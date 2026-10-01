@@ -1,0 +1,16 @@
+node_modules
+dist
+dist-ssr
+*.local
+.vite
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/*
+!.vscode/extensions.json
+.idea
+
+# Logs
+*.log
+npm-debug.log*
