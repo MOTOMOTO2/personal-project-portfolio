@@ -61,9 +61,24 @@ describe('home page', () => {
 
   it('renders each section heading the nav links to', () => {
     renderAt('/')
-    for (const id of ['projects', 'gallery', 'about', 'contact']) {
+    const nav = screen.getByRole('navigation')
+    const ids = within(nav)
+      .getAllByRole('link')
+      .map((link) => link.getAttribute('href')?.split('#')[1])
+      .filter((id): id is string => Boolean(id))
+    expect(ids).toContain('projects')
+    for (const id of ids) {
       expect(document.getElementById(id), id).not.toBeNull()
     }
+  })
+
+  it('hides the gallery and its nav link when there are no photos', () => {
+    renderAt('/')
+    const hasGallery = site.photos.length > 0
+    expect(document.getElementById('gallery') !== null).toBe(hasGallery)
+    expect(within(screen.getByRole('navigation')).queryByRole('link', { name: 'Gallery' }) !== null).toBe(
+      hasGallery,
+    )
   })
 
   it('renders the gallery photos', () => {
@@ -101,16 +116,18 @@ describe('project detail page', () => {
 
   it('links out to the repo and demo when present', () => {
     renderAt(`/projects/${project.slug}`)
+    // Compared as parsed URLs: an anchor's href reads back normalised, so a bare
+    // origin like https://example.com comes back with a trailing slash.
     if (project.links.repo) {
       expect(screen.getByRole('link', { name: /source code/i })).toHaveProperty(
         'href',
-        project.links.repo,
+        new URL(project.links.repo).href,
       )
     }
     if (project.links.demo) {
       expect(screen.getByRole('link', { name: /live demo/i })).toHaveProperty(
         'href',
-        project.links.demo,
+        new URL(project.links.demo).href,
       )
     }
   })

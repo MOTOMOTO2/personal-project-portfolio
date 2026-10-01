@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img">
+  <defs>
+    <linearGradient id="gcoursetrackercoversvg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="hsl(287 68% 52%)" />
+      <stop offset="1" stop-color="hsl(14 62% 32%)" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="750" fill="url(#gcoursetrackercoversvg)" />
+  <circle cx="917" cy="-477" r="-57" fill="#fff" opacity="0.04" /><circle cx="498" cy="-15" r="-88" fill="#fff" opacity="-0.02" /><circle cx="79" cy="-302" r="106" fill="#fff" opacity="0.02" /><circle cx="860" cy="-590" r="75" fill="#fff" opacity="0.06" />
+  <text x="48" y="702" font-family="ui-sans-serif, system-ui, sans-serif"
+           font-size="39" font-weight="600" fill="#fff" opacity="0.92">Course Deadline Tracker</text>
+         <text x="48" y="743" font-family="ui-monospace, monospace"
+           font-size="23" fill="#fff" opacity="0.6">placeholder image</text>
+</svg>

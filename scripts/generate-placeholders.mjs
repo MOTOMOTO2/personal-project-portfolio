@@ -75,41 +75,16 @@ function svg({ file, label, kind }) {
 `
 }
 
+// Only the images that are still placeholders. RevVault and Retro Zombie Arena
+// use real screenshots (PNGs in public/images/), so they are not listed here.
 const manifest = [
-  { file: 'avatar.svg', label: 'YN', kind: 'avatar' },
+  { file: 'avatar.svg', label: 'AY', kind: 'avatar' },
 
-  { file: 'orbit-cover.svg', label: 'Orbit', kind: 'cover' },
-  { file: 'orbit-1.svg', label: 'Orbit — command palette', kind: 'shot' },
-  { file: 'orbit-2.svg', label: 'Orbit — capacity bar', kind: 'shot' },
-  { file: 'orbit-3.svg', label: 'Orbit — offline sync', kind: 'shot' },
+  { file: 'claude-remote-cover.svg', label: 'Claude Remote', kind: 'cover' },
+  { file: 'course-tracker-cover.svg', label: 'Course Deadline Tracker', kind: 'cover' },
+  { file: 'code-assistant-cover.svg', label: 'Personal Code Assistant', kind: 'cover' },
 
-  { file: 'transit-cover.svg', label: 'Transit Delay Map', kind: 'cover' },
-  { file: 'transit-1.svg', label: 'Transit — live map', kind: 'shot' },
-  { file: 'transit-2.svg', label: 'Transit — route history', kind: 'shot' },
-
-  { file: 'shelf-cover.svg', label: 'Shelf', kind: 'cover' },
-  { file: 'shelf-1.svg', label: 'Shelf — spine segmentation', kind: 'shot' },
-  { file: 'shelf-2.svg', label: 'Shelf — matched catalogue', kind: 'shot' },
-
-  { file: 'clock-cover.svg', label: 'Desk Weather Clock', kind: 'cover' },
-  { file: 'clock-1.svg', label: 'Clock — finished enclosure', kind: 'shot' },
-  { file: 'clock-2.svg', label: 'Clock — bare PCB', kind: 'shot' },
-
-  { file: 'chess-cover.svg', label: 'Opening Trainer', kind: 'cover' },
-  { file: 'chess-1.svg', label: 'Trainer — drill view', kind: 'shot' },
-  { file: 'chess-2.svg', label: 'Trainer — review load', kind: 'shot' },
-
-  { file: 'slides-cover.svg', label: 'Slidewright', kind: 'cover' },
-  { file: 'slides-1.svg', label: 'Slidewright — layout inference', kind: 'shot' },
-
-  { file: 'photo-1.svg', label: 'Workbench', kind: 'photo' },
-  { file: 'photo-2.svg', label: 'Meetup talk', kind: 'photo' },
-  { file: 'photo-3.svg', label: 'Whiteboard', kind: 'photo' },
-  { file: 'photo-4.svg', label: 'Hackathon', kind: 'photo' },
-  { file: 'photo-5.svg', label: 'Street, dusk', kind: 'photo' },
-  { file: 'photo-6.svg', label: 'Enclosure revisions', kind: 'photo' },
-
-  { file: 'og-cover.svg', label: 'Your Name — portfolio', kind: 'cover' },
+  { file: 'og-cover.svg', label: 'Aden Yadegar — portfolio', kind: 'cover' },
 ]
 
 mkdirSync(outDir, { recursive: true })

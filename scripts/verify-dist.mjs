@@ -70,12 +70,12 @@ async function expectOk(label, path) {
 
 if (assetMatch) await expectOk('entry JS loads', assetMatch[1])
 if (cssMatch) await expectOk('stylesheet loads', cssMatch[1])
-await expectOk('placeholder image loads', `${base}images/orbit-cover.svg`)
+await expectOk('project image loads', `${base}images/revvault-cover.png`)
 await expectOk('favicon loads', `${base}favicon.svg`)
 
 // A deep link has no file on disk, so the host serves 404.html -- which must be
 // the app, otherwise refreshing a project page would show a blank 404.
-const deep = await fetch(`${origin}${base}projects/orbit-task-manager`)
+const deep = await fetch(`${origin}${base}projects/revvault`)
 const deepBody = await deep.text()
 checks.push(['deep link falls back to the app shell', deepBody.includes('id="root"')])
 
