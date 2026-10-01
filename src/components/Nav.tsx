@@ -4,9 +4,10 @@ import { Link, useLocation } from 'react-router-dom'
 import { site } from '../data/site'
 import { useTheme } from '../lib/theme'
 
+// The Gallery section renders nothing without photos, so its link goes too.
 const sections = [
   { id: 'projects', label: 'Projects' },
-  { id: 'gallery', label: 'Gallery' },
+  ...(site.photos.length > 0 ? [{ id: 'gallery', label: 'Gallery' }] : []),
   { id: 'about', label: 'About' },
   { id: 'contact', label: 'Contact' },
 ]
