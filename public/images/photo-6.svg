@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 900" width="900" height="900" role="img">
+  <defs>
+    <linearGradient id="gphoto6svg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="hsl(276 68% 52%)" />
+      <stop offset="1" stop-color="hsl(352 62% 32%)" />
+    </linearGradient>
+  </defs>
+  <rect width="900" height="900" fill="url(#gphoto6svg)" />
+  <circle cx="298" cy="-783" r="-27" fill="#fff" opacity="0.00" /><circle cx="117" cy="-45" r="-41" fill="#fff" opacity="0.06" /><circle cx="660" cy="-458" r="1" fill="#fff" opacity="-0.02" /><circle cx="479" cy="-620" r="-13" fill="#fff" opacity="0.04" />
+  <text x="48" y="852" font-family="ui-sans-serif, system-ui, sans-serif"
+           font-size="47" font-weight="600" fill="#fff" opacity="0.92">Enclosure revisions</text>
+         <text x="48" y="902" font-family="ui-monospace, monospace"
+           font-size="27" fill="#fff" opacity="0.6">placeholder image</text>
+</svg>
