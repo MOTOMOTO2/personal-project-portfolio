@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img">
+  <defs>
+    <linearGradient id="gclockcoversvg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="hsl(307 68% 52%)" />
+      <stop offset="1" stop-color="hsl(354 62% 32%)" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="750" fill="url(#gclockcoversvg)" />
+  <circle cx="609" cy="-586" r="58" fill="#fff" opacity="0.02" /><circle cx="190" cy="-124" r="27" fill="#fff" opacity="0.06" /><circle cx="971" cy="-411" r="-4" fill="#fff" opacity="0.00" /><circle cx="552" cy="-699" r="-35" fill="#fff" opacity="0.04" />
+  <text x="48" y="702" font-family="ui-sans-serif, system-ui, sans-serif"
+           font-size="39" font-weight="600" fill="#fff" opacity="0.92">Desk Weather Clock</text>
+         <text x="48" y="743" font-family="ui-monospace, monospace"
+           font-size="23" fill="#fff" opacity="0.6">placeholder image</text>
+</svg>

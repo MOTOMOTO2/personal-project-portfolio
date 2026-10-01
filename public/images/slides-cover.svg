@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img">
+  <defs>
+    <linearGradient id="gslidescoversvg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="hsl(277 68% 52%)" />
+      <stop offset="1" stop-color="hsl(354 62% 32%)" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="750" fill="url(#gslidescoversvg)" />
+  <circle cx="391" cy="353" r="220" fill="#fff" opacity="0.10" /><circle cx="1172" cy="65" r="189" fill="#fff" opacity="0.14" /><circle cx="29" cy="178" r="282" fill="#fff" opacity="0.12" /><circle cx="810" cy="640" r="251" fill="#fff" opacity="0.06" />
+  <text x="48" y="702" font-family="ui-sans-serif, system-ui, sans-serif"
+           font-size="39" font-weight="600" fill="#fff" opacity="0.92">Slidewright</text>
+         <text x="48" y="743" font-family="ui-monospace, monospace"
+           font-size="23" fill="#fff" opacity="0.6">placeholder image</text>
+</svg>

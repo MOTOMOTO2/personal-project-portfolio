@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img">
+  <defs>
+    <linearGradient id="gtransit2svg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="hsl(227 68% 52%)" />
+      <stop offset="1" stop-color="hsl(314 62% 32%)" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="750" fill="url(#gtransit2svg)" />
+  <circle cx="721" cy="696" r="230" fill="#fff" opacity="0.11" /><circle cx="302" cy="408" r="199" fill="#fff" opacity="0.15" /><circle cx="1083" cy="121" r="168" fill="#fff" opacity="0.09" /><circle cx="664" cy="583" r="137" fill="#fff" opacity="0.13" />
+  <text x="48" y="702" font-family="ui-sans-serif, system-ui, sans-serif"
+           font-size="39" font-weight="600" fill="#fff" opacity="0.92">Transit — route history</text>
+         <text x="48" y="743" font-family="ui-monospace, monospace"
+           font-size="23" fill="#fff" opacity="0.6">placeholder image</text>
+</svg>
