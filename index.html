@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Your Name — Software Engineer & Project Portfolio</title>
+    <meta
+      name="description"
+      content="Projects, screenshots and case studies from Your Name — a software engineer building web apps, data tools and the occasional piece of hardware."
+    />
+    <meta name="author" content="Your Name" />
+    <meta name="theme-color" content="#6d4df6" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#11131c" media="(prefers-color-scheme: dark)" />
+
+    <!-- Link previews for LinkedIn, Slack, iMessage, etc. Swap the og:image for a
+         real 1200x630 picture once you have one. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Your Name — Software Engineer & Project Portfolio" />
+    <meta
+      property="og:description"
+      content="Projects, screenshots and case studies from a software engineer building web apps, data tools and hardware."
+    />
+    <meta property="og:image" content="images/og-cover.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      // Apply the stored theme before first paint so dark-mode visitors never see
+      // a white flash. Kept in sync with src/lib/theme.ts.
+      try {
+        var stored = localStorage.getItem('portfolio-theme')
+        var dark = stored ? stored === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches
+        if (dark) document.documentElement.classList.add('dark')
+      } catch (error) {
+        /* private mode: fall back to the light theme */
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
