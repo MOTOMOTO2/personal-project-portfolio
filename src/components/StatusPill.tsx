@@ -1,15 +1,16 @@
-import type { Project } from '../data/types'
+import type { ProjectStatus } from '../data/types'
 
-const styles: Record<Project['status'], string> = {
-  Shipped: 'bg-emerald-500/12 text-emerald-700 dark:text-emerald-300',
-  'In progress': 'bg-amber-500/12 text-amber-700 dark:text-amber-300',
-  Prototype: 'bg-sky-500/12 text-sky-700 dark:text-sky-300',
-  Archived: 'bg-zinc-500/12 text-zinc-600 dark:text-zinc-400',
+const dot: Record<ProjectStatus, string> = {
+  Live: 'bg-success',
+  'In progress': 'bg-warning',
+  Complete: 'bg-fg-subtle',
 }
 
-export function StatusPill({ status }: { status: Project['status'] }) {
+/** A coloured dot and the status in words, so colour is never the only signal. */
+export function StatusPill({ status }: { status: ProjectStatus }) {
   return (
-    <span className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${styles[status]}`}>
+    <span className="inline-flex items-center gap-1.5 text-xs font-medium whitespace-nowrap text-fg-muted">
+      <span aria-hidden className={`size-1.5 rounded-full ${dot[status]}`} />
       {status}
     </span>
   )

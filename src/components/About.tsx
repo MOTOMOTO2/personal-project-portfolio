@@ -1,65 +1,56 @@
 import { site } from '../data/site'
-import { SectionHeading } from './SectionHeading'
 
 export function About() {
   const { profile, skills, timeline } = site
 
   return (
-    <section className="py-16 sm:py-20">
-      <div className="container-page">
-        <SectionHeading id="about" eyebrow="Background" title="About me" />
+    <section className="border-t border-border py-20 sm:py-28">
+      <div className="container-page grid gap-12 lg:grid-cols-12 lg:gap-14">
+        <div className="reveal lg:col-span-4">
+          <p className="eyebrow mb-3">About</p>
+          <h2 id="about" className="scroll-mt-24 text-3xl font-semibold sm:text-4xl">
+            A bit about me
+          </h2>
+        </div>
 
-        <div className="grid gap-12 lg:grid-cols-[1.3fr_1fr]">
-          <div className="reveal space-y-4 text-[1.0625rem] leading-relaxed text-fg-muted">
+        <div className="lg:col-span-8">
+          <div className="reveal space-y-5 text-lg leading-relaxed text-fg-muted">
             {profile.about.map((paragraph) => (
               <p key={paragraph.slice(0, 32)}>{paragraph}</p>
             ))}
           </div>
 
-          <div className="reveal">
-            <h3 className="mb-4 text-sm font-semibold tracking-wide uppercase">Skills</h3>
-            <dl className="space-y-4">
+          <div className="reveal mt-14">
+            <h3 className="eyebrow mb-4">Skills and tools</h3>
+            <dl className="divide-y divide-border border-y border-border">
               {skills.map((group) => (
-                <div key={group.name}>
-                  <dt className="mb-2 text-sm font-medium text-fg-muted">{group.name}</dt>
-                  <dd>
-                    <ul className="flex flex-wrap gap-1.5">
-                      {group.items.map((item) => (
-                        <li
-                          key={item}
-                          className="rounded-md border border-border bg-surface px-2 py-1 font-mono text-[11px]"
-                        >
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </dd>
+                <div key={group.name} className="grid gap-1 py-4 sm:grid-cols-[11rem_1fr] sm:gap-6">
+                  <dt className="text-sm font-medium">{group.name}</dt>
+                  <dd className="text-sm leading-relaxed text-fg-muted">{group.items.join(' · ')}</dd>
                 </div>
               ))}
             </dl>
           </div>
-        </div>
 
-        {timeline.length > 0 && (
-          <div className="reveal mt-16">
-            <h3 className="mb-6 text-sm font-semibold tracking-wide uppercase">Experience</h3>
-            <ol className="relative border-l border-border pl-6">
-              {timeline.map((entry) => (
-                <li key={`${entry.org}-${entry.period}`} className="relative pb-8 last:pb-0">
-                  <span
-                    aria-hidden
-                    className="absolute top-1.5 -left-[1.9375rem] size-2.5 rounded-full border-2 border-bg bg-accent"
-                  />
-                  <p className="font-mono text-xs text-fg-muted">{entry.period}</p>
-                  <h4 className="mt-1 font-semibold">
-                    {entry.title} <span className="font-normal text-fg-muted">· {entry.org}</span>
-                  </h4>
-                  <p className="mt-1.5 max-w-2xl text-sm leading-relaxed text-fg-muted">{entry.summary}</p>
-                </li>
-              ))}
-            </ol>
-          </div>
-        )}
+          {timeline.length > 0 && (
+            <div className="reveal mt-14">
+              <h3 className="eyebrow mb-4">Experience</h3>
+              <ol className="divide-y divide-border border-y border-border">
+                {timeline.map((entry) => (
+                  <li key={`${entry.org}-${entry.period}`} className="grid gap-1 py-5 sm:grid-cols-[11rem_1fr] sm:gap-6">
+                    <p className="text-sm text-fg-subtle">{entry.period}</p>
+                    <div>
+                      <h4 className="font-medium">
+                        {entry.title} <span className="font-normal text-fg-muted">· {entry.org}</span>
+                      </h4>
+                      <p className="mt-1.5 text-sm leading-relaxed text-fg-muted">{entry.summary}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          )}
+        </div>
       </div>
     </section>
   )

@@ -3,30 +3,42 @@
 /* Dark mode is driven by a class on <html>, toggled in src/lib/theme.ts. */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/*
+ * The palette. Neutral greys with one accent, defined once for light and once
+ * for dark. Change --accent and the links, focus rings and highlights follow.
+ */
 :root {
-  --bg: hsl(40 24% 98%);
+  --bg: hsl(0 0% 99%);
   --surface: hsl(0 0% 100%);
-  --surface-2: hsl(40 16% 96%);
-  --border: hsl(38 12% 87%);
-  --fg: hsl(230 16% 12%);
-  --fg-muted: hsl(230 8% 42%);
-  --accent: hsl(255 68% 54%);
+  --surface-2: hsl(240 5% 96%);
+  --border: hsl(240 6% 90%);
+  --border-strong: hsl(240 5% 80%);
+  --fg: hsl(240 10% 6%);
+  --fg-muted: hsl(240 4% 36%);
+  --fg-subtle: hsl(240 4% 46%);
+  --accent: hsl(221 83% 46%);
   --accent-fg: hsl(0 0% 100%);
-  --accent-soft: hsl(255 78% 96%);
-  --shadow: 0 1px 2px hsl(230 20% 20% / 0.06), 0 8px 24px -12px hsl(230 20% 20% / 0.14);
+  --accent-soft: hsl(221 90% 96%);
+  --success: hsl(152 62% 36%);
+  --warning: hsl(35 92% 44%);
+  --shadow: 0 1px 2px hsl(240 10% 10% / 0.04), 0 16px 40px -20px hsl(240 10% 10% / 0.18);
 }
 
 .dark {
-  --bg: hsl(232 20% 8%);
-  --surface: hsl(232 17% 11%);
-  --surface-2: hsl(232 15% 14%);
-  --border: hsl(232 12% 21%);
-  --fg: hsl(230 20% 95%);
-  --fg-muted: hsl(230 12% 66%);
-  --accent: hsl(255 88% 74%);
-  --accent-fg: hsl(255 40% 12%);
-  --accent-soft: hsl(255 32% 19%);
-  --shadow: 0 1px 2px hsl(0 0% 0% / 0.4), 0 8px 24px -12px hsl(0 0% 0% / 0.6);
+  --bg: hsl(240 6% 5%);
+  --surface: hsl(240 5% 8%);
+  --surface-2: hsl(240 4% 11%);
+  --border: hsl(240 4% 16%);
+  --border-strong: hsl(240 4% 26%);
+  --fg: hsl(0 0% 96%);
+  --fg-muted: hsl(240 5% 68%);
+  --fg-subtle: hsl(240 4% 54%);
+  --accent: hsl(213 94% 70%);
+  --accent-fg: hsl(222 47% 11%);
+  --accent-soft: hsl(221 40% 15%);
+  --success: hsl(152 55% 52%);
+  --warning: hsl(38 92% 60%);
+  --shadow: 0 1px 2px hsl(0 0% 0% / 0.5), 0 16px 40px -20px hsl(0 0% 0% / 0.8);
 }
 
 @theme inline {
@@ -34,14 +46,18 @@
   --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
   --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
   --color-fg: var(--fg);
   --color-fg-muted: var(--fg-muted);
+  --color-fg-subtle: var(--fg-subtle);
   --color-accent: var(--accent);
   --color-accent-fg: var(--accent-fg);
   --color-accent-soft: var(--accent-soft);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
 
-  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, monospace;
+  --font-sans: Geist, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'Geist Mono', ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, monospace;
 
   --shadow-card: var(--shadow);
 }
@@ -50,7 +66,7 @@
   html {
     scroll-behavior: smooth;
     /* Keep anchored sections clear of the sticky header. */
-    scroll-padding-top: 5.5rem;
+    scroll-padding-top: 5rem;
     color-scheme: light;
   }
 
@@ -70,7 +86,12 @@
   h2,
   h3 {
     text-wrap: balance;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
+  }
+
+  ::selection {
+    background: var(--accent-soft);
+    color: var(--fg);
   }
 
   :focus-visible {
@@ -92,19 +113,90 @@
   }
 }
 
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    height: 2.5rem;
+    padding-inline: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    white-space: nowrap;
+    transition:
+      background-color 0.15s ease,
+      border-color 0.15s ease,
+      color 0.15s ease,
+      opacity 0.15s ease;
+  }
+
+  .btn-primary {
+    background: var(--fg);
+    color: var(--bg);
+  }
+
+  .btn-primary:hover {
+    opacity: 0.86;
+  }
+
+  .btn-secondary {
+    background: var(--surface);
+    border-color: var(--border);
+    color: var(--fg);
+  }
+
+  .btn-secondary:hover {
+    background: var(--surface-2);
+    border-color: var(--border-strong);
+  }
+
+  .btn-icon {
+    width: 2.5rem;
+    padding-inline: 0;
+  }
+
+  /* Small uppercase label above headings. */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg-subtle);
+  }
+}
+
 @utility container-page {
   margin-inline: auto;
   width: 100%;
   max-width: 72rem;
   padding-inline: 1.25rem;
+
+  @media (width >= 40rem) {
+    padding-inline: 2rem;
+  }
+}
+
+/* Faint grid behind the hero, faded out towards the edges. */
+@utility hero-grid {
+  background-image:
+    linear-gradient(to right, var(--border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(ellipse 70% 60% at 30% 0%, black 30%, transparent 75%);
 }
 
 /* Sections fade in as they scroll into view; see useReveal in src/lib/reveal.ts.
    Without JS (or with reduced motion) the content is simply visible. */
 @utility reveal {
   opacity: 0;
-  transform: translateY(14px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(12px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
 }
 
 @utility reveal-in {

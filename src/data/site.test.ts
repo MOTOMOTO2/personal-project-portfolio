@@ -8,7 +8,6 @@ const publicDir = join(import.meta.dirname, '..', '..', 'public')
 
 /** Every image referenced by the site, flattened with a label for failure output. */
 const images = [
-  { label: 'profile avatar', src: site.profile.avatar },
   ...site.projects.flatMap((project) => [
     { label: `${project.slug} cover`, src: project.cover.src },
     ...project.gallery.map((image, index) => ({
@@ -38,6 +37,16 @@ describe('site data', () => {
     expect(site.projects.length).toBeGreaterThan(0)
   })
 
+  it('features at least one project, so "Selected work" is never empty', () => {
+    expect(site.projects.some((project) => project.featured)).toBe(true)
+  })
+
+  it('lists featured projects first, so the detail-page order matches the home page', () => {
+    const firstOther = site.projects.findIndex((project) => !project.featured)
+    if (firstOther === -1) return
+    expect(site.projects.slice(firstOther).every((project) => !project.featured)).toBe(true)
+  })
+
   it('uses unique project slugs, since slugs are the detail-page routes', () => {
     const slugs = site.projects.map((project) => project.slug)
     expect(new Set(slugs).size).toBe(slugs.length)
@@ -49,8 +58,10 @@ describe('site data', () => {
     }
   })
 
-  it('gives every project a title, blurb, description and tags', () => {
+  it('gives every project a title, blurb, description, period, role and tags', () => {
     for (const project of site.projects) {
+      expect(project.period.length, project.slug).toBeGreaterThan(0)
+      expect(project.role.length, project.slug).toBeGreaterThan(0)
       expect(project.title.length, project.slug).toBeGreaterThan(0)
       expect(project.blurb.length, project.slug).toBeGreaterThan(0)
       expect(project.description.length, project.slug).toBeGreaterThan(0)

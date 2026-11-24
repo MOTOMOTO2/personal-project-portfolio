@@ -10,27 +10,27 @@ import type { SiteData } from './types'
  * Image paths are relative to `public/`, so `images/foo.jpg` lives at
  * `public/images/foo.jpg`. The deploy base is prepended for you.
  */
-export const SHOW_SAMPLE_BANNER = false
 
-/**
- * Where the contact form POSTs its JSON. Leave null and the form instead opens
- * the visitor's mail client with everything pre-filled, which needs no backend.
- * Any service that accepts a JSON POST works -- Formspree, Basin, a Worker.
- */
-export const CONTACT_FORM_ENDPOINT: string | null = null
+/** The public repository for this site, linked from the footer. */
+export const SOURCE_URL = 'https://github.com/MOTOMOTO2/personal-project-portfolio'
 
 const data: SiteData = {
   profile: {
     name: 'Aden Yadegar',
-    role: 'Software Developer',
-    tagline: 'I build full-stack web apps, browser games, and AI tools, and put them online for people to use.',
-    location: 'Ontario, Canada',
+    role: 'Full-stack developer',
+    tagline:
+      'I design, build and deploy complete products: a used-car search engine running in production, a course planner that reads syllabi with Claude, and a clinic-booking app I’m building with a team.',
     about: [
       "I'm a student at Lakehead University's Barrie campus, and most of what I build starts as a problem in my own week: a project car I couldn't find parts for, deadlines my course site didn't show me, or wanting to start a coding project from my phone.",
-      'I like taking an idea all the way to something live. RevVault runs in production with sign-in, subscriptions, scheduled jobs, and error monitoring, and several of my projects use Claude to handle the parts that need judgement, like reading a syllabus PDF or answering a hard question about a codebase.',
-      "I'm currently building a coding assistant with machine-learning models written from scratch. If any of the projects above look relevant to what you're hiring for, I'd be glad to talk through them.",
+      'I like taking an idea all the way to something live. RevVault runs in production with Google sign-in, Stripe subscriptions, scheduled jobs and error monitoring. Several of my projects use Claude for the parts that need judgement, like reading a syllabus PDF or answering a hard question about a codebase, and the parts that have to be exactly right, like sync conflicts or push encryption, have tests that prove it.',
+      "I also build with other people. On Care Track, a clinic-booking app with two other students, I've written the database schema, the booking rules, an audit log and the email notifications, all through pull requests on a shared repository. I'm looking for an internship or co-op where I can do that on a larger codebase.",
     ],
-    avatar: 'images/avatar.svg',
+    facts: [
+      { label: 'Based in', value: 'Ontario, Canada' },
+      { label: 'Studying at', value: 'Lakehead University, Barrie' },
+      { label: 'Focus', value: 'Full-stack web, offline and real-time sync, AI tooling' },
+      { label: 'Main languages', value: 'TypeScript, C#, Python, SQL' },
+    ],
     email: 'aden.yadegar21@gmail.com',
     resume: null,
     availability: 'Open to internship and co-op roles',
@@ -42,30 +42,42 @@ const data: SiteData = {
   },
 
   skills: [
-    { name: 'Languages', items: ['TypeScript', 'JavaScript', 'C#', 'C', 'SQL', 'HTML & CSS'] },
-    { name: 'Frontend', items: ['React', 'React Native (Expo)', 'Vite', 'Tailwind CSS', 'Three.js / WebGL', 'PWAs'] },
-    { name: 'Backend & data', items: ['ASP.NET Core', 'Node.js', 'Fastify', 'Entity Framework Core', 'PostgreSQL', 'SQLite', 'Supabase'] },
-    { name: 'AI & tooling', items: ['Claude API', 'Claude Code', 'Git', 'GitHub Actions', 'Docker', 'Fly.io', 'Vitest', 'xUnit'] },
+    { name: 'Languages', items: ['TypeScript', 'JavaScript', 'C#', 'Python', 'SQL', 'C', 'Luau', 'HTML & CSS'] },
+    {
+      name: 'Frontend',
+      items: ['React', 'Next.js', 'Vite', 'Tailwind CSS', 'React Native (Expo)', 'Three.js / WebGL', 'PWAs & service workers'],
+    },
+    {
+      name: 'Backend & data',
+      items: ['ASP.NET Core', 'Entity Framework Core', 'Node.js', 'Fastify', 'FastAPI', 'PostgreSQL', 'SQLite', 'Supabase', 'Drizzle ORM'],
+    },
+    { name: 'AI', items: ['Claude API', 'Claude Code', 'Model Context Protocol (MCP)'] },
+    {
+      name: 'Infrastructure & testing',
+      items: ['Docker', 'Google Cloud Run', 'Vercel', 'Fly.io', 'GitHub Actions', 'Vitest', 'xUnit', 'pytest', 'Playwright'],
+    },
   ],
 
   timeline: [],
 
   projects: [
+    // ---- Featured: shown as large rows under "Selected work" ----------------
     {
       slug: 'revvault',
       title: 'RevVault',
-      blurb: 'Search Kijiji, AutoTrader and eBay for a used car at once, then find parts for it across a dozen retailers.',
+      blurb:
+        'Searches Kijiji, AutoTrader and eBay for a used car at once, then finds parts for it across a dozen retailers. Live at revvault.ca.',
       description: [
         'Shopping for a project car means running the same search on several sites and seeing the same car three times. RevVault searches Kijiji, AutoTrader and eBay at once, shows each car once even when it is listed on more than one site, and compares every price with similar cars for sale nearby. Listings that mention a salvage title, accident history or unusual mileage are flagged.',
         'It keeps going after you buy: a garage and build log for the cars you own, parts search for your exact vehicle across retailers like RockAuto, Amazon, Canadian Tire and eBay, and a wishlist that is re-checked on a schedule so a price drop turns into an email and an in-app alert.',
-        "It's an ASP.NET Core 8 API serving a React 19 single-page app, deployed on Fly.io. Most sources are scraped or read through public JSON endpoints, so each one is built to fail quietly: a site that's down returns nothing for that search instead of breaking the page, and an hourly health check emails me when a source stops returning results.",
+        "It's an ASP.NET Core 8 API serving a React 19 single-page app, built into a Docker image and deployed to Google Cloud Run by GitHub Actions on every push to main. I migrated it there from Fly.io; it now scales to zero when idle and runs inside Cloud Run's free tier. Most sources are scraped or read through public JSON endpoints, so each one is built to fail quietly: a site that's down returns nothing for that search instead of breaking the page, and an hourly health check emails me when a source stops returning results.",
       ],
-      year: '2026',
-      role: 'Solo — design, frontend, backend, deployment',
-      status: 'Shipped',
+      period: 'Jan – Nov 2026',
+      role: 'Solo: design, frontend, backend, deployment',
+      status: 'Live',
       featured: true,
-      tags: ['Web app', 'Full-stack'],
-      tech: ['C#', 'ASP.NET Core', 'React', 'TypeScript', 'PostgreSQL', 'Fly.io'],
+      tags: ['Full-stack', 'Web app'],
+      tech: ['C#', 'ASP.NET Core', 'EF Core', 'React', 'TypeScript', 'PostgreSQL', 'Docker', 'Google Cloud Run', 'Stripe'],
       links: { demo: 'https://revvault.ca' },
       cover: { src: 'images/revvault-cover.png', alt: 'RevVault home page with a used-car search form' },
       gallery: [
@@ -81,55 +93,140 @@ const data: SiteData = {
         },
       ],
       highlights: [
-        'Live in production at revvault.ca',
+        'Live in production at revvault.ca, with 358 commits since January 2026',
         'Searches 4 listing sources and a dozen parts retailers from one form',
         'Price-drop alerts by email, driven by scheduled jobs on GitHub Actions',
-        'Google sign-in, Stripe subscriptions, and Sentry error monitoring',
+        'Google sign-in, Stripe subscriptions and Sentry error monitoring',
+      ],
+    },
+    {
+      slug: 'course-deadline-tracker',
+      title: 'Course Deadline Tracker',
+      blurb:
+        'Every deadline and grade for a term in one place, merged from Brightspace and read out of syllabus PDFs with Claude.',
+      description: [
+        "Brightspace only knows the deadlines an instructor typed into it, which usually means the dropboxes and quizzes but not the lab dates, in-class tests, or what any of it is worth. The rest is in the syllabus PDF. This app subscribes to my Brightspace calendar feed, reads each syllabus with Claude (or an offline parser when there's no API key), and merges the two, so I see the deadlines Brightspace missed instead of a second copy of the ones it had.",
+        'It works out what each item is (course code, type of work and grade weight) and reads the grading scheme, so each course page shows my marks so far, what is missing, and my weighted grade. Reminders go out a week, three days, a day and three hours before graded work, by phone notification, Discord or email, and everything exports back out as a calendar feed for Google, Apple or Outlook.',
+        'It doubles as a study tool: lecture slides saved from D2L are available to Claude through an MCP connector, so Claude can see when each test is, read the slides it covers, and quiz me on them. The calendar parser and the Web Push encryption are written by hand rather than pulled in as dependencies. It installs to a phone’s home screen and runs on Fly.io.',
+      ],
+      period: 'Sep – Oct 2026',
+      role: 'Solo',
+      status: 'Live',
+      featured: true,
+      tags: ['Full-stack', 'AI'],
+      tech: ['TypeScript', 'Node.js', 'Fastify', 'React', 'SQLite', 'Claude API', 'MCP', 'Web Push'],
+      links: { demo: 'https://course-deadline-tracker.fly.dev' },
+      cover: {
+        src: 'images/course-tracker-cover.jpg',
+        alt: 'Course Deadline Tracker sign-in page listing its features',
+      },
+      gallery: [],
+      highlights: [
+        'Finds the deadlines Brightspace missed by matching syllabus dates against the calendar feed',
+        'Weighted grade per course, from the grading scheme in the syllabus',
+        'MCP connector lets Claude read lecture slides and quiz me before a test',
+        'Hand-written iCalendar (RFC 5545) parser and Web Push encryption (RFC 8291)',
       ],
     },
     {
       slug: 'claude-remote',
       title: 'Claude Remote',
-      blurb: 'Start coding projects from my phone: describe an app, and Claude Code on my desktop builds it and pushes it to GitHub.',
+      blurb:
+        'A phone dashboard for running several Claude Code agents at once, on my desktop or in cloud sandboxes, and watching them work live.',
       description: [
-        'Claude Remote is a phone dashboard for an AI coding agent running on my desktop. I type a prompt like "create a simple mario game", choose how much effort it should put in and how much of my usage it can spend, and pick a private repo, a public repo, or local only. My desktop picks up the job, creates the repository, writes the code, and pushes it.',
-        'The dashboard is a plain JavaScript progressive web app that installs to the home screen. Supabase handles sign-in, stores jobs and their event logs, and streams changes in real time, so I can watch an agent work, see what is running, queued or paused, check usage meters, and cancel a job from anywhere.',
-        'Row-level security scopes every row to the signed-in user, which is what makes it safe for the page to ship with a public Supabase key.',
+        'Claude Remote is the control panel for the AI coding agents I run. I type what to build, choose how much effort it should spend and whether the result is a private repo, a public one or local only, and an agent creates the repository, writes the code and pushes it, streaming its log back to my phone as it goes.',
+        "Jobs go into Supabase and are claimed by a runner on my desktop. When the desktop is off, a Vercel Function starts a Vercel Sandbox for the project instead, so a job queued from the bus still starts in seconds. I set a ceiling of one to six agents running at once, each project gets at most one, and every waiting job says exactly what it's waiting for: a free slot, its own project, or a desktop that isn't there.",
+        'The same relay carries other traffic without opening a single port: questions to my own coding assistant on the desktop, and taps on lights and the thermostat to the smart home hub on my Raspberry Pi. The app is plain JavaScript with no build step, and row-level security scopes every row to its owner, which is what makes it safe for the page to ship with a public Supabase key.',
       ],
-      year: '2026',
+      period: 'Sep – Nov 2026',
       role: 'Solo',
-      status: 'Shipped',
+      status: 'Live',
       featured: true,
-      tags: ['AI', 'Web app'],
-      tech: ['JavaScript', 'Supabase', 'PostgreSQL', 'Claude Code', 'PWA'],
+      tags: ['AI', 'Full-stack', 'Real-time'],
+      tech: ['JavaScript', 'Supabase', 'PostgreSQL', 'Vercel Functions', 'Vercel Sandbox', 'Claude Code', 'PWA'],
       links: { repo: 'https://github.com/MOTOMOTO2/claude-remote-dashboard' },
-      cover: { src: 'images/claude-remote-cover.svg', alt: 'Claude Remote' },
-      gallery: [],
+      cover: {
+        src: 'images/claude-remote-cover.jpg',
+        alt: 'Agents screen: one agent running, one paused on a usage limit, and usage meters in the sidebar',
+      },
+      gallery: [
+        {
+          src: 'images/claude-remote-house.jpg',
+          alt: 'House screen with rooms, a thermostat, lights and a locked front door',
+          caption: 'House: the smart home hub on my Raspberry Pi, reached through the same relay.',
+        },
+        {
+          src: 'images/claude-remote-ask.jpg',
+          alt: 'Ask screen: a chat with a personal assistant running on the desktop',
+          caption: 'Ask: a chat with my own assistant, which runs on the desktop.',
+        },
+      ],
       highlights: [
-        'Live agent logs streamed to my phone with Supabase Realtime',
-        'Row-level security scopes every job and project to its owner',
-        'Installs to the home screen, with one sign-in per device',
+        'Runs up to 6 agents at once, on the desktop or in Vercel Sandboxes when it is off',
+        'Live agent logs streamed to the phone with Supabase Realtime',
+        'Reaches home devices through an outbound-only relay: no open ports or tunnels',
+        'Row-level security scopes every job, project and message to its owner',
       ],
     },
     {
+      slug: 'care-track',
+      title: 'Care Track',
+      blurb:
+        'A clinic-booking app built by a team of three students: practitioners publish open times and patients book them. I built much of the backend.',
+      description: [
+        "Waits for scans and specialist appointments can stretch for months, partly because booking still runs on outdated software. Care Track lets practitioners publish their open availability and patients find a slot and book it, with a dashboard on each side for upcoming appointments. We're building it as a team of three students to practise working on a shared codebase, loosely modelled on parts of healthcare platforms like PointClickCare.",
+        'My part is mostly the backend. I wrote the Drizzle schema and first migration, the booking flow with instant and approval-required modes, and a PostgreSQL exclusion constraint that makes double-booking impossible at the database level rather than relying on checks in application code. I also added an append-only audit log that records reads and writes of patient data and every role change.',
+        'Most recently I built availability editing (weekly hours, exceptions, slot length) and the email layer: Mailpit locally and Resend in production, status emails when an appointment is requested, confirmed, declined, cancelled or rescheduled, and a daily reminder job behind a secret-protected cron route that sends each reminder exactly once.',
+      ],
+      period: 'Sep – Nov 2026',
+      role: 'Backend developer, team of three',
+      status: 'In progress',
+      featured: true,
+      tags: ['Full-stack', 'Team project'],
+      tech: ['TypeScript', 'Next.js', 'React', 'PostgreSQL', 'Drizzle ORM', 'Better Auth', 'Vitest', 'Vercel'],
+      links: { demo: 'https://care-track-pearl.vercel.app', repo: 'https://github.com/c0balt60/care-track' },
+      cover: {
+        src: 'images/care-track-cover.jpg',
+        alt: 'Care Track home page: search for open appointments by specialty and location',
+      },
+      gallery: [],
+      highlights: [
+        'Double-booking prevented by a PostgreSQL exclusion constraint',
+        'Append-only audit log of patient-data access and role changes',
+        'Appointment status and reminder emails, each sent exactly once',
+        'Shipped through pull requests on a shared repository with two other developers',
+      ],
+    },
+
+    // ---- More projects: shown in the grid --------------------------------
+    {
       slug: 'retro-zombie-arena',
       title: 'Retro Zombie Arena',
-      blurb: 'A late-90s-style zombie shooter that runs in the browser, with every texture, model and sound generated in code.',
+      blurb:
+        'A late-90s-style zombie shooter that runs in the browser, with every texture, model and sound generated in code.',
       description: [
         'A wave-survival first-person shooter in the spirit of Call of Duty: Zombies, with the pace of Doom and the look of a late-90s PC game: a low-resolution framebuffer scaled up to the window, bloom, dithering, scanlines, chunky textures, and low-poly monsters with glowing eyes. You earn points for hits and kills, buy your way through doors, roll the mystery box for a random gun, buy perks, and upgrade your weapons.',
         'There is a story too. Four chapters on four maps (an asylum, a town, an ironworks and an underground lab) each have their own objective, a boss, and a way out. Every map is regenerated from a new seed each time you play, and nothing on the HUD tells you where to go.',
         "There are no image, model or font files in the repository. Textures are painted onto canvases at load, the guns are modelled in code from the dimensions of real firearms, lighting is baked into vertex colours, and every sound effect and the soundtrack are synthesised with the Web Audio API. The only recorded audio is the announcer's voice lines, generated offline with an open-source text-to-speech model.",
       ],
-      year: '2026',
+      period: 'Sep – Oct 2026',
       role: 'Solo',
       status: 'In progress',
-      featured: true,
+      featured: false,
       tags: ['Game'],
       tech: ['TypeScript', 'Three.js', 'WebGL', 'Web Audio API', 'Vite'],
       links: {},
-      cover: { src: 'images/zombie-cover.png', alt: 'Reloading a rifle in the asylum admissions room as zombies close in' },
+      cover: {
+        src: 'images/zombie-cover.png',
+        alt: 'Reloading a rifle in the asylum admissions room as zombies close in',
+      },
       gallery: [
         { src: 'images/zombie-title.png', alt: 'Retro Zombie Arena title screen', caption: 'Title screen.' },
+        {
+          src: 'images/zombie-chapters.jpg',
+          alt: 'Chapter select screen with four chapters',
+          caption: 'Chapter select: escape one map to unlock the next.',
+        },
         {
           src: 'images/zombie-hollow-creek.png',
           alt: 'Hollow Creek: an open street under the night sky',
@@ -139,6 +236,11 @@ const data: SiteData = {
           src: 'images/zombie-butcher.png',
           alt: 'Fighting the Butcher boss in Hollow Creek',
           caption: 'The Butcher, the boss of chapter 2.',
+        },
+        {
+          src: 'images/zombie-furnace-man.jpg',
+          alt: 'Fighting the Furnace Man among stacked crates in the ironworks',
+          caption: 'The Furnace Man, the boss of chapter 3, Vireo Ironworks.',
         },
         {
           src: 'images/zombie-sublevel-9.png',
@@ -154,52 +256,261 @@ const data: SiteData = {
       ],
     },
     {
-      slug: 'course-deadline-tracker',
-      title: 'Course Deadline Tracker',
-      blurb: 'Every deadline and grade for a term in one place, pulled from Brightspace and read out of syllabus PDFs with Claude.',
+      slug: 'tally',
+      title: 'Tally',
+      blurb:
+        'An offline-first expense tracker that queues changes on the phone, syncs them later, and asks before overwriting anything.',
       description: [
-        "Brightspace only knows the deadlines an instructor typed into it, which usually means the dropboxes and quizzes but not the lab dates, in-class tests, or what any of it is worth. The rest is in the syllabus PDF. This app subscribes to my Brightspace calendar feed, reads each syllabus with Claude (or an offline parser when there's no API key), and merges the two, so I see the deadlines Brightspace missed instead of a second copy of the ones it had.",
-        'It works out what each item is (course code, type of work, and grade weight) and reads the grading scheme, so each course page shows my marks so far, what is missing, and my weighted grade. Reminders go out a week, three days, a day, and three hours before graded work, by phone notification, Discord or email, and everything exports back out as a calendar feed for Google, Apple or Outlook.',
-        "I built it for Lakehead University's Barrie campus, but any Brightspace/D2L calendar feed works. It installs to a phone's home screen and runs on Fly.io.",
+        'Tally is an installable expense tracker that keeps working with no connection. Every tap is written to an outbox on the device first, so an entry appears instantly and survives the app being closed while offline; syncing is a separate step that happens whenever the network comes back.',
+        'The interesting part is the sync protocol. Every change carries the last revision the device had seen, and the server keeps a per-field change log, so it can tell a stale edit to a different field (merged automatically, both edits kept) from a stale edit to the same field (a conflict). Conflicts appear as a card with both values side by side, so nothing is silently overwritten, and retries are idempotent, so a push whose response was lost never applies twice.',
+        'On top of that sit bank imports through Plaid (matched against entries typed in by hand), subscription detection, monthly budgets and Web Push reminders. It runs on Vercel, with FastAPI as a serverless function and Supabase Postgres behind it.',
       ],
-      year: '2026',
+      period: 'Oct – Nov 2026',
       role: 'Solo',
-      status: 'Shipped',
+      status: 'Live',
       featured: false,
-      tags: ['Web app', 'Full-stack', 'AI'],
-      tech: ['TypeScript', 'Node.js', 'Fastify', 'React', 'SQLite', 'Claude API'],
-      links: { demo: 'https://course-deadline-tracker.fly.dev' },
-      cover: { src: 'images/course-tracker-cover.svg', alt: 'Course Deadline Tracker' },
+      tags: ['Full-stack', 'Offline-first', 'PWA'],
+      tech: ['Python', 'FastAPI', 'React', 'TypeScript', 'IndexedDB', 'Service workers', 'Supabase', 'Plaid'],
+      links: {},
+      cover: {
+        src: 'images/tally-cover.jpg',
+        alt: 'Three phone screens: offline with a queued change, a sync conflict asking which value to keep, and fully synced',
+      },
       gallery: [],
       highlights: [
-        'Finds the deadlines Brightspace missed by matching syllabus dates against the calendar feed',
-        'Weighted grade per course, from the grading scheme in the syllabus',
-        'Each reminder fires exactly once, and skips lectures and other ungraded events',
-        'Works without an API key, using an offline PDF parser',
+        'Per-field merging: concurrent edits to different fields both survive',
+        'Compacted outbox: ten offline edits to one entry arrive as one change',
+        '231 tests across the protocol, the client engine, HTTP smoke tests and real Chromium',
+        'Bank transactions imported through Plaid and matched to manual entries',
       ],
     },
     {
       slug: 'personal-code-assistant',
       title: 'Personal Code Assistant',
-      blurb: "A coding assistant I'm training on my own code, using machine-learning models written from scratch, with Claude for the hard questions.",
+      blurb:
+        "A coding assistant I'm training on my own code, using machine-learning models written from scratch, with Claude for the hard questions.",
       description: [
         'A coding assistant that learns from my own repositories. The machine-learning models (a tokenizer, an n-gram language model with Kneser-Ney smoothing, a small transformer, and code embeddings) are implemented from scratch and run locally at interactive speed, with no network and no API cost.',
         'One chat sits over both halves. A router decides each turn: the local models answer what they can, Claude answers the rest, and every answer Claude gives is folded into the local models on the next training run, so the local side covers more ground every week.',
         "It runs in the terminal, in the browser, or on my phone over home Wi-Fi by scanning a QR code, and the conversation lives on my machine so I can pick it up on any of them. It's still in progress: right now I'm tuning code completion against a held-out evaluation set.",
       ],
-      year: '2026',
+      period: 'Sep – Oct 2026',
       role: 'Solo',
       status: 'In progress',
       featured: false,
       tags: ['AI', 'Machine learning', 'Developer tool'],
       tech: ['TypeScript', 'Node.js', 'Claude API'],
       links: {},
-      cover: { src: 'images/code-assistant-cover.svg', alt: 'Personal Code Assistant' },
+      cover: {
+        src: 'images/code-assistant-cover.jpg',
+        alt: 'Terminal: pca chat answering one question locally in 4 ms and routing a harder one to Claude',
+      },
       gallery: [],
       highlights: [
         'Tokenizer, n-gram model, transformer and embeddings written from scratch',
         'Local answers in milliseconds, fully offline',
         "Learns from Claude's answers so the same question stays local next time",
+      ],
+    },
+    {
+      slug: 'bluffalo',
+      title: 'Bluffalo',
+      blurb:
+        'A real-time multiplayer bluffing game: write a convincing fake answer, then spot the real one. 2–10 players, each on their own device.',
+      description: [
+        "Everyone gets the same statement with a word missing. You invent a lie that sounds like the truth, then try to pick the real answer out of everyone else's lies. Players join from their own phones with a four-letter room code: no install and no accounts.",
+        "The server is the only source of truth. Clients send intents and get back a redacted view of the game: during the lie phase neither the answer nor anyone else's lie is in the payload, and answer ids are assigned after shuffling, so reading the WebSocket frames in devtools doesn't give the truth away. The rules engine is pure logic with an injected clock, so every timed rule is tested instantly.",
+        'The client is plain ES modules with no build step and one runtime dependency. Reloading the page resumes the same seat, and the host role moves to another player if the host leaves.',
+      ],
+      period: 'Oct 2026',
+      role: 'Solo',
+      status: 'Complete',
+      featured: false,
+      tags: ['Game', 'Real-time'],
+      tech: ['JavaScript', 'Node.js', 'WebSockets', 'node:test', 'Puppeteer'],
+      links: {},
+      cover: {
+        src: 'images/bluffalo-cover.jpg',
+        alt: 'Three phone screens: the home page with the rules, picking the true answer, and the round results',
+      },
+      gallery: [
+        {
+          src: 'images/bluffalo-game.jpg',
+          alt: 'Two phone screens: writing a lie, and the final scoreboard',
+          caption: 'Writing a lie, and the final scoreboard.',
+        },
+      ],
+      highlights: [
+        'Redacted game state: the answer never reaches a client early',
+        '57 automated tests, including full games over real WebSockets',
+        'A browser check plays a complete game across two real Chrome profiles',
+        'Reconnect and host migration, up to 10 players per room',
+      ],
+    },
+    {
+      slug: 'pi-smart-home-hub',
+      title: 'Pi Smart Home Hub',
+      blurb:
+        'A self-hosted hub on a Raspberry Pi that controls Nanoleaf panels, a TV, an Xbox, a PC, an Ecobee and a Ring doorbell from one dashboard.',
+      description: [
+        "One touch-friendly dashboard for every device in the house, with no vendor apps and no cloud relay for anything that can be controlled locally. It runs on a Raspberry Pi 4 as a systemd service and speaks each device's own protocol: Nanoleaf's local HTTP API, Roku ECP and ADB for the TV, SmartGlass to wake the Xbox, Wake-on-LAN for the PC, and the official APIs for Ecobee and Ring.",
+        'Adapters declare capabilities (power, brightness, colour, thermostat, camera) rather than device types, and the dashboard builds its controls from that metadata, so a new adapter gets a working panel for free. Scenes chain commands across devices with delays, automations fire on events, schedules or thresholds, and state is pushed over a WebSocket so every screen stays in sync.',
+        'Adapters never touch the network directly; everything goes through an injected transport. In demo mode that transport is a set of in-process device simulators running the exact same adapter code, so the whole hub works with no hardware, and the tests check the exact bytes each adapter sends.',
+      ],
+      period: 'Oct 2026',
+      role: 'Solo',
+      status: 'Complete',
+      featured: false,
+      tags: ['IoT', 'Full-stack'],
+      tech: ['TypeScript', 'Node.js', 'React', 'WebSockets', 'Raspberry Pi', 'systemd'],
+      links: {},
+      cover: {
+        src: 'images/pi-hub-cover.jpg',
+        alt: 'Home Hub dashboard on a tablet: scenes, rooms and device toggles',
+      },
+      gallery: [
+        {
+          src: 'images/pi-hub-device.jpg',
+          alt: 'Nanoleaf device panel with colour swatches, brightness and white temperature',
+          caption: 'The panel for the Nanoleaf lights: colour, brightness, white temperature and effects.',
+        },
+      ],
+      highlights: [
+        'Six kinds of device, each over its own local protocol or official API',
+        'Demo mode runs the real adapters against in-process simulators',
+        'Scenes and automations triggered by events, cron schedules or thresholds',
+        'Runs as a hardened systemd service under a non-root user',
+      ],
+    },
+    {
+      slug: 'field-reports',
+      title: 'Field Reports',
+      blurb:
+        "An offline-first phone app for field inspections: read sites and file reports with no signal, and it syncs itself once you're back in range.",
+      description: [
+        'A phone front end for a field-service API: a list of sites, a detail screen for each, and one write action, filing a report. Reading and writing both work with no signal, and the status strip always says which is happening; "synced 2 min ago" only appears when a live read actually succeeded.',
+        "Reports are written to a durable IndexedDB outbox before anything is sent, then delivered whenever possible: immediately, on reconnect, when the app returns to the foreground, on a retry timer, and through Background Sync. The client generates each report's id and the server treats it as an idempotency key, so retries can't create duplicates, and a report written at 9:00 but synced at 17:00 keeps its original time, so it can't overwrite newer state.",
+        'Failures are handled by kind: a 4xx is parked as rejected, a 5xx backs off exponentially with jitter, and a dead network pauses the queue instead of burning through it. Every primary control sits in the bottom third of the screen for one-handed use.',
+      ],
+      period: 'Nov 2026',
+      role: 'Solo',
+      status: 'Complete',
+      featured: false,
+      tags: ['Offline-first', 'PWA'],
+      tech: ['TypeScript', 'React', 'IndexedDB', 'Service workers', 'Python', 'FastAPI'],
+      links: {},
+      cover: {
+        src: 'images/field-reports-cover.jpg',
+        alt: 'Three phone screens: the site list, a site with a report queued offline, and the outbox',
+      },
+      gallery: [
+        {
+          src: 'images/field-reports-sync.jpg',
+          alt: 'Two phone screens: filing a report with no signal, and an empty outbox after syncing',
+          caption: 'Filing a report with no signal, and the outbox after the queue drained on its own.',
+        },
+      ],
+      highlights: [
+        'Idempotent writes: a replayed report returns the original instead of a duplicate',
+        'ETag caching: an unchanged list costs a 304 and no body',
+        '100 tests, including a check that every precached URL is actually served',
+        'Outbox screen shows why each report is waiting, with retry and discard',
+      ],
+    },
+    {
+      slug: 'daily-digest-bot',
+      title: 'Daily Digest Bot',
+      blurb:
+        'Collects RSS feeds, APIs and scraped pages, removes duplicates, and posts one digest a day. Built so a broken source is never silent.',
+      description: [
+        'A bot that gathers items from the sources you configure (RSS feeds, JSON APIs and pages it scrapes), deduplicates them against everything it has already sent, and posts one digest a day to a chat channel. Everything it knows lives in one SQLite file.',
+        'The design goal was that it can’t fail quietly. A source that errors is listed in a "Collection problems" section of the digest itself; a scraped page whose selector matches nothing is an error, not an empty result; a failed delivery returns its items to the queue and pings a separate alert channel; and a health check exits non-zero when no digest has gone out for too long, so an uptime monitor turns silence into an alert.',
+        'A read-only React dashboard shows the hours since the last digest, per-source health and reliability, every digest exactly as it was posted, and the log.',
+      ],
+      period: 'Oct 2026',
+      role: 'Solo',
+      status: 'Complete',
+      featured: false,
+      tags: ['Automation'],
+      tech: ['Python', 'SQLite', 'FastAPI', 'React', 'TypeScript', 'pytest'],
+      links: {},
+      cover: {
+        src: 'images/digest-bot-cover.jpg',
+        alt: 'Dashboard overview: hours since the last digest, health checks and per-source cards',
+      },
+      gallery: [
+        {
+          src: 'images/digest-bot-history.jpg',
+          alt: 'Digest history: a chart of items per day and a table of digests',
+          caption: 'Digest history: items per day, and every digest as it was posted.',
+        },
+      ],
+      highlights: [
+        '188 tests with HTTP mocked: timeouts, DNS failures, revoked webhooks, redesigned pages',
+        'Failed deliveries return their items to the queue, so nothing is lost',
+        'A distinct exit code per failure, so cron and uptime monitors can tell them apart',
+        'A one-command demo runs the whole lifecycle against a real local HTTP server',
+      ],
+    },
+    {
+      slug: 'github-project-index',
+      title: 'GitHub Project Index',
+      blurb:
+        "A page listing every repository on a GitHub account, rebuilt from the GitHub API every Monday so it can't go stale.",
+      description: [
+        'One page that lists every project on a GitHub account: name, a one-line description, language, last push, and a live link where there is one. The data is read from the GitHub API at build time, and a GitHub Actions workflow rebuilds and redeploys the page every week.',
+        "Most repositories have no description, so a standard-library Python script falls back to the first real paragraph of the README, skipping titles, badges and code. Live links come from the repository's homepage field or its GitHub Pages URL, and each one gets an HTTP check, so a dead link is dropped rather than published.",
+        'Nothing is fetched in the browser: the data is inlined into the bundle, so there is no rate limit, no token on the client and no loading spinner. The page has search, language filters and a language-share bar whose legend doubles as the filter, with colours from a colourblind-checked palette.',
+      ],
+      period: 'Oct 2026',
+      role: 'Solo',
+      status: 'Complete',
+      featured: false,
+      tags: ['Automation', 'Web app'],
+      tech: ['Python', 'React', 'TypeScript', 'Vite', 'GitHub Actions'],
+      links: {},
+      cover: {
+        src: 'images/project-index-cover.jpg',
+        alt: 'Project index in its light theme: summary stats, a language bar and the project list',
+      },
+      gallery: [
+        {
+          src: 'images/project-index-dark.jpg',
+          alt: 'Project index in its dark theme',
+          caption: 'The same page in its dark theme.',
+        },
+      ],
+      highlights: [
+        '100 tests: 67 for the page and 33 for the Python data step',
+        'Falls back to the README when a repository has no description',
+        'Checks every live link and drops dead ones before publishing',
+        'Screenshots captured from the production build by a headless Chrome script',
+      ],
+    },
+    {
+      slug: 'necrotide',
+      title: 'Necrotide: Last Stand',
+      blurb:
+        'A round-based zombie survival shooter for Roblox: 20 waves, 4 bosses and 12 upgradable weapons, tested headlessly without Roblox.',
+      description: [
+        'Hold the Ashvault against escalating waves of the undead: buy guns off the walls, gamble at the Fate Crate for a random weapon, forge upgrades, drink permanent buffs, nail the barricades back up and revive downed teammates. A boss arrives every five waves, ending with a three-phase final boss on wave 20, after which the game goes endless.',
+        'Everything is original: the names, the lore, the balance numbers, and the map geometry, which is generated from code. There are no external asset IDs.',
+        'Roblox can’t be scripted from CI, so the game verifies itself three ways: every file is parsed offline, a checker walks the built place file and resolves cross-module references, and a stub of the Roblox API runs the real game modules in a Lua VM, building the map, buying and forging a gun, downing and reviving a player, and phasing a boss.',
+      ],
+      period: 'Sep 2026',
+      role: 'Solo',
+      status: 'Complete',
+      featured: false,
+      tags: ['Game'],
+      tech: ['Luau', 'Roblox', 'Rojo', 'Node.js'],
+      links: {},
+      cover: { src: 'images/necrotide-cover.jpg', alt: 'Necrotide: Last Stand title card' },
+      gallery: [],
+      highlights: [
+        'Runs the real game code headlessly in a Lua VM against a stub of the Roblox API',
+        'Live sync: a pushed commit shows up in an open Roblox Studio session within seconds',
+        '5 enemy types and 4 bosses with phase changes',
+        'Map geometry generated from code and checked for reachability',
       ],
     },
   ],

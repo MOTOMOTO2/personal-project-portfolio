@@ -8,9 +8,26 @@ function systemTheme(): Theme {
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
 
+/** Storage can throw (private mode, blocked site data), so every access is guarded. */
+function readStored(): Theme | null {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY)
+    return stored === 'light' || stored === 'dark' ? stored : null
+  } catch {
+    return null
+  }
+}
+
+function store(theme: Theme) {
+  try {
+    localStorage.setItem(STORAGE_KEY, theme)
+  } catch {
+    // Not remembered across visits; the toggle still works for this one.
+  }
+}
+
 export function readStoredTheme(): Theme {
-  const stored = localStorage.getItem(STORAGE_KEY)
-  return stored === 'light' || stored === 'dark' ? stored : systemTheme()
+  return readStored() ?? systemTheme()
 }
 
 function apply(theme: Theme) {
@@ -22,22 +39,24 @@ export function useTheme() {
 
   useEffect(() => {
     apply(theme)
-    localStorage.setItem(STORAGE_KEY, theme)
   }, [theme])
 
-  // Follow the OS only while the visitor has not made an explicit choice.
+  // Follow the OS only while the visitor has not made an explicit choice. The
+  // choice is only stored when they press the toggle, so this keeps working.
   useEffect(() => {
     const media = window.matchMedia('(prefers-color-scheme: dark)')
     const onChange = () => {
-      if (!localStorage.getItem(STORAGE_KEY)) setTheme(media.matches ? 'dark' : 'light')
+      if (!readStored()) setTheme(media.matches ? 'dark' : 'light')
     }
     media.addEventListener('change', onChange)
     return () => media.removeEventListener('change', onChange)
   }, [])
 
   const toggle = useCallback(() => {
-    setTheme((current) => (current === 'dark' ? 'light' : 'dark'))
-  }, [])
+    const next = theme === 'dark' ? 'light' : 'dark'
+    store(next)
+    setTheme(next)
+  }, [theme])
 
   return { theme, toggle }
 }

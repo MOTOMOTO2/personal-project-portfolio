@@ -20,7 +20,6 @@ export function withAssetPaths(data: SiteData): SiteData {
     ...data,
     profile: {
       ...data.profile,
-      avatar: asset(data.profile.avatar),
       resume: data.profile.resume ? asset(data.profile.resume) : null,
     },
     projects: data.projects.map((project) => ({

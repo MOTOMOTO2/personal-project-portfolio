@@ -88,26 +88,34 @@ describe('home page', () => {
     }
   })
 
-  it('renders a contact form with name, email and message fields', () => {
+  it('splits projects into featured rows and the grid', () => {
     renderAt('/')
-    // Scoped to the form: "email" also matches the mailto link and copy button
-    // in the contact details beside it.
-    const form = document.querySelector('form')
-    expect(form).not.toBeNull()
-    const fields = within(form as HTMLElement)
-    expect(fields.getByLabelText('Name')).toBeDefined()
-    expect(fields.getByLabelText('Email')).toBeDefined()
-    expect(fields.getByLabelText('Message')).toBeDefined()
-    expect(fields.getByRole('button', { name: /send message/i })).toBeDefined()
+    const work = document.getElementById('work')?.closest('section')
+    const grid = document.getElementById('projects')?.closest('section')
+    expect(work).toBeTruthy()
+    for (const project of site.projects) {
+      const home = project.featured ? work : grid
+      expect(within(home as HTMLElement).getByRole('link', { name: project.title }), project.slug).toBeDefined()
+    }
+  })
+
+  it('gives visitors a direct email link in the contact section', () => {
+    renderAt('/')
+    const contact = document.getElementById('contact')?.closest('section')
+    expect(contact).toBeTruthy()
+    const link = within(contact as HTMLElement).getByRole('link', { name: site.profile.email })
+    expect(link.getAttribute('href')).toBe(`mailto:${site.profile.email}`)
   })
 })
 
 describe('project detail page', () => {
   const project = site.projects[0]
 
-  it('shows the project title, description and highlights', () => {
+  it('shows the project title, description, timeline, role and highlights', () => {
     renderAt(`/projects/${project.slug}`)
     expect(screen.getByRole('heading', { level: 1, name: project.title })).toBeDefined()
+    expect(screen.getByText(project.period)).toBeDefined()
+    expect(screen.getByText(project.role)).toBeDefined()
     expect(screen.getByText(project.description[0])).toBeDefined()
     for (const highlight of project.highlights) {
       expect(screen.getByText(highlight)).toBeDefined()
@@ -125,7 +133,7 @@ describe('project detail page', () => {
       )
     }
     if (project.links.demo) {
-      expect(screen.getByRole('link', { name: /live demo/i })).toHaveProperty(
+      expect(screen.getByRole('link', { name: /live site/i })).toHaveProperty(
         'href',
         new URL(project.links.demo).href,
       )

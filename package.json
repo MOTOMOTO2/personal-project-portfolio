@@ -10,8 +10,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "oxlint",
-    "typecheck": "tsc -b --force",
-    "images": "node scripts/generate-placeholders.mjs"
+    "typecheck": "tsc -b --force"
   },
   "dependencies": {
     "lucide-react": "^1.49.0",
