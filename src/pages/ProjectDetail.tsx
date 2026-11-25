@@ -1,15 +1,18 @@
-import { ArrowLeft, ArrowRight, ArrowUpRight, Check, FileText } from 'lucide-react'
+import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, Check, FileText, MousePointerClick } from 'lucide-react'
 import { useState } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { Lightbox } from '../components/Lightbox'
+import { demos } from '../components/demos/registry'
 import { StatusPill } from '../components/StatusPill'
 import { site } from '../data/site'
 import { GithubIcon } from '../lib/icons'
+import { featuredFor, useLens } from '../lib/lens'
 import { useReveal } from '../lib/reveal'
 
 export function ProjectDetail() {
   const { slug } = useParams<{ slug: string }>()
   const [open, setOpen] = useState<number | null>(null)
+  const { lens, query } = useLens()
 
   const index = site.projects.findIndex((candidate) => candidate.slug === slug)
   const project = index === -1 ? undefined : site.projects[index]
@@ -23,7 +26,10 @@ export function ProjectDetail() {
   const previous = site.projects[(index - 1 + count) % count]
   const next = site.projects[(index + 1) % count]
   const images = [project.cover, ...project.gallery]
-  const backTo = project.featured ? '/#work' : '/#projects'
+  // Back to wherever this project sits on the home page under the same lens.
+  const inRows = featuredFor(lens).some((candidate) => candidate.slug === project.slug)
+  const backTo = `/${query}${inRows ? '#work' : '#projects'}`
+  const Demo = project.demo ? demos[project.demo.id].Component : null
 
   return (
     <article className="pb-24">
@@ -41,7 +47,7 @@ export function ProjectDetail() {
           <h1 className="mt-3 text-4xl font-semibold sm:text-5xl">{project.title}</h1>
           <p className="mt-5 text-lg leading-relaxed text-fg-muted sm:text-xl">{project.blurb}</p>
 
-          {(project.links.demo || project.links.repo || project.links.writeup) && (
+          {(project.links.demo || project.links.repo || project.links.writeup || project.demo) && (
             <div className="mt-8 flex flex-wrap gap-2">
               {project.links.demo && (
                 <a href={project.links.demo} target="_blank" rel="noreferrer" className="btn btn-primary">
@@ -59,6 +65,13 @@ export function ProjectDetail() {
                 <a href={project.links.writeup} target="_blank" rel="noreferrer" className="btn btn-secondary">
                   <FileText className="size-4" aria-hidden />
                   Write-up
+                </a>
+              )}
+              {project.demo && (
+                <a href="#demo" className="btn btn-secondary">
+                  <MousePointerClick className="size-4 text-accent" aria-hidden />
+                  Try it in the page
+                  <ArrowDown className="size-3.5" aria-hidden />
                 </a>
               )}
             </div>
@@ -141,6 +154,22 @@ export function ProjectDetail() {
           </aside>
         </div>
 
+        {project.demo && Demo && (
+          <section aria-labelledby="demo" className="mt-20">
+            <p className="eyebrow mb-3">Try it</p>
+            <h2 id="demo" className="scroll-mt-24 text-2xl font-semibold sm:text-3xl">
+              {project.demo.title}
+            </h2>
+            <p className="mt-3 max-w-2xl leading-relaxed text-fg-muted">{project.demo.teaser}</p>
+            <div className="mt-6 rounded-xl border border-border bg-surface p-4 shadow-card sm:p-6">
+              <Demo key={project.slug} />
+            </div>
+            <p className="mt-3 text-xs text-fg-subtle">
+              A model that runs in this page, built from {project.title}'s own rules. It doesn't talk to the real app.
+            </p>
+          </section>
+        )}
+
         {project.gallery.length > 0 && (
           <section className="mt-20">
             <h2 className="eyebrow mb-6">Screenshots</h2>
@@ -173,7 +202,7 @@ export function ProjectDetail() {
 
         <nav aria-label="More projects" className="mt-20 grid gap-4 border-t border-border pt-10 sm:grid-cols-2">
           <Link
-            to={`/projects/${previous.slug}`}
+            to={`/projects/${previous.slug}${query}`}
             className="group rounded-xl border border-border bg-surface p-5 transition-colors hover:border-border-strong"
           >
             <span className="flex items-center gap-1.5 text-xs text-fg-subtle">
@@ -183,7 +212,7 @@ export function ProjectDetail() {
             <span className="mt-1.5 block font-medium">{previous.title}</span>
           </Link>
           <Link
-            to={`/projects/${next.slug}`}
+            to={`/projects/${next.slug}${query}`}
             className="group rounded-xl border border-border bg-surface p-5 text-right transition-colors hover:border-border-strong"
           >
             <span className="flex items-center justify-end gap-1.5 text-xs text-fg-subtle">

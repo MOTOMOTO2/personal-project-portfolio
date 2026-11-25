@@ -23,7 +23,7 @@ const data: SiteData = {
     about: [
       "I'm a student at Lakehead University's Barrie campus, and most of what I build starts as a problem in my own week: a project car I couldn't find parts for, deadlines my course site didn't show me, or wanting to start a coding project from my phone.",
       'I like taking an idea all the way to something live. RevVault runs in production with Google sign-in, Stripe subscriptions, scheduled jobs and error monitoring. Several of my projects use Claude for the parts that need judgement, like reading a syllabus PDF or answering a hard question about a codebase, and the parts that have to be exactly right, like sync conflicts or push encryption, have tests that prove it.',
-      "I also build with other people. On Care Track, a clinic-booking app with two other students, I've written the database schema, the booking rules, an audit log and the email notifications, all through pull requests on a shared repository. I'm looking for an internship or co-op where I can do that on a larger codebase.",
+      "I also build with other people. On Care Track, a clinic-booking app with two other students, I've written the database schema, the booking rules, an audit log, the email notifications and the admin tools, then tried to break it all with a security pass, all through pull requests on a shared repository. I'm looking for an internship or co-op where I can do that on a larger codebase.",
     ],
     facts: [
       { label: 'Based in', value: 'Ontario, Canada' },
@@ -55,6 +55,80 @@ const data: SiteData = {
     {
       name: 'Infrastructure & testing',
       items: ['Docker', 'Google Cloud Run', 'Vercel', 'Fly.io', 'GitHub Actions', 'Vitest', 'xUnit', 'pytest', 'Playwright'],
+    },
+  ],
+
+  // "What are you hiring for?" Each choice swaps in its own large rows and
+  // highlights its skills. Send a tailored link with /?for=<id>.
+  lenses: [
+    {
+      id: 'backend',
+      label: 'Backend',
+      pitch:
+        'Data that stays correct when things happen at once: a database constraint that makes double-booking impossible, idempotent writes, a per-field sync protocol, and an ASP.NET Core API in production.',
+      featured: ['care-track', 'revvault', 'tally', 'field-reports'],
+      skills: [
+        'TypeScript',
+        'C#',
+        'Python',
+        'SQL',
+        'ASP.NET Core',
+        'Entity Framework Core',
+        'Node.js',
+        'Fastify',
+        'FastAPI',
+        'PostgreSQL',
+        'SQLite',
+        'Supabase',
+        'Drizzle ORM',
+        'Docker',
+        'xUnit',
+        'pytest',
+      ],
+    },
+    {
+      id: 'frontend',
+      label: 'Frontend',
+      pitch:
+        'React and TypeScript interfaces that hold up on a phone with a bad connection: installable apps, live dashboards, and a WebGL game with no image or model files.',
+      featured: ['revvault', 'claude-remote', 'tally', 'retro-zombie-arena'],
+      skills: [
+        'TypeScript',
+        'JavaScript',
+        'HTML & CSS',
+        'React',
+        'Next.js',
+        'Vite',
+        'Tailwind CSS',
+        'Three.js / WebGL',
+        'PWAs & service workers',
+        'Vitest',
+        'Playwright',
+      ],
+    },
+    {
+      id: 'ai',
+      label: 'AI tooling',
+      pitch:
+        'Claude where a task needs judgement, plain code where it has to be exact: reading syllabus PDFs, an MCP connector for studying, a fleet of coding agents, and language models written from scratch.',
+      featured: ['course-deadline-tracker', 'claude-remote', 'personal-code-assistant'],
+      skills: ['TypeScript', 'Python', 'Node.js', 'Claude API', 'Claude Code', 'Model Context Protocol (MCP)'],
+    },
+    {
+      id: 'offline',
+      label: 'Offline & real-time',
+      pitch:
+        "Apps that keep working with no signal and agree with the server once it's back: durable outboxes, retries that can't land twice, per-field merges, and live state over WebSockets.",
+      featured: ['tally', 'field-reports', 'claude-remote', 'bluffalo'],
+      skills: ['TypeScript', 'React', 'PWAs & service workers', 'Node.js', 'FastAPI', 'PostgreSQL', 'SQLite', 'Supabase'],
+    },
+    {
+      id: 'games',
+      label: 'Games',
+      pitch:
+        'Three games built entirely from code: a WebGL shooter whose textures, models and sounds are generated at runtime, a real-time party game, and a Roblox survival game tested without Roblox.',
+      featured: ['retro-zombie-arena', 'bluffalo', 'necrotide'],
+      skills: ['TypeScript', 'JavaScript', 'Luau', 'Three.js / WebGL', 'Node.js'],
     },
   ],
 
@@ -137,13 +211,14 @@ const data: SiteData = {
         'Claude Remote is the control panel for the AI coding agents I run. I type what to build, choose how much effort it should spend and whether the result is a private repo, a public one or local only, and an agent creates the repository, writes the code and pushes it, streaming its log back to my phone as it goes.',
         "Jobs go into Supabase and are claimed by a runner on my desktop. When the desktop is off, a Vercel Function starts a Vercel Sandbox for the project instead, so a job queued from the bus still starts in seconds. I set a ceiling of one to six agents running at once, each project gets at most one, and every waiting job says exactly what it's waiting for: a free slot, its own project, or a desktop that isn't there.",
         'The same relay carries other traffic without opening a single port: questions to my own coding assistant on the desktop, and taps on lights and the thermostat to the smart home hub on my Raspberry Pi. The app is plain JavaScript with no build step, and row-level security scopes every row to its owner, which is what makes it safe for the page to ship with a public Supabase key.',
+        "It also works with no signal. A job, a message or a field report is saved on the phone the moment it's sent and goes out when the connection comes back; ids made on the phone mean a retry can't land twice, and the app opens on what it last read and says how old that is. That machinery came from Field Reports, which now lives inside Claude Remote on the same sign-in and row-level security.",
       ],
       period: 'Sep – Nov 2026',
       role: 'Solo',
       status: 'Live',
       featured: true,
       tags: ['AI', 'Full-stack', 'Real-time'],
-      tech: ['JavaScript', 'Supabase', 'PostgreSQL', 'Vercel Functions', 'Vercel Sandbox', 'Claude Code', 'PWA'],
+      tech: ['JavaScript', 'Supabase', 'PostgreSQL', 'Vercel Functions', 'Vercel Sandbox', 'Claude Code', 'IndexedDB', 'PWA'],
       links: { repo: 'https://github.com/MOTOMOTO2/claude-remote-dashboard' },
       cover: {
         src: 'images/claude-remote-cover.jpg',
@@ -165,18 +240,26 @@ const data: SiteData = {
         'Runs up to 6 agents at once, on the desktop or in Vercel Sandboxes when it is off',
         'Live agent logs streamed to the phone with Supabase Realtime',
         'Reaches home devices through an outbound-only relay: no open ports or tunnels',
+        'Works with no signal: jobs, messages and reports queue on the phone and send themselves later',
         'Row-level security scopes every job, project and message to its owner',
       ],
+      demo: {
+        id: 'agent-queue',
+        title: 'Queue more agents than there are slots',
+        teaser:
+          'Set the ceiling, put the desktop to sleep and queue a rush of jobs. Every job that has to wait says exactly what it is waiting for.',
+      },
     },
     {
       slug: 'care-track',
       title: 'Care Track',
       blurb:
-        'A clinic-booking app built by a team of three students: practitioners publish open times and patients book them. I built much of the backend.',
+        'A clinic-booking app built by a team of three students: practitioners publish open times and patients book them. I built much of the backend and its security pass.',
       description: [
         "Waits for scans and specialist appointments can stretch for months, partly because booking still runs on outdated software. Care Track lets practitioners publish their open availability and patients find a slot and book it, with a dashboard on each side for upcoming appointments. We're building it as a team of three students to practise working on a shared codebase, loosely modelled on parts of healthcare platforms like PointClickCare.",
         'My part is mostly the backend. I wrote the Drizzle schema and first migration, the booking flow with instant and approval-required modes, and a PostgreSQL exclusion constraint that makes double-booking impossible at the database level rather than relying on checks in application code. I also added an append-only audit log that records reads and writes of patient data and every role change.',
-        'Most recently I built availability editing (weekly hours, exceptions, slot length) and the email layer: Mailpit locally and Resend in production, status emails when an appointment is requested, confirmed, declined, cancelled or rescheduled, and a daily reminder job behind a secret-protected cron route that sends each reminder exactly once.',
+        'I also built availability editing (weekly hours, exceptions, slot length) and the email layer: Mailpit locally, Resend in production, and status emails when an appointment is requested, confirmed, declined, cancelled or rescheduled. With a teammate I also wrote the daily reminder job, a secret-protected cron route that sends each reminder exactly once.',
+        "Before launch I built the admin side, then tried to break the app. Admins can change roles, disable accounts, verify practitioners (an unverified one never appears in search) and search the audit log by who did what and when. For the break-it pass I wrote a test for every server action that signs in as the wrong patient, practitioner, staff member or admin and calls it with someone else's ids; each test passes only if the database is exactly as it was before. It found two gaps, edits that weren't being audited and account endpoints that allowed password guessing outside the login rate limit, and both are fixed.",
       ],
       period: 'Sep – Nov 2026',
       role: 'Backend developer, team of three',
@@ -192,10 +275,17 @@ const data: SiteData = {
       gallery: [],
       highlights: [
         'Double-booking prevented by a PostgreSQL exclusion constraint',
-        'Append-only audit log of patient-data access and role changes',
+        "Attack tests for every server action: the wrong user, someone else's ids, and an unchanged database",
+        'Append-only audit log of patient-data access and role changes, searchable by admins',
         'Appointment status and reminder emails, each sent exactly once',
         'Shipped through pull requests on a shared repository with two other developers',
       ],
+      demo: {
+        id: 'double-booking',
+        title: 'Try to double-book a clinic',
+        teaser:
+          'Two patients press Book at the same moment. Compare checking first, a unique index, and the exclusion constraint Care Track uses.',
+      },
     },
 
     // ---- More projects: shown in the grid --------------------------------
@@ -283,6 +373,12 @@ const data: SiteData = {
         '231 tests across the protocol, the client engine, HTTP smoke tests and real Chromium',
         'Bank transactions imported through Plaid and matched to manual entries',
       ],
+      demo: {
+        id: 'sync-merge',
+        title: 'Edit the same expense on two devices',
+        teaser:
+          'Go offline, change a field, and change one on the other device too. Different fields merge on their own; the same field asks you which to keep.',
+      },
     },
     {
       slug: 'personal-code-assistant',
@@ -391,6 +487,7 @@ const data: SiteData = {
         'A phone front end for a field-service API: a list of sites, a detail screen for each, and one write action, filing a report. Reading and writing both work with no signal, and the status strip always says which is happening; "synced 2 min ago" only appears when a live read actually succeeded.',
         "Reports are written to a durable IndexedDB outbox before anything is sent, then delivered whenever possible: immediately, on reconnect, when the app returns to the foreground, on a retry timer, and through Background Sync. The client generates each report's id and the server treats it as an idempotency key, so retries can't create duplicates, and a report written at 9:00 but synced at 17:00 keeps its original time, so it can't overwrite newer state.",
         'Failures are handled by kind: a 4xx is parked as rejected, a 5xx backs off exponentially with jitter, and a dead network pauses the queue instead of burning through it. Every primary control sits in the bottom third of the screen for one-handed use.',
+        "It has since moved into Claude Remote as one of its screens, with sites and reports in Supabase under row-level security, and its outbox now carries Claude Remote's jobs and messages too.",
       ],
       period: 'Nov 2026',
       role: 'Solo',
@@ -416,6 +513,12 @@ const data: SiteData = {
         '100 tests, including a check that every precached URL is actually served',
         'Outbox screen shows why each report is waiting, with retry and discard',
       ],
+      demo: {
+        id: 'outbox',
+        title: 'File a report with no signal',
+        teaser:
+          'Cut the signal, break the server, lose a response. Reports wait, back off and retry, and none of them arrives twice.',
+      },
     },
     {
       slug: 'daily-digest-bot',

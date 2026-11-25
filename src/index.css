@@ -19,8 +19,11 @@
   --accent: hsl(221 83% 46%);
   --accent-fg: hsl(0 0% 100%);
   --accent-soft: hsl(221 90% 96%);
-  --success: hsl(152 62% 36%);
-  --warning: hsl(35 92% 44%);
+  /* Dark enough to pass 4.5:1 as text on their own 12-15% tints (demo badges). */
+  --success: hsl(152 72% 27%);
+  --warning: hsl(30 95% 31%);
+  --danger: hsl(0 72% 43%);
+  --danger-soft: hsl(0 80% 46% / 0.14);
   --shadow: 0 1px 2px hsl(240 10% 10% / 0.04), 0 16px 40px -20px hsl(240 10% 10% / 0.18);
 }
 
@@ -38,6 +41,8 @@
   --accent-soft: hsl(221 40% 15%);
   --success: hsl(152 55% 52%);
   --warning: hsl(38 92% 60%);
+  --danger: hsl(0 85% 68%);
+  --danger-soft: hsl(0 85% 68% / 0.18);
   --shadow: 0 1px 2px hsl(0 0% 0% / 0.5), 0 16px 40px -20px hsl(0 0% 0% / 0.8);
 }
 
@@ -55,6 +60,7 @@
   --color-accent-soft: var(--accent-soft);
   --color-success: var(--success);
   --color-warning: var(--warning);
+  --color-danger: var(--danger);
 
   --font-sans: Geist, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   --font-mono: 'Geist Mono', ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, monospace;
@@ -187,6 +193,26 @@
     linear-gradient(to bottom, var(--border) 1px, transparent 1px);
   background-size: 48px 48px;
   mask-image: radial-gradient(ellipse 70% 60% at 30% 0%, black 30%, transparent 75%);
+}
+
+/* The same grid, drawn in the accent colour and only inside a circle around
+   the pointer. Hero.tsx feeds --spot-x / --spot-y; touch screens never see it. */
+@utility hero-spotlight {
+  background-image:
+    linear-gradient(to right, color-mix(in oklab, var(--accent) 55%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--accent) 55%, transparent) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(
+    220px circle at var(--spot-x, 50%) var(--spot-y, -400px),
+    black 0%,
+    transparent 100%
+  );
+}
+
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .hero-spotlight {
+    display: none;
+  }
 }
 
 /* Sections fade in as they scroll into view; see useReveal in src/lib/reveal.ts.

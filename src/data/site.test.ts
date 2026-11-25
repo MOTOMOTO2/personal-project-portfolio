@@ -81,6 +81,15 @@ describe('site data', () => {
     }
   })
 
+  it('gives every demo a title and teaser, and at most one demo of each kind', () => {
+    const demos = site.projects.flatMap((project) => (project.demo ? [project.demo] : []))
+    for (const demo of demos) {
+      expect(demo.title.length, demo.id).toBeGreaterThan(0)
+      expect(demo.teaser.length, demo.id).toBeGreaterThan(0)
+    }
+    expect(new Set(demos.map((demo) => demo.id)).size).toBe(demos.length)
+  })
+
   it('looks like a real email address', () => {
     expect(site.profile.email).toMatch(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)
   })
@@ -107,5 +116,38 @@ describe('site data', () => {
     })
 
     expect(missing.map((image) => `${image.label}: ${image.src}`)).toEqual([])
+  })
+})
+
+describe('hiring lenses', () => {
+  const slugs = new Set(site.projects.map((project) => project.slug))
+  const skills = new Set(site.skills.flatMap((group) => group.items))
+
+  it('uses unique, URL-safe ids, since they go in ?for=', () => {
+    const ids = site.lenses.map((lens) => lens.id)
+    expect(new Set(ids).size).toBe(ids.length)
+    for (const id of ids) expect(id).toMatch(/^[a-z0-9]+(-[a-z0-9]+)*$/)
+  })
+
+  it('features one to four real projects, each once', () => {
+    for (const lens of site.lenses) {
+      expect(lens.featured.length, lens.id).toBeGreaterThan(0)
+      expect(lens.featured.length, lens.id).toBeLessThanOrEqual(4)
+      expect(new Set(lens.featured).size, lens.id).toBe(lens.featured.length)
+      expect(lens.featured.filter((slug) => !slugs.has(slug)), lens.id).toEqual([])
+    }
+  })
+
+  it('only highlights skills that are actually listed, spelled the same way', () => {
+    for (const lens of site.lenses) {
+      expect(lens.skills.filter((skill) => !skills.has(skill)), lens.id).toEqual([])
+    }
+  })
+
+  it('gives every lens a label and a pitch', () => {
+    for (const lens of site.lenses) {
+      expect(lens.label.length, lens.id).toBeGreaterThan(0)
+      expect(lens.pitch.length, lens.id).toBeGreaterThan(0)
+    }
   })
 })

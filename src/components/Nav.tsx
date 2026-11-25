@@ -1,24 +1,34 @@
-import { Menu, Moon, Sun, X } from 'lucide-react'
+import { Menu, Moon, Search, Sun, X } from 'lucide-react'
 import { useCallback, useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { site } from '../data/site'
-import { useTheme } from '../lib/theme'
+import { useLens } from '../lib/lens'
+import type { Theme } from '../lib/theme'
 
-// The Gallery section renders nothing without photos, so its link goes too.
+// Sections that render nothing (no photos, no demos) drop their links too.
 const sections = [
   { id: 'work', label: 'Work' },
+  ...(site.projects.some((project) => project.demo) ? [{ id: 'try', label: 'Try it' }] : []),
   { id: 'projects', label: 'Projects' },
   ...(site.photos.length > 0 ? [{ id: 'gallery', label: 'Gallery' }] : []),
   { id: 'about', label: 'About' },
   { id: 'contact', label: 'Contact' },
 ]
 
+const shortcut = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/i.test(navigator.userAgent) ? '⌘K' : 'Ctrl K'
+
 const linkClass =
   'rounded-md px-3 py-2 text-sm text-fg-muted transition-colors hover:bg-surface-2 hover:text-fg'
 
-export function Nav() {
-  const { theme, toggle } = useTheme()
+type Props = {
+  theme: Theme
+  onToggleTheme: () => void
+  onOpenPalette: () => void
+}
+
+export function Nav({ theme, onToggleTheme, onOpenPalette }: Props) {
   const [open, setOpen] = useState(false)
+  const { query } = useLens()
   // Initialised from the real scroll position so a mid-page reload gets the
   // solid header immediately rather than on the next scroll event.
   const [scrolled, setScrolled] = useState(() => window.scrollY > 8)
@@ -32,8 +42,9 @@ export function Nav() {
   }, [])
 
   // Section links are in-page anchors on the home page and route links elsewhere,
-  // so they work from a project detail page too.
-  const href = (id: string) => (onHome ? `#${id}` : `/#${id}`)
+  // so they work from a project detail page too. Either way the hiring lens
+  // (?for=) comes along: a bare #id keeps the current query string.
+  const href = (id: string) => (onHome ? `#${id}` : `/${query}#${id}`)
 
   // Closing on navigation happens here rather than in an effect on `pathname`,
   // which would cost an extra render on every route change.
@@ -47,7 +58,7 @@ export function Nav() {
     >
       <nav className="container-page flex h-16 items-center justify-between gap-4" aria-label="Main">
         <Link
-          to="/"
+          to={`/${query}`}
           className="flex items-center gap-2.5 font-semibold tracking-tight"
           onClick={() => {
             closeMenu()
@@ -88,7 +99,21 @@ export function Nav() {
 
           <button
             type="button"
-            onClick={toggle}
+            onClick={onOpenPalette}
+            aria-label="Search the site"
+            aria-keyshortcuts="Meta+K Control+K"
+            className="ml-2 inline-flex h-9 items-center gap-2 rounded-md border border-border bg-surface px-2.5 text-sm text-fg-muted transition-colors hover:border-border-strong hover:text-fg"
+          >
+            <Search className="size-4" aria-hidden />
+            <span className="hidden lg:inline">Search</span>
+            <kbd className="hidden rounded border border-border bg-surface-2 px-1.5 font-mono text-[0.6875rem] sm:inline">
+              {shortcut}
+            </kbd>
+          </button>
+
+          <button
+            type="button"
+            onClick={onToggleTheme}
             aria-label={`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`}
             className="ml-1 rounded-md p-2 text-fg-muted transition-colors hover:bg-surface-2 hover:text-fg"
           >

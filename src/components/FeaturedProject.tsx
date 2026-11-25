@@ -1,4 +1,4 @@
-import { ArrowRight, ArrowUpRight, Check } from 'lucide-react'
+import { ArrowRight, ArrowUpRight, Check, MousePointerClick } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import type { Project } from '../data/types'
 import { GithubIcon } from '../lib/icons'
@@ -8,11 +8,13 @@ type Props = {
   project: Project
   /** Puts the screenshot on the right, so consecutive rows alternate. */
   reverse: boolean
+  /** The hiring-lens query string, carried onto the project page. */
+  query?: string
 }
 
 /** A large row in "Selected work": screenshot on one side, the pitch on the other. */
-export function FeaturedProject({ project, reverse }: Props) {
-  const to = `/projects/${project.slug}`
+export function FeaturedProject({ project, reverse, query = '' }: Props) {
+  const to = `/projects/${project.slug}${query}`
 
   return (
     <article className="reveal grid items-center gap-8 lg:grid-cols-12 lg:gap-14">
@@ -65,7 +67,20 @@ export function FeaturedProject({ project, reverse }: Props) {
 
         <p className="mt-5 font-mono text-xs leading-relaxed text-fg-subtle">{project.tech.join(' · ')}</p>
 
-        <div className="mt-7 flex flex-wrap gap-2">
+        {project.demo && (
+          <Link
+            to={`/projects/${project.slug}${query}#demo`}
+            className="group/demo mt-6 flex items-center gap-3 rounded-lg border border-dashed border-border-strong px-3.5 py-2.5 text-sm transition-colors hover:border-accent hover:bg-accent-soft"
+          >
+            <MousePointerClick className="size-4 shrink-0 text-accent" aria-hidden />
+            <span className="min-w-0 flex-1">
+              <span className="font-medium">Try it:</span> {project.demo.title}
+            </span>
+            <ArrowRight className="size-4 shrink-0 text-fg-subtle transition group-hover/demo:translate-x-0.5 group-hover/demo:text-accent" aria-hidden />
+          </Link>
+        )}
+
+        <div className="mt-6 flex flex-wrap gap-2">
           <Link to={to} className="btn btn-primary" aria-label={`Read the ${project.title} case study`}>
             Case study
             <ArrowRight className="size-4" aria-hidden />

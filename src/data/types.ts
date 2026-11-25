@@ -58,6 +58,21 @@ export type ProjectLinks = {
  */
 export type ProjectStatus = 'Live' | 'In progress' | 'Complete'
 
+/** Keys of the hands-on demos in `src/components/demos/registry.ts`. */
+export type DemoId = 'double-booking' | 'sync-merge' | 'outbox' | 'agent-queue'
+
+/**
+ * A small working model of the idea a project hinges on, shown on its page
+ * under "Try it" and listed on the home page.
+ */
+export type ProjectDemo = {
+  id: DemoId
+  /** An invitation, e.g. "Try to double-book a clinic". */
+  title: string
+  /** One or two sentences on what to try and what it shows. */
+  teaser: string
+}
+
 export type Project = {
   /** URL fragment for the detail page -- keep it lowercase and hyphenated. */
   slug: string
@@ -78,11 +93,32 @@ export type Project = {
   cover: Image
   gallery: Image[]
   highlights: string[]
+  /** Optional hands-on demo; omit for projects without one. */
+  demo?: ProjectDemo
+}
+
+/**
+ * One answer to "What are you hiring for?" at the top of the home page.
+ * Picking it reorders the page; it also works as a link, `/?for=<id>`.
+ */
+export type Lens = {
+  /** Used in the URL, so lowercase and hyphenated. */
+  id: string
+  /** The button text, e.g. "Backend". */
+  label: string
+  /** Shown above the large rows while this lens is on. */
+  pitch: string
+  /** Project slugs shown as the large rows, in order (1 to 4). */
+  featured: string[]
+  /** Items from `skills` to highlight; each must match an item exactly. */
+  skills: string[]
 }
 
 export type SiteData = {
   profile: Profile
   skills: SkillGroup[]
+  /** The "What are you hiring for?" choices. Empty hides the picker. */
+  lenses: Lens[]
   timeline: TimelineEntry[]
   /** Shown in this order: featured first, then the rest. */
   projects: Project[]

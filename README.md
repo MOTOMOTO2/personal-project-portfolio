@@ -7,6 +7,24 @@ The home page leads with four **selected** projects as large rows, then the rest
 in a grid. Every project has its own page at `/projects/<slug>` with an
 overview, highlights, the stack, and a screenshot gallery with a lightbox.
 
+Three things make it more than a list of projects:
+
+- **"What are you hiring for?"** A row of choices under the hero (Backend,
+  Frontend, AI tooling, Offline & real-time, Games). Picking one swaps the
+  large rows for the projects that matter most to that role, rewrites the
+  section pitch and highlights the matching skills. The choice lives in the
+  URL, so `/?for=backend` is a tailored link to send with an application, and
+  it follows the visitor onto project pages and back.
+- **Hands-on demos.** Four projects hinge on one hard problem, and their pages
+  carry a small working model of it, built from that project's real rules:
+  racing two bookings against Care Track's exclusion constraint, editing one
+  expense on two devices with Tally's per-field merge, filing Field Reports
+  with no signal, and queueing more Claude Remote agents than there are slots.
+  The home page links to all four under "Hands-on".
+- **⌘K / Ctrl+K search.** Jump to any project, demo or section, tailor the page
+  to a role, or copy the email address. Searching a technology ("postgres")
+  lists the projects that use it.
+
 The whole site is driven by one file — [`src/data/site.ts`](src/data/site.ts).
 Edit that and you are done; you do not need to touch any components to add a
 project, change the bio, or swap images.
@@ -79,16 +97,26 @@ Everything below happens in `src/data/site.ts` unless noted.
    `public` prefix (`images/my-shot.jpg`). The deploy base is prepended for you,
    so do **not** start the path with a slash. Covers and screenshots are shown
    at 16:10; every image needs `alt` text, and `caption` is optional.
-5. **Photo wall** — the `photos` array feeds an optional Gallery section. It is
+5. **Hiring lenses** — `lenses`: one entry per "What are you hiring for?"
+   choice. `id` is what goes in `/?for=<id>`; `featured` is the 1–4 project
+   slugs shown as large rows; `skills` are items from `skills` to highlight and
+   must match them exactly (a test checks both). An empty array hides the
+   picker.
+6. **Demos** — a project's optional `demo` (`id`, `title`, `teaser`) adds a
+   "Try it" section to its page and a card under "Hands-on". The `id` picks a
+   component from `src/components/demos/registry.ts`; to add a new kind, write
+   the model as a pure `.ts` file with tests, a component beside it, and
+   register both there.
+7. **Photo wall** — the `photos` array feeds an optional Gallery section. It is
    empty now, so the section and its nav link are hidden.
-6. **Experience** — `timeline` entries appear under the skills in the About
+8. **Experience** — `timeline` entries appear under the skills in the About
    section. Empty hides it.
-7. **Page title and link preview** — `index.html` holds the `<title>`, the meta
+9. **Page title and link preview** — `index.html` holds the `<title>`, the meta
    description, and the Open Graph tags that LinkedIn and Slack read.
    `og:image` must be an absolute URL to a PNG or JPG
    (`public/images/og-cover.png`, 1200×630); update it if the site moves to a
    new domain.
-8. **Colours** — `src/index.css` defines the palette as CSS variables at the
+10. **Colours** — `src/index.css` defines the palette as CSS variables at the
    top, once for light mode and once for `.dark`. Change `--accent` and the
    links, focus rings and highlight ticks follow.
 
@@ -132,15 +160,27 @@ src/
     types.ts         the shape site.ts has to satisfy
     site.test.ts     checks slugs, ordering, images, links
   components/
-    Hero.tsx             name, tagline, the facts card
-    Projects.tsx         "Selected work" rows + "More projects" grid
+    Hero.tsx             name, tagline, the facts card, the cursor spotlight
+    HiringLens.tsx       "What are you hiring for?" picker
+    Projects.tsx         "Selected work" rows, "Hands-on", "More projects" grid
+    HandsOn.tsx          one card per demo on the home page
     FeaturedProject.tsx  one large row
     ProjectCard.tsx      one grid card
+    CommandPalette.tsx   ⌘K search
+    demos/
+      registry.ts        demo id -> component and icon
+      ui.tsx             switches, segmented controls, badges, panels
+      double-booking.ts  + DoubleBookingDemo.tsx   (Care Track)
+      sync-merge.ts      + SyncMergeDemo.tsx       (Tally)
+      outbox.ts          + OutboxDemo.tsx          (Field Reports)
+      agent-queue.ts     + AgentQueueDemo.tsx      (Claude Remote)
+      demos.test.ts      the models against each project's real rules
     About.tsx, Contact.tsx, Gallery.tsx, Lightbox.tsx, Nav.tsx, Footer.tsx
   pages/             Home, ProjectDetail, NotFound
   lib/
     assets.ts        prefixes image paths with the deploy base
     theme.ts         dark/light toggle; follows the OS until you pick one
+    lens.ts          the ?for= hiring lens: read, set, carry onto links
     reveal.ts        scroll-into-view fade, one shared IntersectionObserver
     icons.tsx        inline brand marks (lucide v1 dropped them)
   App.tsx            layout and routes
@@ -154,7 +194,13 @@ scripts/
 
 - Dark mode is applied by a tiny inline script in `index.html` before first
   paint, so there is no white flash for dark-mode visitors.
-- Every animation is disabled under `prefers-reduced-motion`.
+- Every animation is disabled under `prefers-reduced-motion`; the
+  double-booking demo then shows its steps at once instead of playing them out,
+  and the hero spotlight is hidden (it is also hidden on touch screens).
+- The demos are built from buttons, switches (`role="switch"`) and pressed-state
+  toggles, and announce new results through `aria-live` regions.
+- The command palette is a modal combobox: arrow keys move, Enter opens,
+  Escape closes, and focus goes back to where it was.
 - Project status is shown as a word next to a coloured dot, never colour alone.
 - The lightbox handles `Escape` and arrow keys, locks background scrolling, and
   is announced as a modal dialog.

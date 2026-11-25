@@ -1,20 +1,45 @@
 import { ArrowDown, FileText, Mail } from 'lucide-react'
+import { useRef } from 'react'
 import { site } from '../data/site'
 import { socialIcons } from '../lib/social-icons'
+import { HiringLens } from './HiringLens'
 
 export function Hero() {
   const { profile } = site
   const elsewhere = profile.socials.filter((social) => social.icon !== 'mail')
+  const sectionRef = useRef<HTMLElement>(null)
+  const showLens = site.lenses.length > 0
+
+  // Feeds the spotlight's position as CSS variables. Written straight to the
+  // element rather than through state, so moving the mouse never re-renders.
+  function trackPointer(event: React.PointerEvent<HTMLElement>) {
+    const section = sectionRef.current
+    if (!section || event.pointerType !== 'mouse') return
+    const rect = section.getBoundingClientRect()
+    section.style.setProperty('--spot-x', `${event.clientX - rect.left}px`)
+    section.style.setProperty('--spot-y', `${event.clientY - rect.top}px`)
+  }
 
   return (
-    <section className="relative overflow-hidden border-b border-border">
+    <section ref={sectionRef} onPointerMove={trackPointer} className="group/hero relative overflow-hidden border-b border-border">
       <div aria-hidden className="hero-grid pointer-events-none absolute inset-0 opacity-70" />
+      <div
+        aria-hidden
+        className="hero-spotlight pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover/hero:opacity-100"
+      />
 
-      <div className="container-page relative grid gap-12 pt-16 pb-16 sm:pt-24 sm:pb-24 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-end lg:gap-16">
+      <div
+        className={`container-page relative grid gap-12 pt-16 sm:pt-24 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-end lg:gap-16 ${
+          showLens ? 'pb-10 sm:pb-12' : 'pb-16 sm:pb-24'
+        }`}
+      >
         <div>
           {profile.availability && (
             <p className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-sm text-fg-muted">
-              <span aria-hidden className="size-2 rounded-full bg-success" />
+              <span aria-hidden className="relative flex size-2">
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-success opacity-60 motion-reduce:hidden" />
+                <span className="relative inline-flex size-2 rounded-full bg-success" />
+              </span>
               {profile.availability}
             </p>
           )}
@@ -71,6 +96,12 @@ export function Hero() {
           </ul>
         </aside>
       </div>
+
+      {showLens && (
+        <div className="container-page relative pb-16 sm:pb-20">
+          <HiringLens />
+        </div>
+      )}
     </section>
   )
 }
