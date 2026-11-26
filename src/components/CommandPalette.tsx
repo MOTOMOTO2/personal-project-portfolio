@@ -185,7 +185,7 @@ export function CommandPalette({ theme, onToggleTheme, onClose }: Props) {
             {
               id: 'resume',
               group: 'Actions' as const,
-              label: 'Open my résumé',
+              label: 'Open my resume',
               keywords: 'resume cv pdf',
               icon: FileText,
               run: () => {

@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom'
  *
  * - Counts page views, keeping the hiring lens and filter in the path
  *   (/?for=backend), so opening a tailored link shows up as its own entry.
- * - Counts clicks on the links that matter: email, résumé, GitHub, LinkedIn,
+ * - Counts clicks on the links that matter: email, resume, GitHub, LinkedIn,
  *   and live sites.
  * - Does nothing in development or tests, without a GoatCounter code, or for
  *   visitors who send Do Not Track or Global Privacy Control.
@@ -53,7 +53,7 @@ function send(vars: Count) {
 /** Which kind of link was clicked, or null for ones not worth counting. */
 export function clickName(href: string, host: string): string | null {
   if (href.startsWith('mailto:')) return 'click: email'
-  if (/\.pdf($|\?)/.test(href)) return 'click: résumé'
+  if (/\.pdf($|\?)/.test(href)) return 'click: resume'
   if (!/^https?:\/\//.test(href)) return null
   const url = new URL(href)
   if (url.host === host) return null

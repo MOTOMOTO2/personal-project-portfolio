@@ -79,7 +79,7 @@ export function Contact() {
           {profile.resume && (
             <a href={profile.resume} target="_blank" rel="noreferrer" className="btn btn-secondary h-11">
               <FileText className="size-4" aria-hidden />
-              Résumé
+              Resume
             </a>
           )}
         </div>

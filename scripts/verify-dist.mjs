@@ -76,7 +76,7 @@ if (assetMatch) await expectOk('entry JS loads', assetMatch[1])
 if (cssMatch) await expectOk('stylesheet loads', cssMatch[1])
 await expectOk('project image loads', `${base}images/revvault-cover.png`)
 await expectOk('favicon loads', `${base}favicon.svg`)
-await expectOk('résumé loads', `${base}resume.pdf`)
+await expectOk('resume loads', `${base}resume.pdf`)
 await expectOk('link-preview image loads', `${base}images/og-cover.jpg`)
 
 // Routes with their own page: a 200 (not the 404 fallback) and their own

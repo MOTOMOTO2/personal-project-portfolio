@@ -115,7 +115,7 @@ export function Hero() {
             {profile.resume && (
               <a href={profile.resume} target="_blank" rel="noreferrer" className="btn btn-secondary h-12 px-4">
                 <FileText className="size-4" aria-hidden />
-                Résumé
+                Resume
               </a>
             )}
             {elsewhere.map((social) => {

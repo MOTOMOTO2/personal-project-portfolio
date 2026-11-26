@@ -22,7 +22,7 @@ export type Profile = {
   /** Lines in the profile card beside the hero. */
   facts: Fact[]
   email: string
-  /** Path to a PDF in `public/`, or null to hide the résumé button. */
+  /** Path to a PDF in `public/`, or null to hide the resume button. */
   resume: string | null
   /** Shown with a green dot above your name; null hides it. */
   availability: string | null

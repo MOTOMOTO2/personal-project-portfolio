@@ -108,7 +108,7 @@ export function Nav({ theme, onToggleTheme, onOpenPalette }: Props) {
 
           {site.profile.resume && (
             <a href={site.profile.resume} target="_blank" rel="noreferrer" className="btn btn-secondary ml-2 hidden h-9 md:inline-flex">
-              Résumé
+              Resume
             </a>
           )}
 
@@ -179,7 +179,7 @@ export function Nav({ theme, onToggleTheme, onOpenPalette }: Props) {
                 rel="noreferrer"
                 className="block rounded-md px-3 py-3 text-sm text-fg-muted transition-colors hover:bg-surface-2 hover:text-fg"
               >
-                Résumé
+                Resume
               </a>
             </li>
           )}

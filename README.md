@@ -98,7 +98,7 @@ Everything below happens in `src/data/site.ts` unless noted.
    `facts` (the "Based in" one is shown beside the role), the `about`
    paragraphs, email and socials. Set
    `availability: null` to hide the green "open to roles" line.
-2. **Résumé** — the source is [`resume/resume.html`](resume/resume.html);
+2. **Resume** — the source is [`resume/resume.html`](resume/resume.html);
    `npm run resume` prints it to `public/resume.pdf` with headless Chrome (set
    `CHROME` if it is not in the usual macOS place). `resume: 'resume.pdf'` in
    the profile shows a button in the nav, the hero, the contact section and
@@ -156,7 +156,7 @@ Everything below happens in `src/data/site.ts` unless noted.
    no consent banner. Sign up (free), pick a code, and set it, e.g.
    `analytics: { goatcounter: 'adenyadegar' }`. It counts page views,
    keeping `?for=` and `?type=` so a tailored link shows up on its own, and
-   clicks on email, résumé, GitHub, LinkedIn and live-site links. It is off in
+   clicks on email, resume, GitHub, LinkedIn and live-site links. It is off in
    development and tests, and for visitors who send Do Not Track or Global
    Privacy Control.
 12. **Colours** — `src/index.css` defines the palette as CSS variables at the
