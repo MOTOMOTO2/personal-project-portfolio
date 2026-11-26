@@ -47,7 +47,7 @@ const data: SiteData = {
     availability: 'Open to internship and co-op roles',
     socials: [
       { label: 'GitHub', href: 'https://github.com/adenyadegar', icon: 'github' },
-      { label: 'LinkedIn', href: 'https://www.linkedin.com/in/aden-yadegar-349063313', icon: 'linkedin' },
+      { label: 'LinkedIn', href: 'https://www.linkedin.com/in/adenyadegar', icon: 'linkedin' },
       { label: 'Email', href: 'mailto:aden.yadegar21@gmail.com', icon: 'mail' },
     ],
   },
