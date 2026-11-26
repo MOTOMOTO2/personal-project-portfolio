@@ -496,7 +496,8 @@ const data: SiteData = {
       description: [
         'A coding assistant that learns from my own repositories. The machine-learning models (a tokenizer, an n-gram language model with Kneser-Ney smoothing, a small transformer, and code embeddings) are implemented from scratch and run locally at interactive speed, with no network and no API cost.',
         'One chat sits over both halves. A router decides each turn: the local models answer what they can, Claude answers the rest, and every answer Claude gives is folded into the local models on the next training run, so the local side covers more ground every week.',
-        "It runs in the terminal, in the browser, or on my phone over home Wi-Fi by scanning a QR code, and the conversation lives on my machine so I can pick it up on any of them. It's still in progress: right now I'm tuning code completion against a held-out evaluation set.",
+        'Every change to completion is measured on files the models never trained on. On its own repository the n-gram predicts the next token correctly 52% of the time (77% within its top five), and fixes found by that evaluation took fully correct suggestions from 6.4% to 37%: ranking candidates by summed rather than mean log-probability, matching whole identifiers instead of sub-words, and keeping a locality bonus alive through the beam search. The same evaluation shows the transformer still losing to the n-gram after five minutes of training (29% against 52%), so it stays off by default until it earns its place.',
+        "It runs in the terminal, in the browser, or on my phone over home Wi-Fi by scanning a QR code, and the conversation lives on my machine so I can pick it up on any of them. It's still in progress.",
       ],
       period: 'Sep – Oct 2026',
       role: 'Solo',
@@ -512,6 +513,8 @@ const data: SiteData = {
       gallery: [],
       highlights: [
         'Tokenizer, n-gram model, transformer and embeddings written from scratch',
+        '52% top-1 and 77% top-5 next-token accuracy on held-out files',
+        'Evaluation-driven fixes took fully correct suggestions from 6.4% to 37%',
         'Local answers in milliseconds, fully offline',
         "Learns from Claude's answers so the same question stays local next time",
       ],
