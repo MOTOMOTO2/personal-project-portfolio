@@ -14,6 +14,8 @@ export type Fact = {
 export type Profile = {
   name: string
   role: string
+  /** The big line in the hero. Wrap words in *asterisks* to set them in the italic accent face. */
+  headline: string
   tagline: string
   /** Short paragraphs for the About section. */
   about: string[]
@@ -25,6 +27,23 @@ export type Profile = {
   /** Shown with a green dot above your name; null hides it. */
   availability: string | null
   socials: Social[]
+}
+
+/** One line in the hero's live console: something one of the projects really does. */
+export type ConsoleLine = {
+  /** The project it comes from; the line links to its page. */
+  slug: string
+  command: string
+  result: string
+  tone: 'ok' | 'refused' | 'merged' | 'waiting'
+}
+
+/** A way of working, with the projects that show it. */
+export type Principle = {
+  title: string
+  body: string
+  /** Project slugs offered as evidence. */
+  proof: string[]
 }
 
 export type SkillGroup = {
@@ -119,6 +138,10 @@ export type SiteData = {
   skills: SkillGroup[]
   /** The "What are you hiring for?" choices. Empty hides the picker. */
   lenses: Lens[]
+  /** Lines the hero console types out, in order. */
+  console: ConsoleLine[]
+  /** "How I work", shown in the About section. */
+  principles: Principle[]
   timeline: TimelineEntry[]
   /** Shown in this order: featured first, then the rest. */
   projects: Project[]

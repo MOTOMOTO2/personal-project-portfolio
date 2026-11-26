@@ -18,12 +18,13 @@ export function Projects() {
 
   return (
     <>
-      <section className="py-20 sm:py-28">
+      <section className="overflow-x-clip py-20 sm:py-28">
         <div className="container-page">
           <SectionHeading
             id="work"
+            index="01"
             eyebrow={lens ? `Selected work · ${lens.label}` : 'Selected work'}
-            title="Projects I've designed, built and shipped"
+            title="Projects I've designed, built and *shipped*"
             description={
               lens
                 ? lens.pitch
@@ -42,7 +43,13 @@ export function Projects() {
           </SectionHeading>
           <div className="space-y-20 sm:space-y-28">
             {featured.map((project, index) => (
-              <FeaturedProject key={project.slug} project={project} reverse={index % 2 === 1} query={query} />
+              <FeaturedProject
+                key={project.slug}
+                project={project}
+                number={index + 1}
+                reverse={index % 2 === 1}
+                query={query}
+              />
             ))}
           </div>
         </div>
@@ -55,11 +62,12 @@ export function Projects() {
           <div className="container-page">
             <SectionHeading
               id="projects"
+              index="03"
               eyebrow="More projects"
-              title={lens ? 'Everything else I’ve built' : 'Games, offline apps and tools'}
+              title={lens ? 'Everything *else* I’ve built' : 'Games, offline apps and *more*'}
               description="Browser and Roblox games, offline-first phone apps, home automation and developer tools. Each one has its own write-up."
             />
-            <div className="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
               {others.map((project) => (
                 <ProjectCard key={project.slug} project={project} query={query} />
               ))}

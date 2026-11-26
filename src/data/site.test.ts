@@ -2,6 +2,7 @@ import { existsSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { asset } from '../lib/assets'
+import { heroStats, testCount } from '../lib/stats'
 import { site } from './site'
 
 const publicDir = join(import.meta.dirname, '..', '..', 'public')
@@ -107,6 +108,13 @@ describe('site data', () => {
     }
   })
 
+  it('never shows the same image twice on one project page', () => {
+    for (const project of site.projects) {
+      const srcs = [project.cover, ...project.gallery].map((image) => image.src)
+      expect(new Set(srcs).size, project.slug).toBe(srcs.length)
+    }
+  })
+
   it('points every image at a file that exists in public/', () => {
     const missing = images.filter(({ src }) => {
       if (/^https?:\/\//.test(src)) return false
@@ -149,5 +157,45 @@ describe('hiring lenses', () => {
       expect(lens.label.length, lens.id).toBeGreaterThan(0)
       expect(lens.pitch.length, lens.id).toBeGreaterThan(0)
     }
+  })
+})
+
+describe('hero and about content', () => {
+  const slugs = new Set(site.projects.map((project) => project.slug))
+
+  it('only puts real projects in the console, each line complete', () => {
+    expect(site.console.length).toBeGreaterThan(0)
+    for (const line of site.console) {
+      expect(slugs.has(line.slug), line.slug).toBe(true)
+      expect(line.command.length, line.slug).toBeGreaterThan(0)
+      expect(line.result.length, line.slug).toBeGreaterThan(0)
+    }
+  })
+
+  it('backs every principle with real projects', () => {
+    for (const principle of site.principles) {
+      expect(principle.proof.length, principle.title).toBeGreaterThan(0)
+      expect(principle.proof.filter((slug) => !slugs.has(slug)), principle.title).toEqual([])
+    }
+  })
+
+  it('marks exactly one emphasis in the headline, with balanced asterisks', () => {
+    expect(site.profile.headline.split('*').length - 1).toBe(2)
+  })
+})
+
+describe('hero stats', () => {
+  it('reads test counts out of highlights', () => {
+    const project = { ...site.projects[0], highlights: ['Nothing here', '57 automated tests, including full games'] }
+    expect(testCount(project)).toBe(57)
+    expect(testCount({ ...project, highlights: ['No numbers'] })).toBe(0)
+  })
+
+  it('derives every number from the projects', () => {
+    const stats = heroStats(site.projects)
+    expect(stats[0].value).toBe(site.projects.length)
+    expect(stats[1].value).toBe(site.projects.filter((project) => project.status === 'Live').length)
+    expect(stats[2].value).toBe(site.projects.reduce((sum, project) => sum + testCount(project), 0))
+    expect(stats[3].value).toBe(site.projects.filter((project) => project.demo).length)
   })
 })

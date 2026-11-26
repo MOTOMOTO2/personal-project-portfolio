@@ -3,9 +3,15 @@
 My portfolio site: the projects I've built, each with screenshots and a full
 write-up, plus a short about section and how to reach me.
 
-The home page leads with four **selected** projects as large rows, then the rest
-in a grid. Every project has its own page at `/projects/<slug>` with an
+The home page opens on a positioning headline, a terminal that types out what
+each project really does, and stats counted from the content (projects, how many
+are live, automated tests, demos). Then four **selected** projects as large rows
+in browser frames, the hands-on demos, the rest in a grid, "How I work", and a
+contact panel. Every project has its own page at `/projects/<slug>` with an
 overview, highlights, the stack, and a screenshot gallery with a lightbox.
+
+The look: warm neutrals with one ember accent, Geist with Instrument Serif
+italics for the words a heading leans on, light and dark themes.
 
 Three things make it more than a list of projects:
 
@@ -72,7 +78,8 @@ hashed JS and CSS, an image, and the deep-link fallback.
 
 Everything below happens in `src/data/site.ts` unless noted.
 
-1. **Profile** — `profile`: name, role, tagline, the `facts` shown in the card
+1. **Profile** — `profile`: name, role, `headline` (the big line in the hero;
+   wrap words in `*asterisks*` to set them in the italic accent), tagline, the `facts` shown in the card
    beside the hero, the `about` paragraphs, email and socials. Set
    `availability: null` to hide the green "open to roles" line.
 2. **Résumé** — drop a PDF in `public/` and set `resume: 'resume.pdf'`. A
@@ -97,34 +104,41 @@ Everything below happens in `src/data/site.ts` unless noted.
    `public` prefix (`images/my-shot.jpg`). The deploy base is prepended for you,
    so do **not** start the path with a slash. Covers and screenshots are shown
    at 16:10; every image needs `alt` text, and `caption` is optional.
-5. **Hiring lenses** — `lenses`: one entry per "What are you hiring for?"
+5. **Hero console and "How I work"** — `console` is the lines the hero
+   terminal types out, one per project, each linking to it; `principles` are
+   the three cards in the About section, each with `proof` slugs. Section
+   titles also accept `*emphasis*`.
+6. **Hiring lenses** — `lenses`: one entry per "What are you hiring for?"
    choice. `id` is what goes in `/?for=<id>`; `featured` is the 1–4 project
    slugs shown as large rows; `skills` are items from `skills` to highlight and
    must match them exactly (a test checks both). An empty array hides the
    picker.
-6. **Demos** — a project's optional `demo` (`id`, `title`, `teaser`) adds a
+7. **Demos** — a project's optional `demo` (`id`, `title`, `teaser`) adds a
    "Try it" section to its page and a card under "Hands-on". The `id` picks a
    component from `src/components/demos/registry.ts`; to add a new kind, write
    the model as a pure `.ts` file with tests, a component beside it, and
    register both there.
-7. **Photo wall** — the `photos` array feeds an optional Gallery section. It is
+8. **Photo wall** — the `photos` array feeds an optional Gallery section. It is
    empty now, so the section and its nav link are hidden.
-8. **Experience** — `timeline` entries appear under the skills in the About
+9. **Experience** — `timeline` entries appear under the skills in the About
    section. Empty hides it.
-9. **Page title and link preview** — `index.html` holds the `<title>`, the meta
+10. **Page title and link preview** — `index.html` holds the `<title>`, the meta
    description, and the Open Graph tags that LinkedIn and Slack read.
    `og:image` must be an absolute URL to a PNG or JPG
    (`public/images/og-cover.png`, 1200×630); update it if the site moves to a
    new domain.
-10. **Colours** — `src/index.css` defines the palette as CSS variables at the
+11. **Colours** — `src/index.css` defines the palette as CSS variables at the
    top, once for light mode and once for `.dark`. Change `--accent` and the
    links, focus rings and highlight ticks follow.
 
 ### Where the screenshots came from
 
-They are all real: captured from the live sites, from each project's own
-screenshot tooling (Bluffalo's and Field Reports' browser checks, Claude
-Remote's design preview), or from the screenshots committed in each repo.
+They are all real: captured from the live sites (RevVault's search results,
+Care Track's home page), from each project's own tooling (Claude Remote's
+`tools/preview.mjs`, which renders the real app against its test fixtures;
+Bluffalo's and Field Reports' browser checks), from Course Deadline Tracker's
+seeded demo term (`npm run seed`), or from the screenshots committed in each
+repo.
 Phone screenshots are composed three to an image so they fit the 16:10 frame.
 Two covers are designed rather than captured: Personal Code Assistant's shows
 the terminal transcript from its README, and Necrotide's is a title card,
@@ -160,7 +174,11 @@ src/
     types.ts         the shape site.ts has to satisfy
     site.test.ts     checks slugs, ordering, images, links
   components/
-    Hero.tsx             name, tagline, the facts card, the cursor spotlight
+    Hero.tsx             name, headline, stats, the console, the cursor spotlight
+    LiveConsole.tsx      the terminal that types out what each project does
+    TechMarquee.tsx      the skills ticker under the hero
+    BrowserFrame.tsx     a screenshot dressed as a browser window
+    CountUp.tsx, Emphasis.tsx, ReadingProgress.tsx
     HiringLens.tsx       "What are you hiring for?" picker
     Projects.tsx         "Selected work" rows, "Hands-on", "More projects" grid
     HandsOn.tsx          one card per demo on the home page
@@ -181,6 +199,9 @@ src/
     assets.ts        prefixes image paths with the deploy base
     theme.ts         dark/light toggle; follows the OS until you pick one
     lens.ts          the ?for= hiring lens: read, set, carry onto links
+    stats.ts         the hero numbers, derived from the projects
+    pointer.ts       card spotlight and screenshot tilt, via CSS variables
+    text.ts          strip *emphasis*; the address a browser frame shows
     reveal.ts        scroll-into-view fade, one shared IntersectionObserver
     icons.tsx        inline brand marks (lucide v1 dropped them)
   App.tsx            layout and routes

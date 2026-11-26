@@ -1,13 +1,16 @@
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUpRight, Check, FileText, MousePointerClick } from 'lucide-react'
 import { useState } from 'react'
 import { Link, Navigate, useParams } from 'react-router-dom'
+import { BrowserFrame } from '../components/BrowserFrame'
 import { Lightbox } from '../components/Lightbox'
+import { ReadingProgress } from '../components/ReadingProgress'
 import { demos } from '../components/demos/registry'
 import { StatusPill } from '../components/StatusPill'
 import { site } from '../data/site'
 import { GithubIcon } from '../lib/icons'
 import { featuredFor, useLens } from '../lib/lens'
 import { useReveal } from '../lib/reveal'
+import { addressFor } from '../lib/text'
 
 export function ProjectDetail() {
   const { slug } = useParams<{ slug: string }>()
@@ -32,8 +35,10 @@ export function ProjectDetail() {
   const Demo = project.demo ? demos[project.demo.id].Component : null
 
   return (
-    <article className="pb-24">
-      <div className="container-page pt-10 sm:pt-14">
+    <article className="relative pb-24">
+      <ReadingProgress />
+      <div aria-hidden className="hero-glow pointer-events-none absolute inset-x-0 top-0 h-[36rem]" />
+      <div className="container-page relative pt-10 sm:pt-14">
         <Link
           to={backTo}
           className="inline-flex items-center gap-1.5 text-sm text-fg-muted transition-colors hover:text-fg"
@@ -44,13 +49,13 @@ export function ProjectDetail() {
 
         <header className="mt-8 max-w-3xl">
           <p className="eyebrow">{project.tags.join(' · ')}</p>
-          <h1 className="mt-3 text-4xl font-semibold sm:text-5xl">{project.title}</h1>
+          <h1 className="mt-4 text-[clamp(2.5rem,6vw,4.25rem)] leading-[1] font-semibold">{project.title}</h1>
           <p className="mt-5 text-lg leading-relaxed text-fg-muted sm:text-xl">{project.blurb}</p>
 
           {(project.links.demo || project.links.repo || project.links.writeup || project.demo) && (
             <div className="mt-8 flex flex-wrap gap-2">
               {project.links.demo && (
-                <a href={project.links.demo} target="_blank" rel="noreferrer" className="btn btn-primary">
+                <a href={project.links.demo} target="_blank" rel="noreferrer" className="btn btn-accent">
                   Live site
                   <ArrowUpRight className="size-4" aria-hidden />
                 </a>
@@ -102,16 +107,18 @@ export function ProjectDetail() {
         <button
           type="button"
           onClick={() => setOpen(0)}
-          className="reveal mt-10 block w-full cursor-zoom-in overflow-hidden rounded-xl border border-border bg-surface-2 shadow-card"
+          className="reveal mt-10 block w-full cursor-zoom-in text-left"
           aria-label={`Enlarge cover image: ${project.cover.alt}`}
         >
-          <img
-            src={project.cover.src}
-            alt={project.cover.alt}
-            width={1600}
-            height={1000}
-            className="aspect-16/10 w-full object-cover"
-          />
+          <BrowserFrame address={addressFor(project)}>
+            <img
+              src={project.cover.src}
+              alt={project.cover.alt}
+              width={1600}
+              height={1000}
+              className="aspect-16/10 w-full object-cover"
+            />
+          </BrowserFrame>
         </button>
 
         <div className="mt-16 grid gap-12 lg:grid-cols-12 lg:gap-14">

@@ -2,59 +2,72 @@ import { ArrowRight, ArrowUpRight, Check, MousePointerClick } from 'lucide-react
 import { Link } from 'react-router-dom'
 import type { Project } from '../data/types'
 import { GithubIcon } from '../lib/icons'
+import { useTilt } from '../lib/pointer'
+import { addressFor } from '../lib/text'
+import { BrowserFrame } from './BrowserFrame'
 import { StatusPill } from './StatusPill'
 
 type Props = {
   project: Project
+  /** Position in the list, shown as "01", "02"... */
+  number: number
   /** Puts the screenshot on the right, so consecutive rows alternate. */
   reverse: boolean
   /** The hiring-lens query string, carried onto the project page. */
   query?: string
 }
 
-/** A large row in "Selected work": screenshot on one side, the pitch on the other. */
-export function FeaturedProject({ project, reverse, query = '' }: Props) {
+/** A large row in "Selected work": a framed screenshot on one side, the pitch on the other. */
+export function FeaturedProject({ project, number, reverse, query = '' }: Props) {
   const to = `/projects/${project.slug}${query}`
+  const { ref: tiltRef, onPointerMove, onPointerLeave } = useTilt<HTMLDivElement>()
 
   return (
     <article className="reveal grid items-center gap-8 lg:grid-cols-12 lg:gap-14">
-      <Link
-        to={to}
-        tabIndex={-1}
-        aria-hidden
-        className={`group block overflow-hidden rounded-xl border border-border bg-surface-2 shadow-card lg:col-span-7 ${
+      <div
+        ref={tiltRef}
+        onPointerMove={onPointerMove}
+        onPointerLeave={onPointerLeave}
+        className={`relative min-w-0 transition-transform duration-300 ease-out will-change-transform lg:col-span-7 ${
           reverse ? 'lg:order-last' : ''
         }`}
       >
-        <img
-          src={project.cover.src}
-          alt=""
-          width={1600}
-          height={1000}
-          loading="lazy"
-          className="aspect-16/10 w-full object-cover transition duration-700 group-hover:scale-[1.02]"
+        <div
+          aria-hidden
+          className="absolute -inset-6 -z-10 rounded-[2rem] bg-[radial-gradient(closest-side,var(--glow),transparent)] opacity-70"
         />
-      </Link>
+        <Link to={to} tabIndex={-1} aria-hidden className="group block">
+          <BrowserFrame address={addressFor(project)}>
+            <img
+              src={project.cover.src}
+              alt=""
+              width={1600}
+              height={1000}
+              loading="lazy"
+              className="aspect-16/10 w-full object-cover transition duration-700 group-hover:scale-[1.015]"
+            />
+          </BrowserFrame>
+        </Link>
+      </div>
 
-      <div className="lg:col-span-5">
-        <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+      <div className="min-w-0 lg:col-span-5">
+        <div className="flex items-center gap-4">
+          <span aria-hidden className="font-serif text-5xl leading-none text-accent italic">
+            {String(number).padStart(2, '0')}
+          </span>
+          <span aria-hidden className="h-px flex-1 bg-border" />
           <StatusPill status={project.status} />
-          <span aria-hidden className="text-fg-subtle">
-            ·
-          </span>
-          <span className="text-xs text-fg-subtle">{project.period}</span>
-          <span aria-hidden className="text-fg-subtle">
-            ·
-          </span>
-          <span className="text-xs text-fg-subtle">{project.role}</span>
         </div>
 
-        <h3 className="mt-3 text-2xl font-semibold sm:text-3xl">
+        <h3 className="mt-5 text-3xl font-semibold sm:text-4xl">
           <Link to={to} className="transition-colors hover:text-accent">
             {project.title}
           </Link>
         </h3>
-        <p className="mt-3 leading-relaxed text-fg-muted">{project.blurb}</p>
+        <p className="mt-2 text-sm text-fg-subtle">
+          {project.period} · {project.role}
+        </p>
+        <p className="mt-4 leading-relaxed text-fg-muted">{project.blurb}</p>
 
         <ul className="mt-5 space-y-2.5 text-sm">
           {project.highlights.slice(0, 3).map((highlight) => (
@@ -65,7 +78,16 @@ export function FeaturedProject({ project, reverse, query = '' }: Props) {
           ))}
         </ul>
 
-        <p className="mt-5 font-mono text-xs leading-relaxed text-fg-subtle">{project.tech.join(' · ')}</p>
+        <ul className="mt-5 flex flex-wrap gap-1.5" aria-label="Built with">
+          {project.tech.slice(0, 6).map((tech) => (
+            <li key={tech} className="rounded-md border border-border bg-surface px-2 py-0.5 font-mono text-[0.6875rem] text-fg-muted">
+              {tech}
+            </li>
+          ))}
+          {project.tech.length > 6 && (
+            <li className="px-1 py-0.5 font-mono text-[0.6875rem] text-fg-subtle">+{project.tech.length - 6}</li>
+          )}
+        </ul>
 
         {project.demo && (
           <Link

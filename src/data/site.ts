@@ -14,10 +14,13 @@ import type { SiteData } from './types'
 /** The public repository for this site, linked from the footer. */
 export const SOURCE_URL = 'https://github.com/MOTOMOTO2/personal-project-portfolio'
 
+const GH = 'https://github.com/MOTOMOTO2/'
+
 const data: SiteData = {
   profile: {
     name: 'Aden Yadegar',
     role: 'Full-stack developer',
+    headline: 'I build software that *keeps working* when the signal drops, a server fails, or two people click at once.',
     tagline:
       'I design, build and deploy complete products: a used-car search engine running in production, a course planner that reads syllabi with Claude, and a clinic-booking app I’m building with a team.',
     about: [
@@ -132,6 +135,44 @@ const data: SiteData = {
     },
   ],
 
+  console: [
+    { slug: 'revvault', command: 'search used cars near Toronto', result: '591 listings from 3 sites, prices rated', tone: 'ok' },
+    {
+      slug: 'care-track',
+      command: 'book Dr. Osei 10:15–10:45',
+      result: '23P01 appointments_no_overlap: slot taken',
+      tone: 'refused',
+    },
+    { slug: 'tally', command: 'sync op-7 (note) from rev 3', result: 'merged: both edits kept', tone: 'merged' },
+    { slug: 'field-reports', command: 'POST /reports r-48e0 (retry)', result: '200 duplicate: no second row', tone: 'ok' },
+    { slug: 'claude-remote', command: 'queue job on tally', result: 'waiting: its own project is busy', tone: 'waiting' },
+    {
+      slug: 'course-deadline-tracker',
+      command: 'read MATH1171-syllabus.pdf',
+      result: '4 dated items, 2 Brightspace missed',
+      tone: 'ok',
+    },
+    { slug: 'daily-digest-bot', command: 'collect hn-front', result: 'selector matched 0: reported, not skipped', tone: 'refused' },
+  ],
+
+  principles: [
+    {
+      title: 'Correct when things happen at once',
+      body: "Two people booking the same slot, two phones editing the same expense. I put the rule where timing can't break it: in a database constraint or a sync protocol, with tests that race it.",
+      proof: ['care-track', 'tally'],
+    },
+    {
+      title: 'Works offline, fails out loud',
+      body: 'Writes are saved on the device first and sent when they can be, retries never land twice, and a source that breaks says so instead of going quiet.',
+      proof: ['field-reports', 'daily-digest-bot'],
+    },
+    {
+      title: 'Shipped, not just started',
+      body: 'Real deployments with sign-in, payments, scheduled jobs and monitoring, rebuilt and redeployed by CI on every push.',
+      proof: ['revvault', 'course-deadline-tracker'],
+    },
+  ],
+
   timeline: [],
 
   projects: [
@@ -153,8 +194,18 @@ const data: SiteData = {
       tags: ['Full-stack', 'Web app'],
       tech: ['C#', 'ASP.NET Core', 'EF Core', 'React', 'TypeScript', 'PostgreSQL', 'Docker', 'Google Cloud Run', 'Stripe'],
       links: { demo: 'https://revvault.ca' },
-      cover: { src: 'images/revvault-cover.png', alt: 'RevVault home page with a used-car search form' },
+      cover: {
+        src: 'images/revvault-results.jpg',
+        alt: 'RevVault search results for Toronto: 591 listings from Kijiji, eBay and AutoTrader, each with a price rating',
+        caption:
+          'Search results: 591 listings from three sites, each price rated against similar cars nearby. A source that returns nothing gets a notice, not a broken page.',
+      },
       gallery: [
+        {
+          src: 'images/revvault-cover.png',
+          alt: 'RevVault home page with a used-car search form',
+          caption: 'The home page: one search across Kijiji, AutoTrader and eBay.',
+        },
         {
           src: 'images/revvault-parts.png',
           alt: 'RevVault parts search with vehicle details and part categories',
@@ -191,10 +242,26 @@ const data: SiteData = {
       tech: ['TypeScript', 'Node.js', 'Fastify', 'React', 'SQLite', 'Claude API', 'MCP', 'Web Push'],
       links: { demo: 'https://course-deadline-tracker.fly.dev' },
       cover: {
-        src: 'images/course-tracker-cover.jpg',
-        alt: 'Course Deadline Tracker sign-in page listing its features',
+        src: 'images/course-tracker-dashboard.jpg',
+        alt: 'Course Deadline Tracker dashboard: overdue work, grade weights and four courses for the fall term',
       },
-      gallery: [],
+      gallery: [
+        {
+          src: 'images/course-tracker-deadlines.jpg',
+          alt: 'Deadlines page: overdue, next 24 hours, next 7 days and the share of the final grade at stake',
+          caption: 'Deadlines: what is overdue, what is due next, and how much of the final grade is riding on the week.',
+        },
+        {
+          src: 'images/course-tracker-study.jpg',
+          alt: 'Study page listing upcoming tests with their dates and grade weights',
+          caption: 'Study: pick an upcoming test and Claude teaches and quizzes from that course’s lecture slides.',
+        },
+        {
+          src: 'images/course-tracker-cover.jpg',
+          alt: 'Course Deadline Tracker sign-in page listing its features',
+          caption: 'Sign-in page. Screenshots are from the seeded demo term, not a real student’s data.',
+        },
+      ],
       highlights: [
         'Finds the deadlines Brightspace missed by matching syllabus dates against the calendar feed',
         'Weighted grade per course, from the grading scheme in the syllabus',
@@ -225,6 +292,16 @@ const data: SiteData = {
         alt: 'Agents screen: one agent running, one paused on a usage limit, and usage meters in the sidebar',
       },
       gallery: [
+        {
+          src: 'images/claude-remote-chat.jpg',
+          alt: 'A project chat: a finished run with its summary, and a second run still working',
+          caption: 'A chat per project: each run’s summary, its log, and the next run streaming in live.',
+        },
+        {
+          src: 'images/claude-remote-new.jpg',
+          alt: 'New project screen with suggestions, thinking effort, a usage cap and repository visibility',
+          caption: 'Starting a job: effort, a usage cap it pauses at, and whether the repo is private, public or local.',
+        },
         {
           src: 'images/claude-remote-house.jpg',
           alt: 'House screen with rooms, a thermostat, lights and a locked front door',
@@ -305,7 +382,7 @@ const data: SiteData = {
       featured: false,
       tags: ['Game'],
       tech: ['TypeScript', 'Three.js', 'WebGL', 'Web Audio API', 'Vite'],
-      links: {},
+      links: { repo: GH + 'retro-zombie-arena' },
       cover: {
         src: 'images/zombie-cover.png',
         alt: 'Reloading a rifle in the asylum admissions room as zombies close in',
@@ -321,6 +398,16 @@ const data: SiteData = {
           src: 'images/zombie-hollow-creek.png',
           alt: 'Hollow Creek: an open street under the night sky',
           caption: 'Chapter 2, Hollow Creek: open streets under the night sky.',
+        },
+        {
+          src: 'images/zombie-chapel.jpg',
+          alt: 'Round 1 in a stone chapel lit by hanging lamps, holding a pistol',
+          caption: 'Round 1 in the chapel: baked vertex lighting and textures painted on canvases at load.',
+        },
+        {
+          src: 'images/zombie-ironworks.jpg',
+          alt: 'A warehouse aisle in Vireo Ironworks, lined with racks of crates under work lights',
+          caption: 'Chapter 3, Vireo Ironworks: aisles of racked crates under work lights.',
         },
         {
           src: 'images/zombie-butcher.png',
@@ -361,7 +448,7 @@ const data: SiteData = {
       featured: false,
       tags: ['Full-stack', 'Offline-first', 'PWA'],
       tech: ['Python', 'FastAPI', 'React', 'TypeScript', 'IndexedDB', 'Service workers', 'Supabase', 'Plaid'],
-      links: {},
+      links: { demo: 'https://tally-five-topaz.vercel.app', repo: GH + 'offline-sync-tracker' },
       cover: {
         src: 'images/tally-cover.jpg',
         alt: 'Three phone screens: offline with a queued change, a sync conflict asking which value to keep, and fully synced',
@@ -396,7 +483,7 @@ const data: SiteData = {
       featured: false,
       tags: ['AI', 'Machine learning', 'Developer tool'],
       tech: ['TypeScript', 'Node.js', 'Claude API'],
-      links: {},
+      links: { repo: GH + 'personal-code-assistant' },
       cover: {
         src: 'images/code-assistant-cover.jpg',
         alt: 'Terminal: pca chat answering one question locally in 4 ms and routing a harder one to Claude',
@@ -424,7 +511,7 @@ const data: SiteData = {
       featured: false,
       tags: ['Game', 'Real-time'],
       tech: ['JavaScript', 'Node.js', 'WebSockets', 'node:test', 'Puppeteer'],
-      links: {},
+      links: { repo: GH + 'online-multiplayer-party-game' },
       cover: {
         src: 'images/bluffalo-cover.jpg',
         alt: 'Three phone screens: the home page with the rules, picking the true answer, and the round results',
@@ -459,7 +546,7 @@ const data: SiteData = {
       featured: false,
       tags: ['IoT', 'Full-stack'],
       tech: ['TypeScript', 'Node.js', 'React', 'WebSockets', 'Raspberry Pi', 'systemd'],
-      links: {},
+      links: { repo: GH + 'pi-smart-home-hub' },
       cover: {
         src: 'images/pi-hub-cover.jpg',
         alt: 'Home Hub dashboard on a tablet: scenes, rooms and device toggles',
@@ -469,6 +556,11 @@ const data: SiteData = {
           src: 'images/pi-hub-device.jpg',
           alt: 'Nanoleaf device panel with colour swatches, brightness and white temperature',
           caption: 'The panel for the Nanoleaf lights: colour, brightness, white temperature and effects.',
+        },
+        {
+          src: 'images/pi-hub-phone-settings.jpg',
+          alt: 'The dashboard on a phone beside the settings page with hub status and automations',
+          caption: 'On a phone, and the settings page: hub status, automations, and a scan of the LAN for devices.',
         },
       ],
       highlights: [
@@ -495,7 +587,7 @@ const data: SiteData = {
       featured: false,
       tags: ['Offline-first', 'PWA'],
       tech: ['TypeScript', 'React', 'IndexedDB', 'Service workers', 'Python', 'FastAPI'],
-      links: {},
+      links: { repo: GH + 'offline-sync-pwa' },
       cover: {
         src: 'images/field-reports-cover.jpg',
         alt: 'Three phone screens: the site list, a site with a report queued offline, and the outbox',
@@ -505,6 +597,11 @@ const data: SiteData = {
           src: 'images/field-reports-sync.jpg',
           alt: 'Two phone screens: filing a report with no signal, and an empty outbox after syncing',
           caption: 'Filing a report with no signal, and the outbox after the queue drained on its own.',
+        },
+        {
+          src: 'images/field-reports-claude-remote.jpg',
+          alt: 'Three phone screens in Claude Remote: the site list, a site with a report not yet sent, and the outbox',
+          caption: 'Field Reports today, as a screen inside Claude Remote: offline, with three things waiting to send.',
         },
       ],
       highlights: [
@@ -536,7 +633,7 @@ const data: SiteData = {
       featured: false,
       tags: ['Automation'],
       tech: ['Python', 'SQLite', 'FastAPI', 'React', 'TypeScript', 'pytest'],
-      links: {},
+      links: { repo: GH + 'daily-digest-bot' },
       cover: {
         src: 'images/digest-bot-cover.jpg',
         alt: 'Dashboard overview: hours since the last digest, health checks and per-source cards',
@@ -571,7 +668,7 @@ const data: SiteData = {
       featured: false,
       tags: ['Automation', 'Web app'],
       tech: ['Python', 'React', 'TypeScript', 'Vite', 'GitHub Actions'],
-      links: {},
+      links: { repo: GH + 'github-project-index' },
       cover: {
         src: 'images/project-index-cover.jpg',
         alt: 'Project index in its light theme: summary stats, a language bar and the project list',
@@ -581,6 +678,11 @@ const data: SiteData = {
           src: 'images/project-index-dark.jpg',
           alt: 'Project index in its dark theme',
           caption: 'The same page in its dark theme.',
+        },
+        {
+          src: 'images/project-index-mobile.jpg',
+          alt: 'The project index on a desktop and a phone side by side',
+          caption: 'Desktop and phone layouts of the same build.',
         },
       ],
       highlights: [
@@ -606,7 +708,7 @@ const data: SiteData = {
       featured: false,
       tags: ['Game'],
       tech: ['Luau', 'Roblox', 'Rojo', 'Node.js'],
-      links: {},
+      links: { repo: GH + 'roblox-zombie-survival' },
       cover: { src: 'images/necrotide-cover.jpg', alt: 'Necrotide: Last Stand title card' },
       gallery: [],
       highlights: [

@@ -14,12 +14,14 @@ export function HandsOn({ query = '' }: { query?: string }) {
   if (withDemos.length === 0) return null
 
   return (
-    <section className="border-t border-border py-20 sm:py-28">
-      <div className="container-page">
+    <section className="relative overflow-hidden border-t border-border bg-surface-2/50 py-20 sm:py-28">
+      <div aria-hidden className="hero-grid pointer-events-none absolute inset-0 opacity-40" />
+      <div className="container-page relative">
         <SectionHeading
           id="try"
+          index="02"
           eyebrow="Hands-on"
-          title="Don’t take my word for it"
+          title="Don’t take my word for it. *Try to break it.*"
           description={`${count} of these projects hinge on one hard problem. Each write-up has a small working model of it, built from the real project's rules, that you can try to break right in the page.`}
         />
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">

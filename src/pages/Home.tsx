@@ -3,6 +3,7 @@ import { Contact } from '../components/Contact'
 import { Gallery } from '../components/Gallery'
 import { Hero } from '../components/Hero'
 import { Projects } from '../components/Projects'
+import { TechMarquee } from '../components/TechMarquee'
 import { useLens } from '../lib/lens'
 import { useReveal } from '../lib/reveal'
 
@@ -15,6 +16,7 @@ export function Home() {
   return (
     <>
       <Hero />
+      <TechMarquee />
       <Projects />
       <Gallery />
       <About />

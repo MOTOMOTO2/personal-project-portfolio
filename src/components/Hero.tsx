@@ -1,14 +1,21 @@
 import { ArrowDown, FileText, Mail } from 'lucide-react'
 import { useRef } from 'react'
 import { site } from '../data/site'
+import { heroStats } from '../lib/stats'
 import { socialIcons } from '../lib/social-icons'
+import { CountUp } from './CountUp'
+import { Emphasis } from './Emphasis'
 import { HiringLens } from './HiringLens'
+import { LiveConsole } from './LiveConsole'
+
+const stats = heroStats(site.projects)
 
 export function Hero() {
   const { profile } = site
   const elsewhere = profile.socials.filter((social) => social.icon !== 'mail')
   const sectionRef = useRef<HTMLElement>(null)
   const showLens = site.lenses.length > 0
+  const place = profile.facts.find((fact) => fact.label === 'Based in')?.value
 
   // Feeds the spotlight's position as CSS variables. Written straight to the
   // element rather than through state, so moving the mouse never re-renders.
@@ -22,20 +29,17 @@ export function Hero() {
 
   return (
     <section ref={sectionRef} onPointerMove={trackPointer} className="group/hero relative overflow-hidden border-b border-border">
-      <div aria-hidden className="hero-grid pointer-events-none absolute inset-0 opacity-70" />
+      <div aria-hidden className="hero-glow pointer-events-none absolute inset-0" />
+      <div aria-hidden className="hero-grid pointer-events-none absolute inset-0 opacity-60" />
       <div
         aria-hidden
         className="hero-spotlight pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover/hero:opacity-100"
       />
 
-      <div
-        className={`container-page relative grid gap-12 pt-16 sm:pt-24 lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-end lg:gap-16 ${
-          showLens ? 'pb-10 sm:pb-12' : 'pb-16 sm:pb-24'
-        }`}
-      >
+      <div className="container-page relative grid items-center gap-12 pt-14 pb-12 sm:pt-20 lg:grid-cols-[minmax(0,1.08fr)_minmax(0,0.92fr)] lg:gap-14">
         <div>
           {profile.availability && (
-            <p className="inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-sm text-fg-muted">
+            <p className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/80 px-3 py-1 text-sm text-fg-muted backdrop-blur-sm">
               <span aria-hidden className="relative flex size-2">
                 <span className="absolute inline-flex size-full animate-ping rounded-full bg-success opacity-60 motion-reduce:hidden" />
                 <span className="relative inline-flex size-2 rounded-full bg-success" />
@@ -44,63 +48,79 @@ export function Hero() {
             </p>
           )}
 
-          <h1 className="mt-6 text-5xl font-semibold sm:text-6xl lg:text-7xl">{profile.name}</h1>
-          <p className="mt-3 text-xl font-medium text-fg-muted sm:text-2xl">{profile.role}</p>
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-fg-muted">{profile.tagline}</p>
+          <h1 className="mt-6 text-[clamp(2.75rem,7vw,4.75rem)] leading-[0.95] font-semibold">{profile.name}</h1>
+          <p className="mt-4 font-mono text-[0.8125rem] tracking-wide text-fg-subtle uppercase">
+            {profile.role}
+            {place && <span className="text-fg-subtle/80"> · {place}</span>}
+          </p>
+          <p className="mt-6 max-w-xl text-[clamp(1.375rem,2.6vw,1.875rem)] leading-[1.25] font-medium tracking-tight text-balance">
+            <Emphasis text={profile.headline} />
+          </p>
 
-          <div className="mt-9 flex flex-wrap items-center gap-3">
-            <a href="#work" className="btn btn-primary">
-              View my work
+          <div className="mt-9 flex flex-wrap items-center gap-2.5">
+            <a href="#work" className="btn btn-accent h-11 px-5">
+              See my work
               <ArrowDown className="size-4" aria-hidden />
             </a>
-            <a href={`mailto:${profile.email}`} className="btn btn-secondary">
+            <a href={`mailto:${profile.email}`} className="btn btn-secondary h-11 px-4">
               <Mail className="size-4" aria-hidden />
               Email me
             </a>
             {profile.resume && (
-              <a href={profile.resume} target="_blank" rel="noreferrer" className="btn btn-secondary">
+              <a href={profile.resume} target="_blank" rel="noreferrer" className="btn btn-secondary h-11 px-4">
                 <FileText className="size-4" aria-hidden />
                 Résumé
               </a>
             )}
-          </div>
-        </div>
-
-        <aside aria-label="At a glance" className="rounded-xl border border-border bg-surface p-6 shadow-card">
-          <dl className="divide-y divide-border">
-            {profile.facts.map((fact) => (
-              <div key={fact.label} className="py-3 first:pt-0 last:pb-0">
-                <dt className="text-xs text-fg-subtle">{fact.label}</dt>
-                <dd className="mt-1 text-sm font-medium">{fact.value}</dd>
-              </div>
-            ))}
-          </dl>
-
-          <ul className="mt-5 flex gap-2 border-t border-border pt-5">
             {elsewhere.map((social) => {
               const Icon = socialIcons[social.icon]
               return (
-                <li key={social.label}>
-                  <a
-                    href={social.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="btn btn-secondary h-9 px-3"
-                  >
-                    <Icon className="size-4" aria-hidden />
-                    {social.label}
-                  </a>
-                </li>
+                <a
+                  key={social.label}
+                  href={social.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={social.label}
+                  title={social.label}
+                  className="btn btn-secondary btn-icon h-11 w-11"
+                >
+                  <Icon className="size-[18px]" aria-hidden />
+                </a>
               )
             })}
-          </ul>
-        </aside>
+          </div>
+        </div>
+
+        <LiveConsole />
       </div>
 
-      {showLens && (
-        <div className="container-page relative pb-16 sm:pb-20">
+      <div className="container-page relative">
+        <dl className="grid grid-cols-2 border-y border-border sm:grid-cols-4">
+          {stats.map((stat, index) => (
+            <div
+              key={stat.label}
+              className={`px-1 py-5 sm:px-5 ${index > 0 ? 'sm:border-l sm:border-border' : ''} ${index % 2 === 1 ? 'border-l border-border pl-4 sm:pl-5' : ''} ${index > 1 ? 'border-t border-border sm:border-t-0' : ''}`}
+            >
+              <dt className="sr-only">{stat.label}</dt>
+              <dd>
+                <span className="block text-3xl font-semibold tracking-tight sm:text-4xl">
+                  <CountUp value={stat.value} />
+                </span>
+                <span aria-hidden className="mt-1 block text-sm text-fg-muted">
+                  {stat.label}
+                </span>
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+
+      {showLens ? (
+        <div className="container-page relative pt-8 pb-14 sm:pb-16">
           <HiringLens />
         </div>
+      ) : (
+        <div className="pb-14" />
       )}
     </section>
   )
