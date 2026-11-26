@@ -2,12 +2,12 @@ import { site } from '../data/site'
 import { featuredFor, useLens } from '../lib/lens'
 import { HandsOn } from './HandsOn'
 import { MoreWork } from './MoreWork'
-import { WorkReel } from './WorkReel'
+import { WorkShowcase } from './WorkShowcase'
 
 /**
- * Selected work (the reel), the door to the full index for everything else,
- * then the hands-on demos. The reel follows the hiring lens; every project is
- * always one click away on /work.
+ * Selected work (the showcase), the door to the full index for everything
+ * else, then the hands-on demos. The showcase follows the hiring lens; every
+ * project is always one click away on /work.
  */
 export function Projects() {
   const { lens, query } = useLens()
@@ -16,7 +16,7 @@ export function Projects() {
 
   return (
     <>
-      <WorkReel />
+      <WorkShowcase />
       <MoreWork others={others} query={query} />
       <HandsOn query={query} />
     </>

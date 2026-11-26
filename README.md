@@ -8,9 +8,12 @@ page opens on a full-screen WebGL shader (topographic contour lines in ember on
 warm black that bend around the pointer like a lens), the name in huge wide
 type rising letter by letter, a live local clock and a crosshair readout.
 Under it, **Telemetry**: stats counted from the content beside a terminal that
-types out one real behaviour per project. **Selected work** pins in place and
-scrolls sideways through large project panels as you scroll down (a plain list
-on phones, short screens and with reduced motion). Then a door to the full
+types out one real behaviour per project. **Selected work** is a stage: the
+projects scroll by normally on the left, and whichever one reaches the middle
+of the screen takes over a pinned screen on the right. Its screenshots wipe in
+behind a glowing line and cycle on a timer (paused on hover), and the screen
+tilts toward the pointer with a glare, over a halo of the hero's contour
+shader. Phones get each project as a card with its own image. Then a door to the full
 index, the hands-on demos as "test benches", About as a spec sheet, and a
 closing contact section with the email address as the biggest thing on it.
 Mono labels decode from random glyphs as they come into view.
@@ -191,7 +194,7 @@ src/
     ShaderField.tsx      the WebGL2 contour field behind the hero (no library)
     Telemetry.tsx        the stats beside the console, under the hero
     LiveConsole.tsx      the terminal that types out what each project does
-    WorkReel.tsx         Selected work: pinned, sideways-scrolling project panels
+    WorkShowcase.tsx     Selected work: chapters on the left, the pinned stage on the right
     Scramble.tsx         mono labels that decode as they come into view
     BrowserFrame.tsx     a screenshot dressed as a browser window
     CountUp.tsx, Emphasis.tsx, ReadingProgress.tsx
@@ -233,12 +236,13 @@ scripts/
 - The theme is applied by a tiny inline script in `index.html` before first
   paint, so there is never a flash of the wrong one.
 - Every animation is disabled under `prefers-reduced-motion`: the shader draws
-  one still frame, Selected work becomes a plain list, labels don't decode, and
-  the double-booking demo shows its steps at once. The crosshair is mouse-only.
+  one still frame, the stage neither tilts nor cycles screenshots, labels don't
+  decode, and the double-booking demo shows its steps at once. The crosshair
+  and the stage tilt are mouse-only.
 - The shader pauses off screen and in background tabs, renders fewer pixels if
   frames get slow, and without WebGL2 the CSS glow behind it simply shows.
-- In the sideways reel, tabbing into an off-screen panel scrolls the page so
-  that panel slides into view.
+- Tabbing into a project in Selected work makes it the one on the stage, and
+  the stage's segment buttons scroll to their project.
 - The demos are built from buttons, switches (`role="switch"`) and pressed-state
   toggles, and announce new results through `aria-live` regions.
 - The command palette is a modal combobox: arrow keys move, Enter opens,
