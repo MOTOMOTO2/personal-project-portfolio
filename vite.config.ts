@@ -10,6 +10,8 @@ const base = process.env.VITE_BASE ?? '/'
 
 export default defineConfig({
   base,
+  // Shown in the footer: when this build was made.
+  define: { __BUILD_TIME__: JSON.stringify(new Date().toISOString()) },
   plugins: [react(), tailwindcss()],
   build: { outDir: 'dist', sourcemap: false },
   // Most suites are plain data checks; the component suites opt into jsdom

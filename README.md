@@ -3,23 +3,31 @@
 My portfolio site: the projects I've built, each with screenshots and a full
 write-up, plus a short about section and how to reach me.
 
-The home page opens on a positioning headline, a terminal that types out what
-each project really does, and stats counted from the content (projects, how many
-are live, automated tests, demos). Then four **selected** projects as cards that
-stack as you scroll (on screens tall enough to show a whole card), a door to the
-full index, the hands-on demos, About with "How I work", and a contact panel.
+The design is called **Signal**: the site as a precision instrument. The home
+page opens on a full-screen WebGL shader (topographic contour lines in ember on
+warm black that bend around the pointer like a lens), the name in huge wide
+type rising letter by letter, a live local clock and a crosshair readout.
+Under it, **Telemetry**: stats counted from the content beside a terminal that
+types out one real behaviour per project. **Selected work** pins in place and
+scrolls sideways through large project panels as you scroll down (a plain list
+on phones, short screens and with reduced motion). Then a door to the full
+index, the hands-on demos as "test benches", About as a spec sheet, and a
+closing contact section with the email address as the biggest thing on it.
+Mono labels decode from random glyphs as they come into view.
 
 **All work** (`/work`, a tab in the nav) lists every project newest first, with
 a filter for each kind (`/work?type=games`); hovering a row floats its cover
 beside the pointer. Every project has its own page at `/projects/<slug>` with an
 overview, highlights, the stack, and a screenshot gallery with a lightbox.
 
-The look: warm neutrals with one ember accent, Geist with Instrument Serif
-italics for the words a heading leans on, light and dark themes.
+The look: dark by default ("signal"), with a light "paper" theme on the toggle;
+one ember accent; Archivo (wide and heavy) for display type, Geist for text,
+Geist Mono for datasheet labels, and Instrument Serif italics for the words a
+heading leans on; crop marks on panels.
 
 Three things make it more than a list of projects:
 
-- **"What are you hiring for?"** A row of choices under the hero (Backend,
+- **"What are you hiring for?"** A row of choices in Selected work (Backend,
   Frontend, AI tooling, Offline & real-time, Games). Picking one swaps the
   large rows for the projects that matter most to that role, rewrites the
   section pitch and highlights the matching skills. The choice lives in the
@@ -109,9 +117,9 @@ Everything below happens in `src/data/site.ts` unless noted.
    `public` prefix (`images/my-shot.jpg`). The deploy base is prepended for you,
    so do **not** start the path with a slash. Covers and screenshots are shown
    at 16:10; every image needs `alt` text, and `caption` is optional.
-5. **Hero console and "How I work"** — `console` is the lines the hero
+5. **Console and principles** — `console` is the lines the Telemetry
    terminal types out, one per project, each linking to it; `principles` are
-   the three cards in the About section, each with `proof` slugs. Section
+   the three "operating principles" in About, each with `proof` slugs. Section
    titles also accept `*emphasis*`.
 6. **Hiring lenses** — `lenses`: one entry per "What are you hiring for?"
    choice. `id` is what goes in `/?for=<id>`; `featured` is the 1–4 project
@@ -179,15 +187,18 @@ src/
     types.ts         the shape site.ts has to satisfy
     site.test.ts     checks slugs, ordering, images, links
   components/
-    Hero.tsx             name, headline, stats, the console, the cursor spotlight
+    Hero.tsx             shader, name, headline, clock and crosshair
+    ShaderField.tsx      the WebGL2 contour field behind the hero (no library)
+    Telemetry.tsx        the stats beside the console, under the hero
     LiveConsole.tsx      the terminal that types out what each project does
+    WorkReel.tsx         Selected work: pinned, sideways-scrolling project panels
+    Scramble.tsx         mono labels that decode as they come into view
     BrowserFrame.tsx     a screenshot dressed as a browser window
     CountUp.tsx, Emphasis.tsx, ReadingProgress.tsx
     HiringLens.tsx       "What are you hiring for?" picker
     Projects.tsx         "Selected work" cards, the door to /work, "Hands-on"
     MoreWork.tsx         that door: how many more projects, and their covers
     HandsOn.tsx          one card per demo on the home page
-    FeaturedProject.tsx  one card in the Selected work stack
     CommandPalette.tsx   ⌘K search
     demos/
       registry.ts        demo id -> component and icon
@@ -201,7 +212,8 @@ src/
   pages/             Home, AllWork (/work), ProjectDetail, NotFound
   lib/
     assets.ts        prefixes image paths with the deploy base
-    theme.ts         dark/light toggle; follows the OS until you pick one
+    theme.ts         dark by default; the toggle switches to "paper" and remembers
+    media.ts, clock.ts  a live media-query hook; a ticking clock in a time zone
     lens.ts          the ?for= hiring lens: read, set, carry onto links
     stats.ts         the hero numbers, derived from the projects
     work.ts          the All work filters (from project tags) and newest-first order
@@ -218,11 +230,15 @@ scripts/
 
 ## Accessibility and performance notes
 
-- Dark mode is applied by a tiny inline script in `index.html` before first
-  paint, so there is no white flash for dark-mode visitors.
-- Every animation is disabled under `prefers-reduced-motion`; the
-  double-booking demo then shows its steps at once instead of playing them out,
-  and the hero spotlight is hidden (it is also hidden on touch screens).
+- The theme is applied by a tiny inline script in `index.html` before first
+  paint, so there is never a flash of the wrong one.
+- Every animation is disabled under `prefers-reduced-motion`: the shader draws
+  one still frame, Selected work becomes a plain list, labels don't decode, and
+  the double-booking demo shows its steps at once. The crosshair is mouse-only.
+- The shader pauses off screen and in background tabs, renders fewer pixels if
+  frames get slow, and without WebGL2 the CSS glow behind it simply shows.
+- In the sideways reel, tabbing into an off-screen panel scrolls the page so
+  that panel slides into view.
 - The demos are built from buttons, switches (`role="switch"`) and pressed-state
   toggles, and announce new results through `aria-live` regions.
 - The command palette is a modal combobox: arrow keys move, Enter opens,

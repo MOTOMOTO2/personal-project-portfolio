@@ -29,15 +29,11 @@ export function HiringLens() {
   const options = [{ id: null, label: 'Everything' }, ...site.lenses.map((option) => ({ id: option.id, label: option.label }))]
 
   return (
-    <div className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-2">
-      <span id="lens-label" className="text-sm text-fg-subtle">
+    <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+      <span id="lens-label" className="label text-fg-subtle">
         Hiring for
       </span>
-      <div
-        role="group"
-        aria-labelledby="lens-label"
-        className="inline-flex flex-wrap gap-0.5 rounded-2xl border border-border bg-surface p-1 shadow-card sm:rounded-full"
-      >
+      <div role="group" aria-labelledby="lens-label" className="inline-flex flex-wrap gap-0.5 border border-border bg-surface p-0.5">
         {options.map((option) => {
           const active = (lens?.id ?? null) === option.id
           return (
@@ -46,8 +42,8 @@ export function HiringLens() {
               type="button"
               aria-pressed={active}
               onClick={() => setLens(option.id)}
-              className={`h-8 rounded-full px-3.5 text-sm transition-colors ${
-                active ? 'bg-fg font-medium text-bg' : 'text-fg-muted hover:bg-surface-2 hover:text-fg'
+              className={`h-8 px-3 font-mono text-[0.75rem] tracking-wide transition-colors ${
+                active ? 'bg-fg text-bg' : 'text-fg-muted hover:bg-surface-2 hover:text-fg'
               }`}
             >
               {option.label}
@@ -59,7 +55,7 @@ export function HiringLens() {
         <button
           type="button"
           onClick={copyLink}
-          className="inline-flex h-8 items-center gap-1.5 rounded-full px-2.5 text-sm text-fg-muted transition-colors hover:bg-surface-2 hover:text-fg"
+          className="inline-flex h-8 items-center gap-1.5 px-2 font-mono text-[0.75rem] text-fg-muted transition-colors hover:text-fg"
         >
           {copied ? <Check className="size-3.5 text-success" aria-hidden /> : <Link2 className="size-3.5" aria-hidden />}
           {copied ? 'Copied' : 'Copy link'}

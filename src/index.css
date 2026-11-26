@@ -4,9 +4,10 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /*
- * The palette: warm neutrals with one ember accent, defined once for light and
- * once for dark. Change --accent and the links, focus rings, glows and
- * highlights follow. Every text colour here passes 4.5:1 on --bg.
+ * The palette: "signal", a warm black with one ember accent, is the default
+ * (.dark); "paper" (:root) is the light alternative. Change --accent and the
+ * links, focus rings, glows, the hero shader and highlights follow. Every text
+ * colour here passes 4.5:1 on --bg.
  */
 :root {
   --bg: hsl(40 20% 98%);
@@ -34,18 +35,18 @@
 }
 
 .dark {
-  --bg: hsl(240 6% 5%);
-  --surface: hsl(240 5% 8%);
-  --surface-2: hsl(240 4% 11%);
-  --border: hsl(240 4% 16%);
-  --border-strong: hsl(240 4% 26%);
-  --fg: hsl(30 10% 96%);
-  --fg-muted: hsl(240 5% 68%);
-  --fg-subtle: hsl(240 4% 56%);
-  --accent: hsl(20 95% 62%);
-  --accent-fg: hsl(20 30% 8%);
-  --accent-soft: hsl(18 45% 13%);
-  --glow: hsl(18 100% 55% / 0.2);
+  --bg: hsl(30 8% 4%);
+  --surface: hsl(30 6% 7%);
+  --surface-2: hsl(30 5% 10%);
+  --border: hsl(30 5% 15%);
+  --border-strong: hsl(30 5% 24%);
+  --fg: hsl(36 22% 92%);
+  --fg-muted: hsl(30 8% 68%);
+  --fg-subtle: hsl(30 5% 55%);
+  --accent: hsl(18 100% 58%);
+  --accent-fg: hsl(20 40% 6%);
+  --accent-soft: hsl(18 60% 12%);
+  --glow: hsl(18 100% 55% / 0.18);
   --success: hsl(152 55% 52%);
   --warning: hsl(38 92% 60%);
   --danger: hsl(0 85% 68%);
@@ -73,12 +74,45 @@
   --color-ink-border: var(--ink-border);
 
   --font-sans: Geist, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: Archivo, Geist, ui-sans-serif, system-ui, sans-serif;
   --font-mono: 'Geist Mono', ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, monospace;
   --font-serif: 'Instrument Serif', ui-serif, Georgia, 'Times New Roman', serif;
 
   --shadow-card: var(--shadow);
 
   --animate-caret: caret 1.1s steps(1) infinite;
+  --animate-rise: rise 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  --animate-cue: cue 2.2s cubic-bezier(0.6, 0, 0.4, 1) infinite;
+}
+
+/* The hero name: each letter rises out of its line box. */
+@keyframes rise {
+  from {
+    transform: translateY(105%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+/* The scroll cue: a short line that keeps falling. */
+@keyframes cue {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  45% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  55% {
+    transform: scaleY(1);
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
 }
 
 @keyframes caret {
@@ -212,15 +246,58 @@
     color: var(--fg-subtle);
   }
 
+  /* Big display type: Archivo, wide and heavy. */
+  .display {
+    font-family: var(--font-display);
+    font-stretch: 112%;
+    font-weight: 700;
+    letter-spacing: -0.035em;
+  }
+
+  .display-xl {
+    font-family: var(--font-display);
+    font-stretch: 125%;
+    font-weight: 800;
+    letter-spacing: -0.045em;
+    line-height: 0.86;
+    text-transform: uppercase;
+  }
+
+  /* Mono labels: the datasheet voice. */
+  .label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
   /*
-   * Selected work cards stack as you scroll. Only where a whole card fits
-   * below the header (the tallest is about 600px and the lowest sticks 148px
-   * down), so nothing is ever covered before it can be read or clicked.
+   * Crop marks: four small corners, the signature on panels. Drawn with
+   * gradients on the element itself, so it needs no extra markup.
    */
-  @media (width >= 64rem) and (height >= 48rem) {
-    .stack-card {
-      position: sticky;
-    }
+  .brackets {
+    --mark: color-mix(in oklab, var(--fg) 45%, transparent);
+    background-image:
+      linear-gradient(var(--mark), var(--mark)), linear-gradient(var(--mark), var(--mark)),
+      linear-gradient(var(--mark), var(--mark)), linear-gradient(var(--mark), var(--mark)),
+      linear-gradient(var(--mark), var(--mark)), linear-gradient(var(--mark), var(--mark)),
+      linear-gradient(var(--mark), var(--mark)), linear-gradient(var(--mark), var(--mark));
+    background-repeat: no-repeat;
+    background-size:
+      14px 1px, 1px 14px, 14px 1px, 1px 14px,
+      14px 1px, 1px 14px, 14px 1px, 1px 14px;
+    background-position:
+      top left, top left, top right, top right,
+      bottom left, bottom left, bottom right, bottom right;
+  }
+
+  /* A datasheet row: label, a dotted leader, value. */
+  .leader {
+    background-image: radial-gradient(circle, var(--border-strong) 0.7px, transparent 0.8px);
+    background-size: 6px 6px;
+    background-position: 0 70%;
+    background-repeat: repeat-x;
   }
 
   /* Words set in *asterisks* in the content: the editorial accent. */

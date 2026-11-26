@@ -10,8 +10,7 @@
       content="Aden Yadegar is a full-stack developer in Ontario, Canada. Projects, screenshots and write-ups: RevVault, Course Deadline Tracker, Claude Remote, Care Track and more."
     />
     <meta name="author" content="Aden Yadegar" />
-    <meta name="theme-color" content="#faf9f7" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#0b0b0d" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#0b0a09" />
 
     <!-- Link previews for LinkedIn, Slack, iMessage, etc. These crawlers need an
          absolute URL to a PNG or JPG; update it if the site moves to a new domain. -->
@@ -30,20 +29,21 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Geist:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap"
       rel="stylesheet"
     />
 
     <script>
-      // Apply the stored theme before first paint so dark-mode visitors never see
-      // a white flash. Kept in sync with src/lib/theme.ts.
+      // Apply the theme before first paint so there is never a flash. Dark is
+      // the default; "paper" (light) only when the visitor chose it. Kept in
+      // sync with src/lib/theme.ts.
+      var dark = true
       try {
-        var stored = localStorage.getItem('portfolio-theme')
-        var dark = stored ? stored === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches
-        if (dark) document.documentElement.classList.add('dark')
+        dark = localStorage.getItem('portfolio-theme') !== 'light'
       } catch (error) {
-        /* private mode: fall back to the light theme */
+        /* private mode: keep the default */
       }
+      if (dark) document.documentElement.classList.add('dark')
     </script>
   </head>
   <body>

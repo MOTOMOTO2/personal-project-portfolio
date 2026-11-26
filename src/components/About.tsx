@@ -1,13 +1,23 @@
 import { ArrowUpRight } from 'lucide-react'
-import { Fragment } from 'react'
+import { Fragment, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { site } from '../data/site'
 import type { Principle } from '../data/types'
 import { useLens } from '../lib/lens'
 import { useSpotlight } from '../lib/pointer'
-import { Emphasis } from './Emphasis'
+import { Scramble } from './Scramble'
+import { SectionHeading } from './SectionHeading'
 
 const titles = new Map(site.projects.map((project) => [project.slug, project.title]))
+
+function Row({ label, children }: { label: string; children: ReactNode }) {
+  return (
+    <div className="grid gap-1 border-b border-border py-3.5 sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-5">
+      <dt className="label pt-0.5 text-fg-subtle">{label}</dt>
+      <dd className="text-sm leading-relaxed">{children}</dd>
+    </div>
+  )
+}
 
 function PrincipleCard({ principle, index, query }: { principle: Principle; index: number; query: string }) {
   const { ref, onPointerMove } = useSpotlight<HTMLLIElement>()
@@ -15,20 +25,20 @@ function PrincipleCard({ principle, index, query }: { principle: Principle; inde
     <li
       ref={ref}
       onPointerMove={onPointerMove}
-      className="reveal card-spotlight flex flex-col rounded-2xl border border-border bg-surface p-6"
+      className="brackets reveal card-spotlight flex flex-col border border-border bg-surface p-6"
     >
-      <span aria-hidden className="font-serif text-3xl leading-none text-accent italic">
+      <span aria-hidden className="font-serif text-4xl leading-none text-accent italic">
         {String(index + 1).padStart(2, '0')}
       </span>
-      <h4 className="mt-4 text-lg leading-snug font-semibold">{principle.title}</h4>
-      <p className="mt-2 flex-1 text-sm leading-relaxed text-fg-muted">{principle.body}</p>
-      <p className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-border pt-4 text-xs text-fg-subtle">
-        See it in
+      <h4 className="display mt-5 text-lg leading-snug">{principle.title}</h4>
+      <p className="mt-3 flex-1 text-sm leading-relaxed text-fg-muted">{principle.body}</p>
+      <p className="label mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 border-t border-border pt-4 text-fg-subtle">
+        Proof
         {principle.proof.map((slug) => (
           <Link
             key={slug}
             to={`/projects/${slug}${query}`}
-            className="inline-flex items-center gap-0.5 font-medium text-fg transition-colors hover:text-accent"
+            className="inline-flex items-center gap-0.5 text-fg transition-colors hover:text-accent"
           >
             {titles.get(slug) ?? slug}
             <ArrowUpRight className="size-3" aria-hidden />
@@ -39,87 +49,78 @@ function PrincipleCard({ principle, index, query }: { principle: Principle; inde
   )
 }
 
+/** About as a spec sheet: the story on the left, the facts and stack on the right. */
 export function About() {
   const { profile, skills, timeline, principles } = site
   const { lens, query } = useLens()
   const highlighted = new Set(lens?.skills ?? [])
+  // "Main languages" repeats the Languages row of the stack, so it is left out here.
+  const facts = profile.facts.filter((fact) => !/languages/i.test(fact.label))
 
   return (
     <section className="border-t border-border py-20 sm:py-28">
       <div className="container-page">
-        <div className="grid gap-12 lg:grid-cols-12 lg:gap-14">
-          <div className="reveal self-start lg:sticky lg:top-24 lg:col-span-4">
-            <p className="eyebrow mb-4 flex items-center gap-3">
-              <span className="text-accent">03</span>
-              <span aria-hidden className="h-px w-8 bg-border-strong" />
-              About
-            </p>
-            <h2 id="about" className="scroll-mt-24 text-[clamp(2rem,4.2vw,3.25rem)] leading-[1.05] font-semibold">
-              <Emphasis text="A bit *about me*" />
-            </h2>
+        <SectionHeading id="about" index="03" eyebrow="About" meta="Spec sheet" title="A bit about *me*" />
+
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
+          <div className="reveal space-y-5 text-lg leading-relaxed text-fg-muted lg:col-span-6">
+            {profile.about.map((paragraph) => (
+              <p key={paragraph.slice(0, 32)}>{paragraph}</p>
+            ))}
           </div>
 
-          <div className="lg:col-span-8">
-            <div className="reveal space-y-5 text-lg leading-relaxed text-fg-muted">
-              {profile.about.map((paragraph) => (
-                <p key={paragraph.slice(0, 32)}>{paragraph}</p>
-              ))}
-            </div>
-
-            <div className="reveal mt-14">
-              <h3 className="eyebrow mb-4">
-                Skills and tools
-                {lens && <span className="text-accent normal-case"> · {lens.label} highlighted</span>}
-              </h3>
-              <dl className="divide-y divide-border border-y border-border">
-                {skills.map((group) => (
-                  <div key={group.name} className="grid gap-1 py-4 sm:grid-cols-[11rem_1fr] sm:gap-6">
-                    <dt className="text-sm font-medium">{group.name}</dt>
-                    <dd className="text-sm leading-relaxed text-fg-muted">
-                      {group.items.map((item, index) => (
-                        <Fragment key={item}>
-                          {index > 0 && ' · '}
-                          <span
-                            className={
-                              highlighted.has(item)
-                                ? 'rounded bg-accent-soft px-1 py-0.5 font-medium text-accent transition-colors'
-                                : 'transition-colors'
-                            }
-                          >
-                            {item}
-                          </span>
-                        </Fragment>
-                      ))}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
-
-            {timeline.length > 0 && (
-              <div className="reveal mt-14">
-                <h3 className="eyebrow mb-4">Experience</h3>
-                <ol className="divide-y divide-border border-y border-border">
-                  {timeline.map((entry) => (
-                    <li key={`${entry.org}-${entry.period}`} className="grid gap-1 py-5 sm:grid-cols-[11rem_1fr] sm:gap-6">
-                      <p className="text-sm text-fg-subtle">{entry.period}</p>
-                      <div>
-                        <h4 className="font-medium">
-                          {entry.title} <span className="font-normal text-fg-muted">· {entry.org}</span>
-                        </h4>
-                        <p className="mt-1.5 text-sm leading-relaxed text-fg-muted">{entry.summary}</p>
-                      </div>
-                    </li>
-                  ))}
-                </ol>
-              </div>
+          <dl className="reveal self-start border-t border-border lg:col-span-6">
+            {facts.map((fact) => (
+              <Row key={fact.label} label={fact.label}>
+                {fact.value}
+              </Row>
+            ))}
+            {profile.availability && (
+              <Row label="Status">
+                <span className="inline-flex items-center gap-2">
+                  <span aria-hidden className="size-1.5 rounded-full bg-success" />
+                  {profile.availability}
+                </span>
+              </Row>
             )}
-          </div>
+            {skills.map((group) => (
+              <Row key={group.name} label={group.name}>
+                <span className="text-fg-muted">
+                  {group.items.map((item, index) => (
+                    <Fragment key={item}>
+                      {index > 0 && ' · '}
+                      <span
+                        className={
+                          highlighted.has(item) ? 'bg-accent-soft px-1 py-0.5 font-medium text-accent' : undefined
+                        }
+                      >
+                        {item}
+                      </span>
+                    </Fragment>
+                  ))}
+                </span>
+              </Row>
+            ))}
+            {timeline.map((entry) => (
+              <Row key={`${entry.org}-${entry.period}`} label={entry.period}>
+                <span className="font-medium">{entry.title}</span>
+                <span className="text-fg-muted"> · {entry.org}. {entry.summary}</span>
+              </Row>
+            ))}
+          </dl>
         </div>
+        {lens && (
+          <p className="label mt-4 text-right text-accent">
+            Highlighted: what {lens.label.toLowerCase()} roles ask for
+          </p>
+        )}
 
         {principles.length > 0 && (
-          <div className="mt-20">
-            <h3 className="eyebrow reveal mb-6">How I work</h3>
+          <div className="mt-24">
+            <p className="label reveal mb-8 flex items-center gap-4 text-fg-subtle">
+              <Scramble text="Operating principles" />
+              <span aria-hidden className="h-px flex-1 bg-border" />
+            </p>
             <ul className="grid gap-4 md:grid-cols-3">
               {principles.map((principle, index) => (
                 <PrincipleCard key={principle.title} principle={principle} index={index} query={query} />

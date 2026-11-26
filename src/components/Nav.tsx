@@ -16,8 +16,7 @@ const sections = [
 
 const shortcut = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/i.test(navigator.userAgent) ? '⌘K' : 'Ctrl K'
 
-const linkClass =
-  'rounded-md px-3 py-2 text-sm text-fg-muted transition-colors hover:bg-surface-2 hover:text-fg'
+const linkClass = 'label px-3 py-2 text-fg-muted transition-colors hover:text-fg'
 
 type Props = {
   theme: Theme
@@ -67,11 +66,11 @@ export function Nav({ theme, onToggleTheme, onOpenPalette }: Props) {
         >
           <span
             aria-hidden
-            className="grid size-7 place-items-center rounded-md bg-fg font-mono text-[11px] font-medium text-bg"
+            className="grid size-7 place-items-center bg-accent font-mono text-[11px] font-semibold text-accent-fg"
           >
             AY
           </span>
-          {site.profile.name}
+          <span className="display text-[0.95rem]">{site.profile.name}</span>
         </Link>
 
         <div className="flex items-center gap-1">
@@ -80,14 +79,14 @@ export function Nav({ theme, onToggleTheme, onOpenPalette }: Props) {
               <Link
                 to={`/work${query}`}
                 aria-current={onIndex ? 'page' : undefined}
-                className={`mr-1 inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition-colors ${
+                className={`label mr-2 inline-flex items-center gap-2 border px-3 py-2 transition-colors ${
                   onIndex
                     ? 'border-fg bg-fg text-bg'
                     : 'border-border bg-surface text-fg hover:border-border-strong'
                 }`}
               >
                 All work
-                <span className={`font-mono text-[0.6875rem] ${onIndex ? 'text-bg/70' : 'text-fg-subtle'}`}>
+                <span className={onIndex ? 'text-bg/70' : 'text-accent'}>
                   {site.projects.length}
                 </span>
               </Link>
@@ -118,7 +117,7 @@ export function Nav({ theme, onToggleTheme, onOpenPalette }: Props) {
             onClick={onOpenPalette}
             aria-label="Search the site"
             aria-keyshortcuts="Meta+K Control+K"
-            className="ml-2 inline-flex h-9 items-center gap-2 rounded-md border border-border bg-surface px-2.5 text-sm text-fg-muted transition-colors hover:border-border-strong hover:text-fg"
+            className="ml-2 inline-flex h-9 items-center gap-2 border border-border bg-surface px-2.5 text-sm text-fg-muted transition-colors hover:border-border-strong hover:text-fg"
           >
             <Search className="size-4" aria-hidden />
             <span className="hidden lg:inline">Search</span>

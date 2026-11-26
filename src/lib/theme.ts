@@ -4,10 +4,6 @@ export type Theme = 'light' | 'dark'
 
 const STORAGE_KEY = 'portfolio-theme'
 
-function systemTheme(): Theme {
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-}
-
 /** Storage can throw (private mode, blocked site data), so every access is guarded. */
 function readStored(): Theme | null {
   try {
@@ -26,8 +22,9 @@ function store(theme: Theme) {
   }
 }
 
+/** Dark is the site's look; light ("paper") only when the visitor picks it. */
 export function readStoredTheme(): Theme {
-  return readStored() ?? systemTheme()
+  return readStored() ?? 'dark'
 }
 
 function apply(theme: Theme) {
@@ -40,17 +37,6 @@ export function useTheme() {
   useEffect(() => {
     apply(theme)
   }, [theme])
-
-  // Follow the OS only while the visitor has not made an explicit choice. The
-  // choice is only stored when they press the toggle, so this keeps working.
-  useEffect(() => {
-    const media = window.matchMedia('(prefers-color-scheme: dark)')
-    const onChange = () => {
-      if (!readStored()) setTheme(media.matches ? 'dark' : 'light')
-    }
-    media.addEventListener('change', onChange)
-    return () => media.removeEventListener('change', onChange)
-  }, [])
 
   const toggle = useCallback(() => {
     const next = theme === 'dark' ? 'light' : 'dark'

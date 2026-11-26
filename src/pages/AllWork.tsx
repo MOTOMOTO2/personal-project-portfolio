@@ -60,9 +60,14 @@ export function AllWork() {
           Home
         </Link>
 
-        <header className="reveal mt-8 max-w-3xl">
-          <p className="eyebrow">Index</p>
-          <h1 className="mt-4 text-[clamp(2.75rem,7vw,5rem)] leading-[0.95] font-semibold">
+        <header className="reveal mt-8 max-w-4xl">
+          <p className="label flex items-center gap-4 text-fg-subtle">
+            <span className="text-accent">[→]</span>
+            Index
+            <span aria-hidden className="h-px flex-1 bg-border" />
+            {site.projects.length} projects
+          </p>
+          <h1 className="display mt-7 text-[clamp(2.75rem,7.5vw,6rem)] leading-[0.92]">
             <Emphasis text="Everything I've *built*" />
           </h1>
           <p className="mt-6 text-lg leading-relaxed text-fg-muted">
@@ -81,14 +86,14 @@ export function AllWork() {
                 type="button"
                 aria-pressed={active}
                 onClick={() => choose(category.id)}
-                className={`inline-flex h-9 items-center gap-2 rounded-full border px-4 text-sm transition-colors ${
+                className={`inline-flex h-9 items-center gap-2 border px-3.5 font-mono text-[0.75rem] tracking-wide transition-colors ${
                   active
                     ? 'border-fg bg-fg text-bg'
                     : 'border-border bg-surface text-fg-muted hover:border-border-strong hover:text-fg'
                 }`}
               >
                 {category.label}
-                <span className={`font-mono text-xs ${active ? 'text-bg/70' : 'text-fg-subtle'}`}>{count}</span>
+                <span className={active ? 'text-bg/70' : 'text-accent'}>{count}</span>
               </button>
             )
           })}
@@ -114,17 +119,17 @@ export function AllWork() {
                   loading="lazy"
                   className="aspect-16/10 w-full rounded-md border border-border object-cover sm:hidden"
                 />
-                <span aria-hidden className="hidden font-mono text-sm text-fg-subtle tabular-nums sm:block">
+                <span aria-hidden className="label hidden text-fg-subtle tabular-nums sm:block">
                   {String(index + 1).padStart(2, '0')}
                 </span>
 
                 <span className="min-w-0">
                   <span className="flex items-center gap-2.5">
-                    <span className="text-lg font-semibold tracking-tight transition duration-300 group-hover:translate-x-1 group-hover:text-accent sm:text-2xl">
+                    <span className="display text-lg transition duration-300 group-hover:translate-x-1 group-hover:text-accent sm:text-[1.65rem]">
                       {project.title}
                     </span>
                     {project.demo && (
-                      <span className="inline-flex items-center gap-1 rounded-full bg-accent-soft px-2 py-0.5 text-[0.6875rem] font-medium text-accent">
+                      <span className="label inline-flex items-center gap-1 bg-accent-soft px-1.5 py-0.5 text-accent">
                         <MousePointerClick className="size-3" aria-hidden />
                         demo
                       </span>
@@ -160,7 +165,7 @@ export function AllWork() {
       <div
         ref={previewRef}
         aria-hidden
-        className={`pointer-events-none fixed top-0 left-0 z-30 hidden w-80 overflow-hidden rounded-xl border border-border bg-surface-2 shadow-[0_30px_60px_-20px_rgb(0_0_0/0.45)] transition-opacity duration-200 [@media(hover:hover)]:lg:block ${
+        className={`pointer-events-none fixed top-0 left-0 z-30 hidden w-80 overflow-hidden rounded-md border border-border-strong bg-surface-2 shadow-[0_30px_60px_-20px_rgb(0_0_0/0.45)] transition-opacity duration-200 [@media(hover:hover)]:lg:block ${
           preview ? 'opacity-100' : 'opacity-0'
         }`}
       >

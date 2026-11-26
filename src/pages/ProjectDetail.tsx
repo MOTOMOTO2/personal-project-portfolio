@@ -48,8 +48,11 @@ export function ProjectDetail() {
         </Link>
 
         <header className="mt-8 max-w-3xl">
-          <p className="eyebrow">{project.tags.join(' · ')}</p>
-          <h1 className="mt-4 text-[clamp(2.5rem,6vw,4.25rem)] leading-[1] font-semibold">{project.title}</h1>
+          <p className="label flex items-center gap-3 text-fg-subtle">
+            <span className="text-accent">PRJ-{String(index + 1).padStart(2, '0')}</span>
+            {project.tags.join(' · ')}
+          </p>
+          <h1 className="display mt-5 text-[clamp(2.75rem,7vw,5.5rem)] leading-[0.92]">{project.title}</h1>
           <p className="mt-5 text-lg leading-relaxed text-fg-muted sm:text-xl">{project.blurb}</p>
 
           {(project.links.demo || project.links.repo || project.links.writeup || project.demo) && (
@@ -85,21 +88,21 @@ export function ProjectDetail() {
 
         <dl className="mt-12 grid grid-cols-2 gap-x-6 gap-y-5 border-y border-border py-6 sm:grid-cols-4">
           <div>
-            <dt className="text-xs text-fg-subtle">Timeline</dt>
+            <dt className="label text-fg-subtle">Timeline</dt>
             <dd className="mt-1 text-sm font-medium">{project.period}</dd>
           </div>
           <div>
-            <dt className="text-xs text-fg-subtle">Role</dt>
+            <dt className="label text-fg-subtle">Role</dt>
             <dd className="mt-1 text-sm font-medium">{project.role}</dd>
           </div>
           <div>
-            <dt className="text-xs text-fg-subtle">Status</dt>
+            <dt className="label text-fg-subtle">Status</dt>
             <dd className="mt-1.5">
               <StatusPill status={project.status} />
             </dd>
           </div>
           <div>
-            <dt className="text-xs text-fg-subtle">Main stack</dt>
+            <dt className="label text-fg-subtle">Main stack</dt>
             <dd className="mt-1 text-sm font-medium">{project.tech.slice(0, 3).join(', ')}</dd>
           </div>
         </dl>
@@ -123,7 +126,7 @@ export function ProjectDetail() {
 
         <div className="mt-16 grid gap-12 lg:grid-cols-12 lg:gap-14">
           <div className="reveal lg:col-span-7">
-            <h2 className="eyebrow mb-5">Overview</h2>
+            <h2 className="label mb-5 text-accent">Overview</h2>
             <div className="space-y-5 text-[1.0625rem] leading-relaxed text-fg-muted">
               {project.description.map((paragraph) => (
                 <p key={paragraph.slice(0, 32)}>{paragraph}</p>
@@ -134,7 +137,7 @@ export function ProjectDetail() {
           <aside className="reveal space-y-10 self-start lg:col-span-4 lg:col-start-9">
             {project.highlights.length > 0 && (
               <div>
-                <h2 className="eyebrow mb-4">Highlights</h2>
+                <h2 className="label mb-4 text-accent">Highlights</h2>
                 <ul className="space-y-3 text-sm">
                   {project.highlights.map((highlight) => (
                     <li key={highlight} className="flex gap-2.5">
@@ -146,7 +149,7 @@ export function ProjectDetail() {
               </div>
             )}
             <div>
-              <h2 className="eyebrow mb-4">Built with</h2>
+              <h2 className="label mb-4 text-accent">Built with</h2>
               <ul className="flex flex-wrap gap-1.5">
                 {project.tech.map((tech) => (
                   <li
@@ -163,8 +166,8 @@ export function ProjectDetail() {
 
         {project.demo && Demo && (
           <section aria-labelledby="demo" className="mt-20">
-            <p className="eyebrow mb-3">Try it</p>
-            <h2 id="demo" className="scroll-mt-24 text-2xl font-semibold sm:text-3xl">
+            <p className="label mb-3 text-accent">Try it</p>
+            <h2 id="demo" className="display scroll-mt-24 text-3xl sm:text-4xl">
               {project.demo.title}
             </h2>
             <p className="mt-3 max-w-2xl leading-relaxed text-fg-muted">{project.demo.teaser}</p>
@@ -179,7 +182,7 @@ export function ProjectDetail() {
 
         {project.gallery.length > 0 && (
           <section className="mt-20">
-            <h2 className="eyebrow mb-6">Screenshots</h2>
+            <h2 className="label mb-6 text-accent">Screenshots</h2>
             <ul className={`grid gap-6 ${project.gallery.length > 1 ? 'sm:grid-cols-2' : ''}`}>
               {project.gallery.map((image, galleryIndex) => (
                 <li key={image.src} className="reveal">

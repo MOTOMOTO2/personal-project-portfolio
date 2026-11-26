@@ -1,10 +1,11 @@
-import { ArrowUpRight, Check, Copy, FileText, Mail } from 'lucide-react'
+import { ArrowUpRight, Check, Copy, FileText } from 'lucide-react'
 import { useState } from 'react'
 import { site } from '../data/site'
 import { socialIcons } from '../lib/social-icons'
 import { Emphasis } from './Emphasis'
+import { Scramble } from './Scramble'
 
-/** The closing panel: dark in both themes, one clear thing to do. */
+/** The close: one big line, and the email address as the biggest thing on it. */
 export function Contact() {
   const { profile } = site
   const [copied, setCopied] = useState(false)
@@ -16,93 +17,71 @@ export function Contact() {
       setCopied(true)
       window.setTimeout(() => setCopied(false), 2000)
     } catch {
-      // Clipboard can be blocked; the mailto button beside this still works.
+      // Clipboard can be blocked; the mailto link above still works.
     }
   }
 
   return (
-    <section className="py-20 sm:py-28">
+    <section className="relative isolate overflow-hidden border-t border-border py-24 sm:py-32">
+      <div aria-hidden className="hero-glow absolute inset-0 -z-10 opacity-90" />
+      <div aria-hidden className="hero-grid absolute inset-0 -z-10 opacity-40" />
+
       <div className="container-page">
-        <div className="reveal relative overflow-hidden rounded-[2rem] border border-ink-border bg-ink px-6 py-16 text-white sm:px-14 sm:py-20">
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 bg-[radial-gradient(36rem_22rem_at_85%_0%,hsl(18_100%_55%/0.28),transparent_70%),radial-gradient(28rem_18rem_at_0%_100%,hsl(18_100%_55%/0.14),transparent_70%)]"
-          />
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgb(255_255_255/0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgb(255_255_255/0.05)_1px,transparent_1px)] bg-[size:48px_48px] [mask-image:radial-gradient(ellipse_70%_80%_at_70%_0%,black,transparent)]"
-          />
+        <p className="label reveal flex items-center gap-4 text-fg-subtle">
+          <span className="text-accent">[04]</span>
+          <Scramble text="Contact" />
+          <span aria-hidden className="h-px flex-1 bg-border" />
+          <span>Barrie, ON</span>
+        </p>
 
-          <div className="relative max-w-2xl">
-            <p className="flex items-center gap-3 font-mono text-xs font-medium tracking-[0.08em] text-white/55 uppercase">
-              <span className="text-[#ff8a5c]">04</span>
-              <span aria-hidden className="h-px w-8 bg-white/25" />
-              Contact
-            </p>
-            <h2 id="contact" className="mt-4 scroll-mt-24 text-[clamp(2.25rem,5vw,3.75rem)] leading-[1.02] font-semibold">
-              <span className="[&_.serif-accent]:text-[#ff8a5c]">
-                <Emphasis text="Let's build something that *keeps working*." />
-              </span>
-            </h2>
-            <p className="mt-6 text-lg leading-relaxed text-white/70">
-              I'm looking for internship and co-op roles in software development. If you're hiring, or want to hear
-              more about any of these projects, send me an email.
-            </p>
+        <h2 id="contact" className="display reveal mt-8 max-w-5xl scroll-mt-24 text-[clamp(2.5rem,6.4vw,5.75rem)] leading-[0.95]">
+          <Emphasis text="Let's build something that *keeps working*." />
+        </h2>
+        <p className="reveal mt-6 max-w-xl text-lg leading-relaxed text-fg-muted">
+          I'm looking for internship and co-op roles in software development. If you're hiring, or want to hear more
+          about any of these projects, send me an email.
+        </p>
 
-            <div className="mt-10 flex flex-wrap items-center gap-2.5">
-              <a
-                href={`mailto:${profile.email}`}
-                className="btn h-12 bg-[#ff6a33] px-5 text-[0.9375rem] text-[#1a0d06] shadow-[0_10px_30px_-10px_#ff6a33] hover:bg-[#ff7a47]"
-              >
-                <Mail className="size-4" aria-hidden />
-                {profile.email}
+        <a
+          href={`mailto:${profile.email}`}
+          aria-label={profile.email}
+          className="group reveal mt-14 block border-y border-border py-7 transition-colors hover:border-accent/60 sm:py-9"
+        >
+          <span aria-hidden className="label text-fg-subtle">
+            Email
+          </span>
+          <span aria-hidden className="mt-3 flex items-center justify-between gap-6">
+            <span className="display text-[clamp(1.25rem,4.6vw,4rem)] leading-none [overflow-wrap:anywhere] transition-colors duration-300 group-hover:text-accent">
+              {profile.email}
+            </span>
+            <ArrowUpRight className="size-8 shrink-0 text-fg-subtle transition duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-accent sm:size-14" />
+          </span>
+        </a>
+
+        <div className="reveal mt-6 flex flex-wrap items-center gap-2">
+          <button type="button" onClick={copyEmail} className="btn btn-secondary h-11">
+            {copied ? <Check className="size-4 text-success" aria-hidden /> : <Copy className="size-4" aria-hidden />}
+            {copied ? 'Copied' : 'Copy address'}
+          </button>
+          <p aria-live="polite" className="sr-only">
+            {copied ? 'Email address copied to clipboard' : ''}
+          </p>
+          {elsewhere.map((social) => {
+            const Icon = socialIcons[social.icon]
+            return (
+              <a key={social.label} href={social.href} target="_blank" rel="noreferrer" className="btn btn-secondary h-11">
+                <Icon className="size-4" aria-hidden />
+                {social.label}
+                <ArrowUpRight className="size-3.5 text-fg-subtle" aria-hidden />
               </a>
-              <button
-                type="button"
-                onClick={copyEmail}
-                aria-label="Copy email address"
-                className="btn btn-icon h-12 w-12 border-white/15 bg-white/5 text-white hover:bg-white/10"
-              >
-                {copied ? <Check className="size-4 text-emerald-400" aria-hidden /> : <Copy className="size-4" aria-hidden />}
-              </button>
-              <p aria-live="polite" className="sr-only">
-                {copied ? 'Email address copied to clipboard' : ''}
-              </p>
-            </div>
-
-            <ul className="mt-6 flex flex-wrap items-center gap-2">
-              {elsewhere.map((social) => {
-                const Icon = socialIcons[social.icon]
-                return (
-                  <li key={social.label}>
-                    <a
-                      href={social.href}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="btn h-10 border-white/15 bg-white/5 text-white/85 hover:bg-white/10 hover:text-white"
-                    >
-                      <Icon className="size-4" aria-hidden />
-                      {social.label}
-                      <ArrowUpRight className="size-3.5 text-white/50" aria-hidden />
-                    </a>
-                  </li>
-                )
-              })}
-              {profile.resume && (
-                <li>
-                  <a
-                    href={profile.resume}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="btn h-10 border-white/15 bg-white/5 text-white/85 hover:bg-white/10 hover:text-white"
-                  >
-                    <FileText className="size-4" aria-hidden />
-                    Résumé
-                  </a>
-                </li>
-              )}
-            </ul>
-          </div>
+            )
+          })}
+          {profile.resume && (
+            <a href={profile.resume} target="_blank" rel="noreferrer" className="btn btn-secondary h-11">
+              <FileText className="size-4" aria-hidden />
+              Résumé
+            </a>
+          )}
         </div>
       </div>
     </section>
