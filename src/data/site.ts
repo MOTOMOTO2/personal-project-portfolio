@@ -528,11 +528,11 @@ const data: SiteData = {
       ],
       period: 'Oct 2026',
       role: 'Solo',
-      status: 'Complete',
+      status: 'Live',
       featured: false,
       tags: ['Game', 'Real-time'],
       tech: ['JavaScript', 'Node.js', 'WebSockets', 'node:test', 'Puppeteer'],
-      links: { repo: GH + 'online-multiplayer-party-game' },
+      links: { demo: 'https://bluffalo-party.fly.dev', repo: GH + 'online-multiplayer-party-game' },
       cover: {
         src: 'images/bluffalo-cover.jpg',
         alt: 'Three phone screens: the home page with the rules, picking the true answer, and the round results',
