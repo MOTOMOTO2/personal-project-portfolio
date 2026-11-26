@@ -57,7 +57,10 @@ export function clickName(href: string, host: string): string | null {
   if (!/^https?:\/\//.test(href)) return null
   const url = new URL(href)
   if (url.host === host) return null
-  if (url.host === 'github.com') return `click: github${url.pathname === '/MOTOMOTO2' ? ' profile' : ''}`
+  if (url.host === 'github.com') {
+    // github.com/<user> is the profile; anything deeper is a repository.
+    return url.pathname.split('/').filter(Boolean).length === 1 ? 'click: github profile' : 'click: github'
+  }
   if (url.host.endsWith('linkedin.com')) return 'click: linkedin'
   return `click: ${url.host}`
 }

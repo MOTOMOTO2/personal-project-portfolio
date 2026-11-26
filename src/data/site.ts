@@ -12,16 +12,16 @@ import type { SiteData } from './types'
  */
 
 /** The public repository for this site, linked from the footer. */
-export const SOURCE_URL = 'https://github.com/MOTOMOTO2/personal-project-portfolio'
+export const SOURCE_URL = 'https://github.com/adenyadegar/personal-project-portfolio'
 
 /**
  * Where the site lives. Link previews and canonical URLs are built from it
  * (scripts/route-pages.mjs, and the og: tags in index.html); change both if
  * the site moves, e.g. to a custom domain.
  */
-export const SITE_URL = 'https://motomoto2.github.io/personal-project-portfolio/'
+export const SITE_URL = 'https://adenyadegar.github.io/personal-project-portfolio/'
 
-const GH = 'https://github.com/MOTOMOTO2/'
+const GH = 'https://github.com/adenyadegar/'
 
 const data: SiteData = {
   profile: {
@@ -46,7 +46,7 @@ const data: SiteData = {
     resume: 'resume.pdf',
     availability: 'Open to internship and co-op roles',
     socials: [
-      { label: 'GitHub', href: 'https://github.com/MOTOMOTO2', icon: 'github' },
+      { label: 'GitHub', href: 'https://github.com/adenyadegar', icon: 'github' },
       { label: 'LinkedIn', href: 'https://www.linkedin.com/in/aden-yadegar-349063313', icon: 'linkedin' },
       { label: 'Email', href: 'mailto:aden.yadegar21@gmail.com', icon: 'mail' },
     ],
@@ -307,7 +307,7 @@ const data: SiteData = {
       featured: true,
       tags: ['AI', 'Full-stack', 'Real-time'],
       tech: ['JavaScript', 'Supabase', 'PostgreSQL', 'Vercel Functions', 'Vercel Sandbox', 'Claude Code', 'IndexedDB', 'PWA'],
-      links: { repo: 'https://github.com/MOTOMOTO2/claude-remote-dashboard' },
+      links: { repo: 'https://github.com/adenyadegar/claude-remote-dashboard' },
       cover: {
         src: 'images/claude-remote-cover.jpg',
         alt: 'Agents screen: one agent running, one paused on a usage limit, and usage meters in the sidebar',
@@ -756,7 +756,7 @@ const data: SiteData = {
       featured: false,
       tags: ['Frontend', 'Web app'],
       tech: ['TypeScript', 'React', 'WebGL', 'Vite', 'Tailwind CSS', 'React Router', 'Vitest', 'GitHub Actions'],
-      links: { demo: 'https://motomoto2.github.io/personal-project-portfolio/', repo: GH + 'personal-project-portfolio' },
+      links: { demo: 'https://adenyadegar.github.io/personal-project-portfolio/', repo: GH + 'personal-project-portfolio' },
       cover: {
         src: 'images/portfolio-home.jpg',
         alt: 'The home page of this portfolio: the name over a field of ember contour lines that bend around the cursor',
