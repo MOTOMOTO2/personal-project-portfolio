@@ -34,8 +34,12 @@ const server = createServer(async (request, response) => {
   const target = join(dist, normalize(relative).replace(/^(\.\.[/\\])+/, ''))
 
   try {
-    const info = await stat(target)
-    const file = info.isDirectory() ? join(target, 'index.html') : target
+    // Like GitHub Pages: /work is served from work.html when there is one.
+    const info = await stat(target).catch(async (error) => {
+      if (extname(target)) throw error
+      return stat(`${target}.html`).then(() => null)
+    })
+    const file = info === null ? `${target}.html` : info.isDirectory() ? join(target, 'index.html') : target
     response.writeHead(200, { 'Content-Type': types[extname(file)] ?? 'application/octet-stream' })
     response.end(await readFile(file))
   } catch {
@@ -72,12 +76,32 @@ if (assetMatch) await expectOk('entry JS loads', assetMatch[1])
 if (cssMatch) await expectOk('stylesheet loads', cssMatch[1])
 await expectOk('project image loads', `${base}images/revvault-cover.png`)
 await expectOk('favicon loads', `${base}favicon.svg`)
+await expectOk('résumé loads', `${base}resume.pdf`)
+await expectOk('link-preview image loads', `${base}images/og-cover.jpg`)
 
-// A deep link has no file on disk, so the host serves 404.html -- which must be
-// the app, otherwise refreshing a project page would show a blank 404.
-const deep = await fetch(`${origin}${base}projects/revvault`)
+// Routes with their own page: a 200 (not the 404 fallback) and their own
+// link-preview tags, so LinkedIn and Slack show the right card.
+const meta = (html, property) => html.match(new RegExp(`property="${property}"\\s+content="([^"]*)"`))?.[1] ?? ''
+for (const [path, expected] of [
+  ['projects/revvault', 'RevVault'],
+  ['work', 'All work'],
+]) {
+  const response = await fetch(`${origin}${base}${path}`)
+  const html = await response.text()
+  checks.push([`/${path} is served with a 200 (${response.status})`, response.status === 200])
+  checks.push([`/${path} has its own og:title`, meta(html, 'og:title').startsWith(expected)])
+  checks.push([`/${path} has an absolute og:image`, /^https:\/\//.test(meta(html, 'og:image'))])
+  checks.push([`/${path} is still the app`, html.includes('id="root"')])
+  // A relative favicon would resolve under /projects/ and 404.
+  const icon = html.match(/rel="icon"\s+href="([^"]+)"/)?.[1] ?? ''
+  checks.push([`/${path} links the favicon from the base`, icon.startsWith(base)])
+}
+
+// Any other deep link has no file on disk, so the host serves 404.html, which
+// must be the app, or refreshing it would show a blank 404.
+const deep = await fetch(`${origin}${base}projects/not-a-project`)
 const deepBody = await deep.text()
-checks.push(['deep link falls back to the app shell', deepBody.includes('id="root"')])
+checks.push(['other deep links fall back to the app shell', deepBody.includes('id="root"')])
 
 const assetPrefix = assetMatch?.[1] ?? ''
 checks.push([`assets use the "${base}" base`, assetPrefix.startsWith(base)])

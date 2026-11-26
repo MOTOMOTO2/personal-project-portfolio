@@ -147,4 +147,10 @@ export type SiteData = {
   projects: Project[]
   /** Free-form photo wall: build shots, event photos, whatever. */
   photos: Image[]
+  /**
+   * Privacy-friendly analytics (src/lib/analytics.ts). `goatcounter` is your
+   * code from goatcounter.com, e.g. "adenyadegar" for adenyadegar.goatcounter.com;
+   * null turns analytics off.
+   */
+  analytics: { goatcounter: string | null }
 }

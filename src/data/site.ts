@@ -14,28 +14,36 @@ import type { SiteData } from './types'
 /** The public repository for this site, linked from the footer. */
 export const SOURCE_URL = 'https://github.com/MOTOMOTO2/personal-project-portfolio'
 
+/**
+ * Where the site lives. Link previews and canonical URLs are built from it
+ * (scripts/route-pages.mjs, and the og: tags in index.html); change both if
+ * the site moves, e.g. to a custom domain.
+ */
+export const SITE_URL = 'https://motomoto2.github.io/personal-project-portfolio/'
+
 const GH = 'https://github.com/MOTOMOTO2/'
 
 const data: SiteData = {
   profile: {
     name: 'Aden Yadegar',
-    role: 'Full-stack developer',
+    role: 'Full-stack developer · Software Engineering student',
     headline: 'I build software that *keeps working* when the signal drops, a server fails, or two people click at once.',
     tagline:
       'I design, build and deploy complete products: a used-car search engine running in production, a course planner that reads syllabi with Claude, and a clinic-booking app I’m building with a team.',
     about: [
-      "I'm a student at Lakehead University's Barrie campus, and most of what I build starts as a problem in my own week: a project car I couldn't find parts for, deadlines my course site didn't show me, or wanting to start a coding project from my phone.",
+      "I'm in my first year of Software Engineering at Lakehead University's Barrie campus, after a year of Computer Engineering at Toronto Metropolitan University, and most of what I build starts as a problem in my own week: a project car I couldn't find parts for, deadlines my course site didn't show me, or wanting to start a coding project from my phone.",
       'I like taking an idea all the way to something live. RevVault runs in production with Google sign-in, Stripe subscriptions, scheduled jobs and error monitoring. Several of my projects use Claude for the parts that need judgement, like reading a syllabus PDF or answering a hard question about a codebase, and the parts that have to be exactly right, like sync conflicts or push encryption, have tests that prove it.',
       "I also build with other people. On Care Track, a clinic-booking app with two other students, I've written the database schema, the booking rules, an audit log, the email notifications and the admin tools, then tried to break it all with a security pass, all through pull requests on a shared repository. I'm looking for an internship or co-op where I can do that on a larger codebase.",
     ],
     facts: [
-      { label: 'Based in', value: 'Ontario, Canada' },
-      { label: 'Studying at', value: 'Lakehead University, Barrie' },
+      { label: 'Based in', value: 'Barrie, Ontario' },
+      { label: 'Studying', value: 'B.Eng. Software Engineering, Lakehead University (first year, to 2030)' },
       { label: 'Focus', value: 'Full-stack web, offline and real-time sync, AI tooling' },
       { label: 'Main languages', value: 'TypeScript, C#, Python, SQL' },
+      { label: 'Speaks', value: 'English, Spanish (fluent), French (advanced)' },
     ],
     email: 'aden.yadegar21@gmail.com',
-    resume: null,
+    resume: 'resume.pdf',
     availability: 'Open to internship and co-op roles',
     socials: [
       { label: 'GitHub', href: 'https://github.com/MOTOMOTO2', icon: 'github' },
@@ -173,7 +181,20 @@ const data: SiteData = {
     },
   ],
 
-  timeline: [],
+  timeline: [
+    {
+      period: '2025 – 2026',
+      title: 'Computer Engineering',
+      org: 'Toronto Metropolitan University',
+      summary: 'One year, with the credits transferred to Lakehead: circuits, calculus, waves and fields.',
+    },
+    {
+      period: '2022 – now',
+      title: 'Line cook',
+      org: 'five Barrie-area kitchens',
+      summary: 'Fine dining to high-volume service, working to spec under time pressure, alongside school.',
+    },
+  ],
 
   projects: [
     // ---- Featured: shown as large rows under "Selected work" ----------------
@@ -722,9 +743,10 @@ const data: SiteData = {
       slug: 'portfolio',
       title: 'This portfolio',
       blurb:
-        "The site you're on: a hiring lens that retailors the page for a role, working models of four projects' hardest problems, and ⌘K search, all driven by one content file.",
+        "The site you're on: a hand-written WebGL hero that reacts to the cursor, a hiring lens that retailors the page for a role, and working models of four projects' hardest problems.",
       description: [
-        'A React and TypeScript site where one file, src/data/site.ts, holds every word, project and screenshot, so adding a project never means touching a component. It builds to static files and is deployed to GitHub Pages by GitHub Actions on every push, after lint, the tests and a smoke test of the built output.',
+        "The look is called Signal. The hero is a fragment shader I wrote in raw WebGL2: topographic contour lines that drift and bend around the pointer like a lens, drawn in the theme's own colours, paused off screen and turned down on slow machines. Selected work pins a screen on the right that wipes in each project's screenshots as you scroll past it.",
+        'Underneath, it is a React and TypeScript site where one file, src/data/site.ts, holds every word, project and screenshot, so adding a project never means touching a component. It builds to static files and is deployed to GitHub Pages by GitHub Actions on every push, after lint, the tests and a smoke test of the built output.',
         "Most of it is about the person reading it. Picking a role under “Hiring for” swaps in the projects that matter for that job and highlights the matching skills, and the choice lives in the URL, so a tailored view is a link I can send. Four projects carry a small working model of the problem they solve, built from that project's own rules and tested against them. ⌘K finds projects by the technology they use, and the All work page lists everything with a filter for each kind.",
         "The numbers in the hero are counted from the content rather than typed in, so they can't drift out of date, and the tests check that every image exists, every link is well-formed, and no project page shows the same screenshot twice.",
       ],
@@ -733,13 +755,18 @@ const data: SiteData = {
       status: 'Live',
       featured: false,
       tags: ['Frontend', 'Web app'],
-      tech: ['TypeScript', 'React', 'Vite', 'Tailwind CSS', 'React Router', 'Vitest', 'GitHub Actions'],
+      tech: ['TypeScript', 'React', 'WebGL', 'Vite', 'Tailwind CSS', 'React Router', 'Vitest', 'GitHub Actions'],
       links: { demo: 'https://motomoto2.github.io/personal-project-portfolio/', repo: GH + 'personal-project-portfolio' },
       cover: {
         src: 'images/portfolio-home.jpg',
-        alt: 'The home page of this portfolio: name, headline, stats and a terminal of project events',
+        alt: 'The home page of this portfolio: the name over a field of ember contour lines that bend around the cursor',
       },
       gallery: [
+        {
+          src: 'images/portfolio-work.jpg',
+          alt: "Selected work: a project's write-up on the left and its screenshot on a pinned, tilting screen on the right",
+          caption: 'Selected work: the project in the middle of the screen takes over the stage, with its screenshots cycling.',
+        },
         {
           src: 'images/portfolio-index.jpg',
           alt: 'The All work page: filters, a list of every project, and a hovered project’s cover floating beside the pointer',
@@ -752,15 +779,18 @@ const data: SiteData = {
         },
       ],
       highlights: [
-        'Content, rendered pages and the demo models all under test, run by CI before every deploy',
+        'Hero shader written by hand in raw WebGL2, with no library, following the cursor',
         'Hiring lens: a tailored view of the page for each role, shareable as a link',
         'Working models of four projects’ hardest problems, built from their real rules',
-        'Hero numbers derived from the content, so they never go stale',
+        'Every page has its own link preview; CI deploys only after the tests pass',
       ],
     },
   ],
 
   photos: [],
+
+  // Sign up free at goatcounter.com, then put your code here, e.g. 'adenyadegar'.
+  analytics: { goatcounter: null },
 }
 
 /** Asset paths are resolved against the deploy base; see src/lib/assets.ts. */

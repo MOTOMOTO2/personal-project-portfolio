@@ -3,6 +3,7 @@ import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { asset } from '../lib/assets'
 import { heroStats, testCount } from '../lib/stats'
+import { clickName, viewPath } from '../lib/analytics'
 import { CATEGORIES, inCategory, newestFirst, periodEnd } from '../lib/work'
 import { site } from './site'
 
@@ -225,5 +226,29 @@ describe('all work ordering and filters', () => {
       const kinds = CATEGORIES.filter((category) => category.id !== 'all' && inCategory(project, category.id))
       expect(kinds.length, project.slug).toBeGreaterThan(0)
     }
+  })
+})
+
+describe('analytics', () => {
+  it('uses a valid GoatCounter code when one is set', () => {
+    const code = site.analytics.goatcounter
+    if (code !== null) expect(code).toMatch(/^[a-z0-9-]+$/)
+  })
+
+  it('names the clicks worth counting and ignores the rest', () => {
+    const host = 'motomoto2.github.io'
+    expect(clickName('mailto:a@b.c', host)).toBe('click: email')
+    expect(clickName('/personal-project-portfolio/resume.pdf', host)).toBe('click: résumé')
+    expect(clickName('https://github.com/MOTOMOTO2', host)).toBe('click: github profile')
+    expect(clickName('https://www.linkedin.com/in/x', host)).toBe('click: linkedin')
+    expect(clickName('https://revvault.ca', host)).toBe('click: revvault.ca')
+    expect(clickName('/projects/tally', host)).toBeNull()
+    expect(clickName(`https://${host}/work`, host)).toBeNull()
+  })
+
+  it('keeps the hiring lens and filter in a page view, and nothing else', () => {
+    expect(viewPath('/', '?for=backend&utm_source=x')).toBe('/?for=backend')
+    expect(viewPath('/work', '?type=games')).toBe('/work?type=games')
+    expect(viewPath('/projects/tally', '?ref=abc')).toBe('/projects/tally')
   })
 })

@@ -98,8 +98,13 @@ Everything below happens in `src/data/site.ts` unless noted.
    `facts` (the "Based in" one is shown beside the role), the `about`
    paragraphs, email and socials. Set
    `availability: null` to hide the green "open to roles" line.
-2. **Résumé** — drop a PDF in `public/` and set `resume: 'resume.pdf'`. A
-   button appears in the nav, the hero and the contact section. `null` hides it.
+2. **Résumé** — the source is [`resume/resume.html`](resume/resume.html);
+   `npm run resume` prints it to `public/resume.pdf` with headless Chrome (set
+   `CHROME` if it is not in the usual macOS place). `resume: 'resume.pdf'` in
+   the profile shows a button in the nav, the hero, the contact section and
+   ⌘K; `null` hides them. The phone number is deliberately not in the repo or
+   on the site. For a copy to send directly:
+   `RESUME_PHONE="(905) …" RESUME_OUT="$HOME/Documents/Aden Yadegar - Resume.pdf" npm run resume`.
 3. **Projects** — one object per project in the `projects` array, shown in
    array order:
    - `featured: true` puts a project in "Selected work" as a large row. Keep the
@@ -136,14 +141,25 @@ Everything below happens in `src/data/site.ts` unless noted.
    register both there.
 8. **Photo wall** — the `photos` array feeds an optional Gallery section. It is
    empty now, so the section and its nav link are hidden.
-9. **Experience** — `timeline` entries appear under the skills in the About
-   section. Empty hides it.
-10. **Page title and link preview** — `index.html` holds the `<title>`, the meta
-   description, and the Open Graph tags that LinkedIn and Slack read.
-   `og:image` must be an absolute URL to a PNG or JPG
-   (`public/images/og-cover.png`, 1200×630); update it if the site moves to a
-   new domain.
-11. **Colours** — `src/index.css` defines the palette as CSS variables at the
+9. **Experience** — `timeline` entries (study and work) appear as rows in the
+   About spec sheet. Empty hides them.
+10. **Page title and link previews** — `index.html` holds the home page's
+   `<title>`, description and Open Graph tags, with
+   `public/images/og-cover.jpg` (1200×630) as its card. Every other route gets
+   its own card: after the build, `scripts/route-pages.mjs` writes
+   `dist/work.html` and `dist/projects/<slug>.html` with that page's title,
+   blurb and cover, so a shared project link shows that project. If the site
+   moves (say, to a custom domain), change `SITE_URL` in `site.ts` and the
+   absolute URLs in `index.html` together.
+11. **Analytics** — `analytics.goatcounter` turns on
+   [GoatCounter](https://www.goatcounter.com): no cookies, no personal data,
+   no consent banner. Sign up (free), pick a code, and set it, e.g.
+   `analytics: { goatcounter: 'adenyadegar' }`. It counts page views,
+   keeping `?for=` and `?type=` so a tailored link shows up on its own, and
+   clicks on email, résumé, GitHub, LinkedIn and live-site links. It is off in
+   development and tests, and for visitors who send Do Not Track or Global
+   Privacy Control.
+12. **Colours** — `src/index.css` defines the palette as CSS variables at the
    top, once for light mode and once for `.dark`. Change `--accent` and the
    links, focus rings and highlight ticks follow.
 
@@ -176,10 +192,11 @@ directory `dist`. No base path needed, and these hosts handle deep links
 themselves.
 
 Because the site uses real paths rather than `#` routes, a static host needs to
-serve the app for unknown URLs or refreshing `/projects/revvault` would 404. The
-build writes `dist/404.html` as a copy of `index.html`, which is exactly what
-GitHub Pages falls back to. On hosts that rewrite on their own it is just an
-unused extra file.
+serve the app for every route. `/work` and every `/projects/<slug>` have their
+own HTML file (see link previews above), which GitHub Pages serves with a 200.
+Anything else falls back to `dist/404.html`, a copy of `index.html`, which is
+exactly what GitHub Pages serves for a missing path. On hosts that rewrite on
+their own these are just unused extra files.
 
 ## How it is put together
 
@@ -217,6 +234,7 @@ src/
     assets.ts        prefixes image paths with the deploy base
     theme.ts         dark by default; the toggle switches to "paper" and remembers
     media.ts, clock.ts  a live media-query hook; a ticking clock in a time zone
+    analytics.ts     GoatCounter page views and key clicks, off without a code
     lens.ts          the ?for= hiring lens: read, set, carry onto links
     stats.ts         the hero numbers, derived from the projects
     work.ts          the All work filters (from project tags) and newest-first order
@@ -228,6 +246,8 @@ src/
   App.test.tsx       renders the real pages and asserts the content shows up
 scripts/
   copy-spa-fallback.mjs       dist/index.html -> dist/404.html
+  route-pages.mjs             a page per route, each with its own link preview
+  build-resume.mjs            resume/resume.html -> public/resume.pdf
   verify-dist.mjs             serves dist/ and smoke-tests it
 ```
 

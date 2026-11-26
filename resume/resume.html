@@ -1,0 +1,302 @@
+<!doctype html>
+<!--
+  The résumé. `npm run resume` prints it to public/resume.pdf (the copy the
+  site links to). The phone number is not in this file on purpose: the site
+  and this repo are public. For a copy to send directly, with the number:
+
+    RESUME_PHONE="(905) 000-0000" RESUME_OUT="$HOME/Documents/Aden Yadegar - Resume.pdf" npm run resume
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Aden Yadegar — Résumé</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=block"
+      rel="stylesheet"
+    />
+    <style>
+      @page {
+        size: Letter;
+        margin: 0.42in 0.5in 0.4in;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      body {
+        margin: 0;
+        font-family: Geist, 'Helvetica Neue', Arial, sans-serif;
+        font-size: 8.9pt;
+        line-height: 1.36;
+        color: #1b1714;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        gap: 18pt;
+        padding-bottom: 7pt;
+        border-bottom: 1.4pt solid #1b1714;
+      }
+      h1 {
+        margin: 0;
+        font-family: Archivo, Geist, sans-serif;
+        font-stretch: 118%;
+        font-weight: 800;
+        font-size: 21pt;
+        letter-spacing: -0.03em;
+        line-height: 1;
+        text-transform: uppercase;
+      }
+      .role {
+        margin-top: 3pt;
+        font-size: 9.5pt;
+        font-weight: 500;
+        color: #b4400f;
+      }
+      .contact {
+        text-align: right;
+        font-family: 'Geist Mono', ui-monospace, monospace;
+        font-size: 7.6pt;
+        line-height: 1.5;
+        color: #4a433d;
+      }
+      h2 {
+        margin: 8.5pt 0 4pt;
+        font-family: 'Geist Mono', ui-monospace, monospace;
+        font-size: 7.6pt;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #b4400f;
+        display: flex;
+        align-items: center;
+        gap: 7pt;
+      }
+      h2::after {
+        content: '';
+        flex: 1;
+        height: 0.6pt;
+        background: #d9d1c9;
+      }
+      .entry {
+        margin-bottom: 4pt;
+        break-inside: avoid;
+      }
+      .line {
+        display: flex;
+        justify-content: space-between;
+        gap: 10pt;
+      }
+      .title {
+        font-weight: 600;
+      }
+      .title .what {
+        font-weight: 400;
+        color: #4a433d;
+      }
+      .when {
+        flex-shrink: 0;
+        font-family: 'Geist Mono', ui-monospace, monospace;
+        font-size: 7.6pt;
+        color: #5e5650;
+      }
+      .stack {
+        font-family: 'Geist Mono', ui-monospace, monospace;
+        font-size: 7.3pt;
+        color: #6b625b;
+        margin-top: 0.5pt;
+      }
+      ul {
+        margin: 2pt 0 0;
+        padding-left: 11pt;
+      }
+      li {
+        margin-bottom: 1.2pt;
+      }
+      li::marker {
+        color: #b4400f;
+      }
+      .skills {
+        display: grid;
+        grid-template-columns: 7.2em 1fr;
+        gap: 1.5pt 10pt;
+      }
+      .skills dt {
+        font-weight: 600;
+      }
+      .skills dd {
+        margin: 0;
+      }
+      .more {
+        margin-top: 3pt;
+        color: #4a433d;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div>
+        <h1>Aden Yadegar</h1>
+        <div class="role">Software Engineering student · Full-stack developer</div>
+      </div>
+      <div class="contact">
+        Barrie, ON · <a href="mailto:aden.yadegar21@gmail.com">aden.yadegar21@gmail.com</a><!--PHONE--><br />
+        <a href="https://motomoto2.github.io/personal-project-portfolio/">motomoto2.github.io/personal-project-portfolio</a><br />
+        <a href="https://github.com/MOTOMOTO2">github.com/MOTOMOTO2</a> ·
+        <a href="https://www.linkedin.com/in/aden-yadegar-349063313">linkedin.com/in/aden-yadegar-349063313</a>
+      </div>
+    </header>
+
+    <h2>Education</h2>
+    <div class="entry">
+      <div class="line">
+        <span class="title">Lakehead University, Barrie <span class="what">· B.Eng., Software Engineering (first year)</span></span>
+        <span class="when">Sep 2026 – 2030 (expected)</span>
+      </div>
+    </div>
+    <div class="entry">
+      <div class="line">
+        <span class="title">Toronto Metropolitan University <span class="what">· Computer Engineering, one year; credits transferred</span></span>
+        <span class="when">2025 – 2026</span>
+      </div>
+      <div class="more">Coursework: Electric Circuits, Calculus II, Waves and Fields</div>
+    </div>
+
+    <h2>Projects</h2>
+    <div class="entry">
+      <div class="line">
+        <span class="title">RevVault <span class="what">· used-car search and parts finder, live at revvault.ca</span></span>
+        <span class="when">Jan 2026 – present</span>
+      </div>
+      <div class="stack">C#, ASP.NET Core, EF Core, React, TypeScript, PostgreSQL, Docker, Google Cloud Run, Stripe</div>
+      <ul>
+        <li>
+          Built and run solo in production: one search across Kijiji, AutoTrader and eBay in parallel, duplicates
+          merged, every price rated against similar cars nearby, and parts for the car across a dozen retailers.
+        </li>
+        <li>
+          Reverse-engineered RockAuto's catalogue API (cookies, model slugs, trim matching); NHTSA vPIC for make and
+          model data, the eBay Browse API for price alerts.
+        </li>
+        <li>
+          Google sign-in, Stripe subscriptions, Sentry, per-session rate limits on the AI assistant; scheduled
+          price-drop emails and source health checks on GitHub Actions, which also deploys every push. 358 commits.
+        </li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="line">
+        <span class="title">Care Track <span class="what">· clinic-booking web app, team of three</span></span>
+        <span class="when">Sep 2026 – present</span>
+      </div>
+      <div class="stack">TypeScript, Next.js, PostgreSQL, Drizzle ORM, Better Auth, Vitest, Vercel</div>
+      <ul>
+        <li>
+          Wrote the schema, the booking flow and a PostgreSQL exclusion constraint that makes double-booking
+          impossible at the database level; an append-only audit log; admin tools and status emails.
+        </li>
+        <li>
+          Ran the access-control review: a test for every server action that signs in as the wrong user with someone
+          else's ids. It found two gaps, both fixed. All work through pull requests on a shared repository.
+        </li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="line">
+        <span class="title">Course Deadline Tracker <span class="what">· live on Fly.io</span></span>
+        <span class="when">Sep – Oct 2026</span>
+      </div>
+      <div class="stack">TypeScript, Node.js, Fastify, React, SQLite, Claude API, MCP, Web Push</div>
+      <ul>
+        <li>
+          Merges a Brightspace calendar feed with deadlines Claude reads out of syllabus PDFs into a strict JSON
+          schema (dates, weights, confidence), so students see what Brightspace missed and their weighted grade.
+        </li>
+        <li>
+          Reminders by phone, Discord and email; hand-written iCalendar parser and Web Push encryption; an MCP
+          connector lets Claude quiz students from their own lecture slides.
+        </li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="line">
+        <span class="title">Claude Remote <span class="what">· phone dashboard for AI coding agents (began as DevPilot, in Blazor)</span></span>
+        <span class="when">2026</span>
+      </div>
+      <div class="stack">JavaScript, Supabase, PostgreSQL, Vercel Functions and Sandbox, Claude Code CLI, PWA</div>
+      <ul>
+        <li>
+          Queue a coding job from the phone; up to six Claude Code agents run at once on my desktop, or in cloud
+          sandboxes when it is off, streaming their logs back live. One agent per project; sessions resume.
+        </li>
+        <li>
+          Outbound-only relay with row-level security; with no signal, jobs queue on the phone and send later, never twice.
+        </li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="line">
+        <span class="title">Tally <span class="what">· offline-first expense tracker</span></span>
+        <span class="when">Oct – Nov 2026</span>
+      </div>
+      <div class="stack">Python, FastAPI, React, TypeScript, IndexedDB, Supabase, Plaid</div>
+      <ul>
+        <li>
+          Sync protocol with per-field merging: offline edits to different fields both survive, the same field asks
+          which to keep, and retries never apply twice. 231 tests.
+        </li>
+      </ul>
+    </div>
+
+    <div class="more">
+      <b>Also:</b> Retro Zombie Arena (WebGL shooter, every asset generated in code), Bluffalo (real-time multiplayer
+      game), Pi Smart Home Hub, Field Reports, Daily Digest Bot. Write-ups and screenshots for all of them on the portfolio.
+    </div>
+
+    <h2>Skills</h2>
+    <dl class="skills">
+      <dt>Languages</dt>
+      <dd>TypeScript, JavaScript, C#, Python, SQL, C/C++, Bash, HTML/CSS</dd>
+      <dt>Frameworks</dt>
+      <dd>React, Next.js, ASP.NET Core, EF Core, Node.js, Fastify, FastAPI, Three.js, Blazor, Unity</dd>
+      <dt>Data and cloud</dt>
+      <dd>PostgreSQL, SQLite, Supabase, Docker, Google Cloud Run, Vercel, Fly.io, GitHub Actions</dd>
+      <dt>Testing, tools</dt>
+      <dd>Vitest, xUnit, pytest, Playwright, Git, GitHub CLI, Claude API, Claude Code, MCP</dd>
+    </dl>
+
+    <h2>Experience</h2>
+    <div class="entry">
+      <div class="line">
+        <span class="title">Line Cook <span class="what">· Beertown, The Dirty Oar, Kelsey's, McFinns, Urban Dish</span></span>
+        <span class="when">2022 – present</span>
+      </div>
+      <ul>
+        <li>
+          Five kitchens, fine dining to high-volume service: working to spec under time pressure, alongside school.
+        </li>
+      </ul>
+    </div>
+
+    <h2>Leadership and more</h2>
+    <ul>
+      <li>Soccer team captain, 2022 – 2025: led and mentored younger players; 1st place, Barrie Soccer Club tournament.</li>
+      <li>VEX Robotics, 2021 – 2025: autonomous and driver-control code for competition robots; Arduino sensor circuits.</li>
+      <li>Languages: English (native), Spanish (fluent), French (advanced). Piano (Level 8), alto saxophone. Honour Roll.</li>
+    </ul>
+  </body>
+</html>

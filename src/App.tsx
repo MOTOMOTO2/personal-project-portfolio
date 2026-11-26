@@ -8,11 +8,14 @@ import { Home } from './pages/Home'
 import { AllWork } from './pages/AllWork'
 import { NotFound } from './pages/NotFound'
 import { ProjectDetail } from './pages/ProjectDetail'
+import { site } from './data/site'
+import { useAnalytics } from './lib/analytics'
 import { useTheme } from './lib/theme'
 
 export default function App() {
   // Owned here so the nav button and the command palette share one theme.
   const { theme, toggle } = useTheme()
+  useAnalytics(site.analytics.goatcounter)
   const [paletteOpen, setPaletteOpen] = useState(false)
   const openPalette = useCallback(() => setPaletteOpen(true), [])
   const closePalette = useCallback(() => setPaletteOpen(false), [])
