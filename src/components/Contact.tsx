@@ -35,7 +35,7 @@ export function Contact() {
 
           <div className="relative max-w-2xl">
             <p className="flex items-center gap-3 font-mono text-xs font-medium tracking-[0.08em] text-white/55 uppercase">
-              <span className="text-[#ff8a5c]">05</span>
+              <span className="text-[#ff8a5c]">04</span>
               <span aria-hidden className="h-px w-8 bg-white/25" />
               Contact
             </p>

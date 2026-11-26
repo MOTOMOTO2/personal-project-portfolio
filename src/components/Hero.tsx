@@ -5,7 +5,6 @@ import { heroStats } from '../lib/stats'
 import { socialIcons } from '../lib/social-icons'
 import { CountUp } from './CountUp'
 import { Emphasis } from './Emphasis'
-import { HiringLens } from './HiringLens'
 import { LiveConsole } from './LiveConsole'
 
 const stats = heroStats(site.projects)
@@ -14,7 +13,6 @@ export function Hero() {
   const { profile } = site
   const elsewhere = profile.socials.filter((social) => social.icon !== 'mail')
   const sectionRef = useRef<HTMLElement>(null)
-  const showLens = site.lenses.length > 0
   const place = profile.facts.find((fact) => fact.label === 'Based in')?.value
 
   // Feeds the spotlight's position as CSS variables. Written straight to the
@@ -94,19 +92,16 @@ export function Hero() {
         <LiveConsole />
       </div>
 
-      <div className="container-page relative">
-        <dl className="grid grid-cols-2 border-y border-border sm:grid-cols-4">
-          {stats.map((stat, index) => (
-            <div
-              key={stat.label}
-              className={`px-1 py-5 sm:px-5 ${index > 0 ? 'sm:border-l sm:border-border' : ''} ${index % 2 === 1 ? 'border-l border-border pl-4 sm:pl-5' : ''} ${index > 1 ? 'border-t border-border sm:border-t-0' : ''}`}
-            >
+      <div className="container-page relative pb-14 sm:pb-20">
+        <dl className="grid grid-cols-2 gap-x-6 gap-y-6 border-t border-border pt-8 sm:grid-cols-4">
+          {stats.map((stat) => (
+            <div key={stat.label}>
               <dt className="sr-only">{stat.label}</dt>
               <dd>
-                <span className="block text-3xl font-semibold tracking-tight sm:text-4xl">
+                <span className="block text-3xl font-semibold tracking-tight sm:text-[2.5rem]">
                   <CountUp value={stat.value} />
                 </span>
-                <span aria-hidden className="mt-1 block text-sm text-fg-muted">
+                <span aria-hidden className="mt-1 block text-sm text-fg-subtle">
                   {stat.label}
                 </span>
               </dd>
@@ -114,14 +109,6 @@ export function Hero() {
           ))}
         </dl>
       </div>
-
-      {showLens ? (
-        <div className="container-page relative pt-8 pb-14 sm:pb-16">
-          <HiringLens />
-        </div>
-      ) : (
-        <div className="pb-14" />
-      )}
     </section>
   )
 }

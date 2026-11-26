@@ -1,19 +1,12 @@
-import { ArrowDown, Check, Link2 } from 'lucide-react'
+import { Check, Link2 } from 'lucide-react'
 import { useState } from 'react'
 import { site } from '../data/site'
 import { featuredFor, joinTitles, useLens } from '../lib/lens'
 
-const chipClass = (active: boolean) =>
-  `inline-flex h-8 items-center rounded-full border px-3.5 text-sm transition-colors ${
-    active
-      ? 'border-fg bg-fg font-medium text-bg'
-      : 'border-border bg-surface text-fg-muted hover:border-border-strong hover:text-fg'
-  }`
-
 /**
- * "What are you hiring for?" Picking an answer swaps the large rows below for
- * the projects that matter most to that kind of role and highlights the
- * matching skills. The choice is in the URL, so it can be sent as a link.
+ * "Hiring for" in the Selected work header: one row of choices that swaps the
+ * large cards below for the projects that matter most to that kind of role.
+ * The choice is in the URL, so it can be sent as a link.
  */
 export function HiringLens() {
   const { lens, setLens } = useLens()
@@ -33,66 +26,48 @@ export function HiringLens() {
     }
   }
 
-  const picks = featuredFor(lens).map((project) => project.title)
+  const options = [{ id: null, label: 'Everything' }, ...site.lenses.map((option) => ({ id: option.id, label: option.label }))]
 
   return (
-    <div className="rounded-xl border border-border bg-surface/85 p-4 shadow-card backdrop-blur-sm sm:p-5">
-      <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:gap-6">
-        <p id="lens-label" className="eyebrow shrink-0">
-          What are you hiring for?
-        </p>
-        <div role="group" aria-labelledby="lens-label" className="flex flex-wrap gap-1.5">
-          <button type="button" aria-pressed={!lens} onClick={() => setLens(null)} className={chipClass(!lens)}>
-            Everything
-          </button>
-          {site.lenses.map((option) => (
+    <div className="mt-8 flex flex-wrap items-center gap-x-3 gap-y-2">
+      <span id="lens-label" className="text-sm text-fg-subtle">
+        Hiring for
+      </span>
+      <div
+        role="group"
+        aria-labelledby="lens-label"
+        className="inline-flex flex-wrap gap-0.5 rounded-2xl border border-border bg-surface p-1 shadow-card sm:rounded-full"
+      >
+        {options.map((option) => {
+          const active = (lens?.id ?? null) === option.id
+          return (
             <button
-              key={option.id}
+              key={option.label}
               type="button"
-              aria-pressed={lens?.id === option.id}
+              aria-pressed={active}
               onClick={() => setLens(option.id)}
-              className={chipClass(lens?.id === option.id)}
+              className={`h-8 rounded-full px-3.5 text-sm transition-colors ${
+                active ? 'bg-fg font-medium text-bg' : 'text-fg-muted hover:bg-surface-2 hover:text-fg'
+              }`}
             >
               {option.label}
             </button>
-          ))}
-        </div>
+          )
+        })}
       </div>
-
-      <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-border pt-3 text-sm text-fg-muted">
-        <p aria-live="polite" className="min-w-0 flex-1 basis-64">
-          {lens ? (
-            <>
-              Showing <span className="font-medium text-fg">{joinTitles(picks)}</span> first.
-            </>
-          ) : (
-            'Pick one and the page puts the projects that matter most for that role first.'
-          )}
-        </p>
-        <div className="flex items-center gap-1">
-          <a
-            href="#work"
-            className="inline-flex items-center gap-1.5 rounded-md px-2 py-1 transition-colors hover:bg-surface-2 hover:text-fg"
-          >
-            See the work
-            <ArrowDown className="size-3.5" aria-hidden />
-          </a>
-          {lens && (
-            <button
-              type="button"
-              onClick={copyLink}
-              className="inline-flex items-center gap-1.5 rounded-md px-2 py-1 transition-colors hover:bg-surface-2 hover:text-fg"
-            >
-              {copied ? (
-                <Check className="size-3.5 text-success" aria-hidden />
-              ) : (
-                <Link2 className="size-3.5" aria-hidden />
-              )}
-              {copied ? 'Link copied' : 'Copy link to this view'}
-            </button>
-          )}
-        </div>
-      </div>
+      {lens && (
+        <button
+          type="button"
+          onClick={copyLink}
+          className="inline-flex h-8 items-center gap-1.5 rounded-full px-2.5 text-sm text-fg-muted transition-colors hover:bg-surface-2 hover:text-fg"
+        >
+          {copied ? <Check className="size-3.5 text-success" aria-hidden /> : <Link2 className="size-3.5" aria-hidden />}
+          {copied ? 'Copied' : 'Copy link'}
+        </button>
+      )}
+      <p aria-live="polite" className="sr-only">
+        {lens ? `Showing ${joinTitles(featuredFor(lens).map((project) => project.title))} first.` : ''}
+      </p>
     </div>
   )
 }

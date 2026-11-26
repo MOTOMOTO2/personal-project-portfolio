@@ -48,26 +48,15 @@ export function About() {
     <section className="border-t border-border py-20 sm:py-28">
       <div className="container-page">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-14">
-          <div className="reveal lg:col-span-4">
+          <div className="reveal self-start lg:sticky lg:top-24 lg:col-span-4">
             <p className="eyebrow mb-4 flex items-center gap-3">
-              <span className="text-accent">04</span>
+              <span className="text-accent">03</span>
               <span aria-hidden className="h-px w-8 bg-border-strong" />
               About
             </p>
             <h2 id="about" className="scroll-mt-24 text-[clamp(2rem,4.2vw,3.25rem)] leading-[1.05] font-semibold">
               <Emphasis text="A bit *about me*" />
             </h2>
-
-            <aside aria-label="At a glance" className="mt-8 rounded-2xl border border-border bg-surface p-6 shadow-card">
-              <dl className="divide-y divide-border">
-                {profile.facts.map((fact) => (
-                  <div key={fact.label} className="py-3 first:pt-0 last:pb-0">
-                    <dt className="text-xs text-fg-subtle">{fact.label}</dt>
-                    <dd className="mt-1 text-sm font-medium">{fact.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            </aside>
           </div>
 
           <div className="lg:col-span-8">

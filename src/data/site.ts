@@ -718,6 +718,46 @@ const data: SiteData = {
         'Map geometry generated from code and checked for reachability',
       ],
     },
+    {
+      slug: 'portfolio',
+      title: 'This portfolio',
+      blurb:
+        "The site you're on: a hiring lens that retailors the page for a role, working models of four projects' hardest problems, and ⌘K search, all driven by one content file.",
+      description: [
+        'A React and TypeScript site where one file, src/data/site.ts, holds every word, project and screenshot, so adding a project never means touching a component. It builds to static files and is deployed to GitHub Pages by GitHub Actions on every push, after lint, the tests and a smoke test of the built output.',
+        "Most of it is about the person reading it. Picking a role under “Hiring for” swaps in the projects that matter for that job and highlights the matching skills, and the choice lives in the URL, so a tailored view is a link I can send. Four projects carry a small working model of the problem they solve, built from that project's own rules and tested against them. ⌘K finds projects by the technology they use, and the All work page lists everything with a filter for each kind.",
+        "The numbers in the hero are counted from the content rather than typed in, so they can't drift out of date, and the tests check that every image exists, every link is well-formed, and no project page shows the same screenshot twice.",
+      ],
+      period: 'Oct – Nov 2026',
+      role: 'Solo',
+      status: 'Live',
+      featured: false,
+      tags: ['Frontend', 'Web app'],
+      tech: ['TypeScript', 'React', 'Vite', 'Tailwind CSS', 'React Router', 'Vitest', 'GitHub Actions'],
+      links: { demo: 'https://motomoto2.github.io/personal-project-portfolio/', repo: GH + 'personal-project-portfolio' },
+      cover: {
+        src: 'images/portfolio-home.jpg',
+        alt: 'The home page of this portfolio: name, headline, stats and a terminal of project events',
+      },
+      gallery: [
+        {
+          src: 'images/portfolio-index.jpg',
+          alt: 'The All work page: filters, a list of every project, and a hovered project’s cover floating beside the pointer',
+          caption: 'All work: every project with a filter for each kind. Hovering a row floats its cover beside the pointer.',
+        },
+        {
+          src: 'images/portfolio-demo.jpg',
+          alt: "The double-booking demo on Care Track's page, with the second booking refused by the exclusion constraint",
+          caption: "One of the four demos: Care Track's exclusion constraint refusing an overlapping booking.",
+        },
+      ],
+      highlights: [
+        'Content, rendered pages and the demo models all under test, run by CI before every deploy',
+        'Hiring lens: a tailored view of the page for each role, shareable as a link',
+        'Working models of four projects’ hardest problems, built from their real rules',
+        'Hero numbers derived from the content, so they never go stale',
+      ],
+    },
   ],
 
   photos: [],

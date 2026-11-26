@@ -38,7 +38,6 @@ type Command = {
 const SECTIONS = [
   { id: 'work', label: 'Selected work' },
   ...(site.projects.some((project) => project.demo) ? [{ id: 'try', label: 'Hands-on demos' }] : []),
-  { id: 'projects', label: 'More projects' },
   { id: 'about', label: 'About and skills' },
   { id: 'contact', label: 'Contact' },
 ]
@@ -122,6 +121,15 @@ export function CommandPalette({ theme, onToggleTheme, onClose }: Props) {
         icon: Briefcase,
         run: () => navigate(`/?for=${lens.id}#work`),
       })),
+      {
+        id: 'all-work',
+        group: 'Go to' as const,
+        label: 'All work',
+        hint: `Every project, newest first`,
+        keywords: 'index archive everything projects list',
+        icon: Hash,
+        run: () => navigate(`/work${lensQuery}`),
+      },
       ...SECTIONS.map((section) => ({
         id: `section-${section.id}`,
         group: 'Go to' as const,

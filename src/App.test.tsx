@@ -52,11 +52,15 @@ describe('home page', () => {
     expect(screen.getAllByText(site.profile.role).length).toBeGreaterThan(0)
   })
 
-  it('renders a card for every project', () => {
+  it('shows the featured projects and links to the full index for the rest', () => {
     renderAt('/')
-    for (const project of site.projects) {
+    for (const project of site.projects.filter((candidate) => candidate.featured)) {
       expect(screen.getAllByRole('link', { name: project.title }).length).toBeGreaterThan(0)
     }
+    const others = site.projects.filter((candidate) => !candidate.featured).length
+    const door = screen.getByRole('link', { name: /browse all work/i })
+    expect(door.getAttribute('href')).toBe('/work')
+    expect(door.textContent).toMatch(new RegExp(`And (${others}|\\w+) more`))
   })
 
   it('renders each section heading the nav links to', () => {
@@ -66,7 +70,8 @@ describe('home page', () => {
       .getAllByRole('link')
       .map((link) => link.getAttribute('href')?.split('#')[1])
       .filter((id): id is string => Boolean(id))
-    expect(ids).toContain('projects')
+    expect(ids).toContain('work')
+    expect(within(nav).getAllByRole('link', { name: /all work/i })[0].getAttribute('href')).toBe('/work')
     for (const id of ids) {
       expect(document.getElementById(id), id).not.toBeNull()
     }
@@ -88,14 +93,12 @@ describe('home page', () => {
     }
   })
 
-  it('splits projects into featured rows and the grid', () => {
+  it('keeps only the featured projects in Selected work', () => {
     renderAt('/')
-    const work = document.getElementById('work')?.closest('section')
-    const grid = document.getElementById('projects')?.closest('section')
-    expect(work).toBeTruthy()
+    const work = document.getElementById('work')?.closest('section') as HTMLElement
     for (const project of site.projects) {
-      const home = project.featured ? work : grid
-      expect(within(home as HTMLElement).getByRole('link', { name: project.title }), project.slug).toBeDefined()
+      const links = within(work).queryAllByRole('link', { name: project.title })
+      expect(links.length > 0, project.slug).toBe(project.featured)
     }
   })
 
@@ -169,8 +172,8 @@ describe('hiring lens', () => {
   it('swaps in the lens picks as the large rows when the link has ?for=', () => {
     renderAt(`/?for=${lens.id}`)
     for (const project of site.projects) {
-      const home = lens.featured.includes(project.slug) ? sectionOf('work') : sectionOf('projects')
-      expect(within(home).getByRole('link', { name: project.title }), project.slug).toBeDefined()
+      const links = within(sectionOf('work')).queryAllByRole('link', { name: project.title })
+      expect(links.length > 0, project.slug).toBe(lens.featured.includes(project.slug))
     }
     expect(screen.getByText(lens.pitch)).toBeDefined()
   })
@@ -296,5 +299,33 @@ describe('hands-on demos', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Change amount on the other device' }))
     fireEvent.click(screen.getByRole('switch', { name: /offline/i }))
     expect(screen.getByText(/both edits are kept/)).toBeDefined()
+  })
+})
+
+describe('all work page', () => {
+  const list = () => screen.getByRole('list', { name: 'Projects' })
+
+  it('lists every project, each linking to its write-up', () => {
+    renderAt('/work')
+    expect(screen.getByRole('heading', { level: 1, name: /everything i've built/i })).toBeDefined()
+    for (const project of site.projects) {
+      const link = within(list()).getByText(project.title).closest('a')
+      expect(link?.getAttribute('href'), project.slug).toBe(`/projects/${project.slug}`)
+    }
+  })
+
+  it('filters by kind of project, and the URL remembers it', () => {
+    renderAt('/work?type=games')
+    const games = site.projects.filter((project) => project.tags.includes('Game'))
+    expect(within(list()).getAllByRole('link')).toHaveLength(games.length)
+
+    fireEvent.click(screen.getByRole('button', { name: /^All/ }))
+    expect(within(list()).getAllByRole('link')).toHaveLength(site.projects.length)
+  })
+
+  it('sends a project page back to the index when it is not a featured one', () => {
+    const project = site.projects.find((candidate) => !candidate.featured)!
+    renderAt(`/projects/${project.slug}`)
+    expect(screen.getByRole('link', { name: /all projects/i }).getAttribute('href')).toBe('/work')
   })
 })

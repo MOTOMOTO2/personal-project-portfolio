@@ -3,6 +3,7 @@ import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { asset } from '../lib/assets'
 import { heroStats, testCount } from '../lib/stats'
+import { CATEGORIES, inCategory, newestFirst, periodEnd } from '../lib/work'
 import { site } from './site'
 
 const publicDir = join(import.meta.dirname, '..', '..', 'public')
@@ -197,5 +198,32 @@ describe('hero stats', () => {
     expect(stats[1].value).toBe(site.projects.filter((project) => project.status === 'Live').length)
     expect(stats[2].value).toBe(site.projects.reduce((sum, project) => sum + testCount(project), 0))
     expect(stats[3].value).toBe(site.projects.filter((project) => project.demo).length)
+  })
+})
+
+describe('all work ordering and filters', () => {
+  it('reads the end of a period', () => {
+    expect(periodEnd('Sep – Oct 2026')).toBe(periodEnd('Oct 2026'))
+    expect(periodEnd('Jan – Nov 2026')).toBeGreaterThan(periodEnd('Oct 2026'))
+    expect(periodEnd('whenever')).toBe(0)
+  })
+
+  it('sorts newest first and keeps every project', () => {
+    const sorted = newestFirst(site.projects)
+    expect(sorted).toHaveLength(site.projects.length)
+    for (let index = 1; index < sorted.length; index++) {
+      expect(periodEnd(sorted[index - 1].period)).toBeGreaterThanOrEqual(periodEnd(sorted[index].period))
+    }
+  })
+
+  it('can read every period, so nothing sorts to the bottom by accident', () => {
+    for (const project of site.projects) expect(periodEnd(project.period), project.slug).toBeGreaterThan(0)
+  })
+
+  it('puts every project under at least one filter besides All', () => {
+    for (const project of site.projects) {
+      const kinds = CATEGORIES.filter((category) => category.id !== 'all' && inCategory(project, category.id))
+      expect(kinds.length, project.slug).toBeGreaterThan(0)
+    }
   })
 })

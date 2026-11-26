@@ -5,6 +5,7 @@ import { Footer } from './components/Footer'
 import { Nav } from './components/Nav'
 import { ScrollManager } from './components/ScrollManager'
 import { Home } from './pages/Home'
+import { AllWork } from './pages/AllWork'
 import { NotFound } from './pages/NotFound'
 import { ProjectDetail } from './pages/ProjectDetail'
 import { useTheme } from './lib/theme'
@@ -41,6 +42,7 @@ export default function App() {
       <main id="main" className="flex-1">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/work" element={<AllWork />} />
           <Route path="/projects/:slug" element={<ProjectDetail />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

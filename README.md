@@ -5,9 +5,13 @@ write-up, plus a short about section and how to reach me.
 
 The home page opens on a positioning headline, a terminal that types out what
 each project really does, and stats counted from the content (projects, how many
-are live, automated tests, demos). Then four **selected** projects as large rows
-in browser frames, the hands-on demos, the rest in a grid, "How I work", and a
-contact panel. Every project has its own page at `/projects/<slug>` with an
+are live, automated tests, demos). Then four **selected** projects as cards that
+stack as you scroll (on screens tall enough to show a whole card), a door to the
+full index, the hands-on demos, About with "How I work", and a contact panel.
+
+**All work** (`/work`, a tab in the nav) lists every project newest first, with
+a filter for each kind (`/work?type=games`); hovering a row floats its cover
+beside the pointer. Every project has its own page at `/projects/<slug>` with an
 overview, highlights, the stack, and a screenshot gallery with a lightbox.
 
 The look: warm neutrals with one ember accent, Geist with Instrument Serif
@@ -79,8 +83,9 @@ hashed JS and CSS, an image, and the deep-link fallback.
 Everything below happens in `src/data/site.ts` unless noted.
 
 1. **Profile** — `profile`: name, role, `headline` (the big line in the hero;
-   wrap words in `*asterisks*` to set them in the italic accent), tagline, the `facts` shown in the card
-   beside the hero, the `about` paragraphs, email and socials. Set
+   wrap words in `*asterisks*` to set them in the italic accent), tagline,
+   `facts` (the "Based in" one is shown beside the role), the `about`
+   paragraphs, email and socials. Set
    `availability: null` to hide the green "open to roles" line.
 2. **Résumé** — drop a PDF in `public/` and set `resume: 'resume.pdf'`. A
    button appears in the nav, the hero and the contact section. `null` hides it.
@@ -176,14 +181,13 @@ src/
   components/
     Hero.tsx             name, headline, stats, the console, the cursor spotlight
     LiveConsole.tsx      the terminal that types out what each project does
-    TechMarquee.tsx      the skills ticker under the hero
     BrowserFrame.tsx     a screenshot dressed as a browser window
     CountUp.tsx, Emphasis.tsx, ReadingProgress.tsx
     HiringLens.tsx       "What are you hiring for?" picker
-    Projects.tsx         "Selected work" rows, "Hands-on", "More projects" grid
+    Projects.tsx         "Selected work" cards, the door to /work, "Hands-on"
+    MoreWork.tsx         that door: how many more projects, and their covers
     HandsOn.tsx          one card per demo on the home page
-    FeaturedProject.tsx  one large row
-    ProjectCard.tsx      one grid card
+    FeaturedProject.tsx  one card in the Selected work stack
     CommandPalette.tsx   ⌘K search
     demos/
       registry.ts        demo id -> component and icon
@@ -194,12 +198,13 @@ src/
       agent-queue.ts     + AgentQueueDemo.tsx      (Claude Remote)
       demos.test.ts      the models against each project's real rules
     About.tsx, Contact.tsx, Gallery.tsx, Lightbox.tsx, Nav.tsx, Footer.tsx
-  pages/             Home, ProjectDetail, NotFound
+  pages/             Home, AllWork (/work), ProjectDetail, NotFound
   lib/
     assets.ts        prefixes image paths with the deploy base
     theme.ts         dark/light toggle; follows the OS until you pick one
     lens.ts          the ?for= hiring lens: read, set, carry onto links
     stats.ts         the hero numbers, derived from the projects
+    work.ts          the All work filters (from project tags) and newest-first order
     pointer.ts       card spotlight and screenshot tilt, via CSS variables
     text.ts          strip *emphasis*; the address a browser frame shows
     reveal.ts        scroll-into-view fade, one shared IntersectionObserver

@@ -31,7 +31,7 @@ export function ProjectDetail() {
   const images = [project.cover, ...project.gallery]
   // Back to wherever this project sits on the home page under the same lens.
   const inRows = featuredFor(lens).some((candidate) => candidate.slug === project.slug)
-  const backTo = `/${query}${inRows ? '#work' : '#projects'}`
+  const backTo = inRows ? `/${query}#work` : `/work${query}`
   const Demo = project.demo ? demos[project.demo.id].Component : null
 
   return (

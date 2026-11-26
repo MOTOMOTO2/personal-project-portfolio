@@ -9,7 +9,6 @@ import type { Theme } from '../lib/theme'
 const sections = [
   { id: 'work', label: 'Work' },
   ...(site.projects.some((project) => project.demo) ? [{ id: 'try', label: 'Try it' }] : []),
-  { id: 'projects', label: 'Projects' },
   ...(site.photos.length > 0 ? [{ id: 'gallery', label: 'Gallery' }] : []),
   { id: 'about', label: 'About' },
   { id: 'contact', label: 'Contact' },
@@ -34,6 +33,7 @@ export function Nav({ theme, onToggleTheme, onOpenPalette }: Props) {
   const [scrolled, setScrolled] = useState(() => window.scrollY > 8)
   const { pathname } = useLocation()
   const onHome = pathname === '/'
+  const onIndex = pathname === '/work'
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8)
@@ -76,6 +76,22 @@ export function Nav({ theme, onToggleTheme, onOpenPalette }: Props) {
 
         <div className="flex items-center gap-1">
           <ul className="hidden items-center gap-0.5 md:flex">
+            <li>
+              <Link
+                to={`/work${query}`}
+                aria-current={onIndex ? 'page' : undefined}
+                className={`mr-1 inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm transition-colors ${
+                  onIndex
+                    ? 'border-fg bg-fg text-bg'
+                    : 'border-border bg-surface text-fg hover:border-border-strong'
+                }`}
+              >
+                All work
+                <span className={`font-mono text-[0.6875rem] ${onIndex ? 'text-bg/70' : 'text-fg-subtle'}`}>
+                  {site.projects.length}
+                </span>
+              </Link>
+            </li>
             {sections.map((section) => (
               <li key={section.id}>
                 {onHome ? (
@@ -135,6 +151,16 @@ export function Nav({ theme, onToggleTheme, onOpenPalette }: Props) {
 
       {open && (
         <ul id="mobile-menu" className="container-page border-t border-border py-2 md:hidden">
+          <li>
+            <Link
+              to={`/work${query}`}
+              onClick={closeMenu}
+              className="flex items-center justify-between rounded-md px-3 py-3 text-sm font-medium text-fg transition-colors hover:bg-surface-2"
+            >
+              All work
+              <span className="font-mono text-xs text-fg-subtle">{site.projects.length} projects</span>
+            </Link>
+          </li>
           {sections.map((section) => (
             <li key={section.id}>
               <Link
