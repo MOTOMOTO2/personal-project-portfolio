@@ -183,9 +183,9 @@ The build is static, so any host works. Two options:
 **GitHub Pages** — already wired up. Go to repo **Settings → Pages → Source** and
 pick **GitHub Actions**. Every push to `main` then runs lint, tests and the build
 via [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) and publishes
-to `https://<user>.github.io/<repo>/`. The workflow sets `VITE_BASE` to the repo
-name because project sites are served from a subpath; if you rename the repo to
-`<user>.github.io`, delete that `env` block so the base stays `/`.
+to `https://<user>.github.io/` when the repo is named `<user>.github.io` (as this
+one is), or to `https://<user>.github.io/<repo>/` otherwise. The workflow picks
+`VITE_BASE` from the repo name, so either works without edits.
 
 **Netlify / Vercel / Cloudflare Pages** — build command `npm run build`, publish
 directory `dist`. No base path needed, and these hosts handle deep links

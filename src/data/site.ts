@@ -12,14 +12,14 @@ import type { SiteData } from './types'
  */
 
 /** The public repository for this site, linked from the footer. */
-export const SOURCE_URL = 'https://github.com/adenyadegar/personal-project-portfolio'
+export const SOURCE_URL = 'https://github.com/adenyadegar/adenyadegar.github.io'
 
 /**
  * Where the site lives. Link previews and canonical URLs are built from it
  * (scripts/route-pages.mjs, and the og: tags in index.html); change both if
  * the site moves, e.g. to a custom domain.
  */
-export const SITE_URL = 'https://adenyadegar.github.io/personal-project-portfolio/'
+export const SITE_URL = 'https://adenyadegar.github.io/'
 
 const GH = 'https://github.com/adenyadegar/'
 
@@ -756,7 +756,7 @@ const data: SiteData = {
       featured: false,
       tags: ['Frontend', 'Web app'],
       tech: ['TypeScript', 'React', 'WebGL', 'Vite', 'Tailwind CSS', 'React Router', 'Vitest', 'GitHub Actions'],
-      links: { demo: 'https://adenyadegar.github.io/personal-project-portfolio/', repo: GH + 'personal-project-portfolio' },
+      links: { demo: 'https://adenyadegar.github.io/', repo: GH + 'adenyadegar.github.io' },
       cover: {
         src: 'images/portfolio-home.jpg',
         alt: 'The home page of this portfolio: the name over a field of ember contour lines that bend around the cursor',
@@ -789,8 +789,8 @@ const data: SiteData = {
 
   photos: [],
 
-  // Sign up free at goatcounter.com, then put your code here, e.g. 'adenyadegar'.
-  analytics: { goatcounter: null },
+  // Counts at https://adenyadegar.goatcounter.com (no cookies; see src/lib/analytics.ts).
+  analytics: { goatcounter: 'adenyadegar' },
 }
 
 /** Asset paths are resolved against the deploy base; see src/lib/assets.ts. */

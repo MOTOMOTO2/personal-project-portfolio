@@ -103,6 +103,11 @@ const deep = await fetch(`${origin}${base}projects/not-a-project`)
 const deepBody = await deep.text()
 checks.push(['other deep links fall back to the app shell', deepBody.includes('id="root"')])
 
+// The site used to live at /personal-project-portfolio/. Those links now land
+// on 404.html, which has to carry the script that forwards them.
+const moved = await fetch(`${origin}/personal-project-portfolio/resume.pdf`)
+checks.push(['old /personal-project-portfolio/ links are forwarded', (await moved.text()).includes("'/personal-project-portfolio'")])
+
 const assetPrefix = assetMatch?.[1] ?? ''
 checks.push([`assets use the "${base}" base`, assetPrefix.startsWith(base)])
 

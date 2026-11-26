@@ -34,16 +34,16 @@ jobs:
       - run: npm test
 
       - name: Build
-        # Project sites are served from https://<user>.github.io/<repo>/, so the
-        # bundle and the router both need that prefix. A user/org site
-        # (<user>.github.io) is served from the root -- delete this env block there.
+        # A <user>.github.io repository is served from the domain root; any other
+        # repository is a project site at https://<user>.github.io/<repo>/, and the
+        # bundle and the router both need that prefix.
         env:
-          VITE_BASE: /${{ github.event.repository.name }}/
+          VITE_BASE: ${{ endsWith(github.event.repository.name, '.github.io') && '/' || format('/{0}/', github.event.repository.name) }}
         run: npm run build
 
       - name: Smoke-test the build
         env:
-          VERIFY_BASE_JSON: '"/${{ github.event.repository.name }}/"'
+          VERIFY_BASE_JSON: ${{ endsWith(github.event.repository.name, '.github.io') && '"/"' || format('"/{0}/"', github.event.repository.name) }}
         run: node scripts/verify-dist.mjs
 
       - uses: actions/configure-pages@v5

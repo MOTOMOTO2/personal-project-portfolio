@@ -238,7 +238,7 @@ describe('analytics', () => {
   it('names the clicks worth counting and ignores the rest', () => {
     const host = 'adenyadegar.github.io'
     expect(clickName('mailto:a@b.c', host)).toBe('click: email')
-    expect(clickName('/personal-project-portfolio/resume.pdf', host)).toBe('click: resume')
+    expect(clickName('/resume.pdf', host)).toBe('click: resume')
     expect(clickName('https://github.com/adenyadegar', host)).toBe('click: github profile')
     expect(clickName('https://www.linkedin.com/in/x', host)).toBe('click: linkedin')
     expect(clickName('https://revvault.ca', host)).toBe('click: revvault.ca')
