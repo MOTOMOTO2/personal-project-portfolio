@@ -144,7 +144,7 @@ export function Hero() {
             </span>
             Scroll
           </span>
-          <span className="hidden sm:inline">Software that keeps working</span>
+          <span className="hidden sm:inline">Projects below</span>
         </div>
       </div>
     </section>

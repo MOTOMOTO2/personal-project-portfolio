@@ -372,7 +372,7 @@ export function WorkShowcase() {
         </p>
         <div className="mt-6 flex flex-wrap items-end justify-between gap-x-10 gap-y-5">
           <h2 id="work" className="display max-w-3xl scroll-mt-24 text-[clamp(2.25rem,4.4vw,4rem)] leading-[1]">
-            <Emphasis text="Projects I've designed, built and *shipped*" />
+            <Emphasis text="Projects I'm *proud of*" />
           </h2>
           <HiringLens />
         </div>

@@ -26,9 +26,9 @@ export function MoreWork({ others, query = '' }: { others: Project[]; query?: st
               <span className="text-accent">[→]</span> Index
             </p>
             <h2 id="more-work" className="display mt-4 text-3xl leading-[1.05] sm:text-4xl">
-              <Emphasis text={`And ${count} more: games, offline apps and *tools*`} />
+              <Emphasis text={`Plus ${count} *more*`} />
             </h2>
-            <p className="mt-3 text-fg-muted">Everything I've built, newest first, with a filter for each kind.</p>
+            <p className="mt-3 text-fg-muted">Everything I've built, newest first. You can filter by type.</p>
             <span className="label mt-7 inline-flex items-center gap-2 text-accent">
               Browse all work
               <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden />

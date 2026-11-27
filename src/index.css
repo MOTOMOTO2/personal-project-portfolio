@@ -4,30 +4,30 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /*
- * The palette: "signal", a warm black with one ember accent, is the default
+ * The palette: "signal", a cool near-black with one cobalt accent, is the default
  * (.dark); "paper" (:root) is the light alternative. Change --accent and the
  * links, focus rings, glows, the hero shader and highlights follow. Every text
  * colour here passes 4.5:1 on --bg.
  */
 :root {
-  --bg: hsl(40 20% 98%);
+  --bg: hsl(220 25% 98%);
   --surface: hsl(0 0% 100%);
-  --surface-2: hsl(36 14% 95%);
-  --border: hsl(30 10% 89%);
-  --border-strong: hsl(30 8% 78%);
-  --fg: hsl(24 12% 7%);
-  --fg-muted: hsl(30 6% 36%);
-  --fg-subtle: hsl(30 5% 45%);
-  --accent: hsl(16 82% 40%);
+  --surface-2: hsl(220 18% 95%);
+  --border: hsl(220 14% 89%);
+  --border-strong: hsl(220 10% 78%);
+  --fg: hsl(225 25% 9%);
+  --fg-muted: hsl(222 10% 35%);
+  --fg-subtle: hsl(222 8% 44%);
+  --accent: hsl(224 76% 46%);
   --accent-fg: hsl(0 0% 100%);
-  --accent-soft: hsl(20 90% 95%);
-  --glow: hsl(18 100% 60% / 0.16);
+  --accent-soft: hsl(222 90% 95%);
+  --glow: hsl(222 100% 55% / 0.14);
   /* Dark enough to pass 4.5:1 as text on their own 12-15% tints (demo badges). */
   --success: hsl(152 72% 27%);
   --warning: hsl(30 95% 31%);
   --danger: hsl(0 72% 43%);
   --danger-soft: hsl(0 80% 46% / 0.14);
-  --shadow: 0 1px 2px hsl(24 20% 10% / 0.05), 0 18px 44px -22px hsl(24 30% 10% / 0.22);
+  --shadow: 0 1px 2px hsl(225 25% 10% / 0.05), 0 18px 44px -22px hsl(225 30% 10% / 0.22);
   /* The console and contact panel stay dark in both themes. */
   --ink: hsl(240 8% 6%);
   --ink-2: hsl(240 6% 10%);
@@ -35,18 +35,18 @@
 }
 
 .dark {
-  --bg: hsl(30 8% 4%);
-  --surface: hsl(30 6% 7%);
-  --surface-2: hsl(30 5% 10%);
-  --border: hsl(30 5% 15%);
-  --border-strong: hsl(30 5% 24%);
-  --fg: hsl(36 22% 92%);
-  --fg-muted: hsl(30 8% 68%);
-  --fg-subtle: hsl(30 5% 55%);
-  --accent: hsl(18 100% 58%);
-  --accent-fg: hsl(20 40% 6%);
-  --accent-soft: hsl(18 60% 12%);
-  --glow: hsl(18 100% 55% / 0.18);
+  --bg: hsl(228 14% 5%);
+  --surface: hsl(228 12% 8%);
+  --surface-2: hsl(228 10% 11%);
+  --border: hsl(228 9% 16%);
+  --border-strong: hsl(228 8% 25%);
+  --fg: hsl(220 25% 93%);
+  --fg-muted: hsl(222 12% 70%);
+  --fg-subtle: hsl(222 8% 57%);
+  --accent: hsl(222 100% 66%);
+  --accent-fg: hsl(225 60% 8%);
+  --accent-soft: hsl(222 55% 14%);
+  --glow: hsl(222 100% 60% / 0.18);
   --success: hsl(152 55% 52%);
   --warning: hsl(38 92% 60%);
   --danger: hsl(0 85% 68%);

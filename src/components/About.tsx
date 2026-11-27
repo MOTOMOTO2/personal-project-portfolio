@@ -60,7 +60,7 @@ export function About() {
   return (
     <section className="border-t border-border py-20 sm:py-28">
       <div className="container-page">
-        <SectionHeading id="about" index="03" eyebrow="About" meta="Spec sheet" title="A bit about *me*" />
+        <SectionHeading id="about" index="03" eyebrow="About" meta="Quick facts" title="A bit about *me*" />
 
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
           <div className="reveal space-y-5 text-lg leading-relaxed text-fg-muted lg:col-span-6">
@@ -118,7 +118,7 @@ export function About() {
         {principles.length > 0 && (
           <div className="mt-24">
             <p className="label reveal mb-8 flex items-center gap-4 text-fg-subtle">
-              <Scramble text="Operating principles" />
+              <Scramble text="How I like to build" />
               <span aria-hidden className="h-px flex-1 bg-border" />
             </p>
             <ul className="grid gap-4 md:grid-cols-3">

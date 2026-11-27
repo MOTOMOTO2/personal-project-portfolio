@@ -35,11 +35,11 @@ export function Contact() {
         </p>
 
         <h2 id="contact" className="display reveal mt-8 max-w-5xl scroll-mt-24 text-[clamp(2.5rem,6.4vw,5.75rem)] leading-[0.95]">
-          <Emphasis text="Let's build something that *keeps working*." />
+          <Emphasis text="Let's *talk*." />
         </h2>
         <p className="reveal mt-6 max-w-xl text-lg leading-relaxed text-fg-muted">
-          I'm looking for internship and co-op roles in software development. If you're hiring, or want to hear more
-          about any of these projects, send me an email.
+          I'm looking for an internship or co-op in software development. If you're hiring, or you just want to ask
+          about one of these projects, send me an email.
         </p>
 
         <a

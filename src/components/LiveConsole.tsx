@@ -74,7 +74,7 @@ export function LiveConsole() {
           aria-label={`${titles.get(entry.slug)}: ${entry.command}, ${entry.result}`}
         >
           <span className="flex items-baseline gap-2">
-            <span className="shrink-0 text-[#ff8a5c]">{entry.slug}</span>
+            <span className="shrink-0 text-[#8fb0ff]">{entry.slug}</span>
             <span className="text-white/35">$</span>
             <span className="min-w-0 text-white/85">
               {partial ? entry.command.slice(0, partial.typed) : entry.command}

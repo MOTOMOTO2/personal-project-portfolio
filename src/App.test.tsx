@@ -60,7 +60,7 @@ describe('home page', () => {
     const others = site.projects.filter((candidate) => !candidate.featured).length
     const door = screen.getByRole('link', { name: /browse all work/i })
     expect(door.getAttribute('href')).toBe('/work')
-    expect(door.textContent).toMatch(new RegExp(`And (${others}|\\w+) more`))
+    expect(door.textContent).toMatch(new RegExp(`Plus (${others}|\\w+) more`, 'i'))
   })
 
   it('renders each section heading the nav links to', () => {

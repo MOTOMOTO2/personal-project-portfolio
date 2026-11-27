@@ -18,14 +18,14 @@ export function Telemetry() {
         <div className="reveal">
           <p className="label flex items-center gap-4 text-fg-subtle">
             <span className="text-accent">[00]</span>
-            <Scramble text="Telemetry" />
+            <Scramble text="At a glance" />
             <span aria-hidden className="h-px flex-1 bg-border" />
           </p>
           <h2 id="telemetry" className="display mt-7 text-[clamp(2rem,4.2vw,3.5rem)] leading-[1]">
-            <Emphasis text="Real systems, *doing their jobs*." />
+            <Emphasis text="My projects, *in action*" />
           </h2>
           <p className="mt-5 max-w-md leading-relaxed text-fg-muted">
-            The terminal replays one thing each project really does. Click a line to open that project.
+            Each line is something one of my projects really does. Click a line to open that project.
           </p>
 
           <dl className="mt-10 grid grid-cols-2 gap-px overflow-hidden border border-border bg-border">

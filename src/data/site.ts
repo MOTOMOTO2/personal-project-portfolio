@@ -26,14 +26,14 @@ const GH = 'https://github.com/adenyadegar/'
 const data: SiteData = {
   profile: {
     name: 'Aden Yadegar',
-    role: 'Full-stack developer · Software Engineering student',
-    headline: 'I build software that *keeps working* when the signal drops, a server fails, or two people click at once.',
+    role: 'Software Engineering student · Full-stack developer',
+    headline: "I build full-stack web apps and get them *online*. RevVault, my used-car search engine, has been live since January.",
     tagline:
-      'I design, build and deploy complete products: a used-car search engine running in production, a course planner that reads syllabi with Claude, and a clinic-booking app I’m building with a team.',
+      "I'm a software engineering student in Barrie, Ontario. I've been teaching myself to code since 2020, and these days I build full-stack apps.",
     about: [
-      "I'm in my first year of Software Engineering at Lakehead University's Barrie campus, after a year of Computer Engineering at Toronto Metropolitan University, and most of what I build starts as a problem in my own week: a project car I couldn't find parts for, deadlines my course site didn't show me, or wanting to start a coding project from my phone.",
-      'I like taking an idea all the way to something live. RevVault runs in production with Google sign-in, Stripe subscriptions, scheduled jobs and error monitoring. Several of my projects use Claude for the parts that need judgement, like reading a syllabus PDF or answering a hard question about a codebase, and the parts that have to be exactly right, like sync conflicts or push encryption, have tests that prove it.',
-      "I also build with other people. On Care Track, a clinic-booking app with two other students, I've written the database schema, the booking rules, an audit log, the email notifications and the admin tools, then tried to break it all with a security pass, all through pull requests on a shared repository. I'm looking for an internship or co-op where I can do that on a larger codebase.",
+      "I started teaching myself to code in 2020, during quarantine. I picked up Python, fell in love with it, and never really stopped. In high school I wrote autonomous and driver code for my VEX robotics team, and since then I've moved on to websites, apps and the projects on this page.",
+      "Now I'm in my first year of Software Engineering at Lakehead University in Barrie, after a year of Computer Engineering at TMU. Most of my projects start with something that bugged me. I couldn't find parts for my project car, so I built RevVault. My course site kept missing deadlines, so I built a tracker that reads my syllabi for me.",
+      "I like getting things all the way to live. RevVault has real sign-in, payments and error monitoring, and it redeploys itself every time I push. I also like building with other people. On Care Track I worked mostly on the backend with two other students, all through pull requests. I'm looking for an internship or co-op where I can keep learning on a bigger team.",
     ],
     facts: [
       { label: 'Based in', value: 'Barrie, Ontario' },
@@ -76,7 +76,7 @@ const data: SiteData = {
       id: 'backend',
       label: 'Backend',
       pitch:
-        'Data that stays correct when things happen at once: a database constraint that makes double-booking impossible, idempotent writes, a per-field sync protocol, and an ASP.NET Core API in production.',
+        "Backend work where the data has to stay right. A booking system that can't double-book, sync that merges edits safely, and a C# API that's been running in production since January.",
       featured: ['care-track', 'revvault', 'tally', 'field-reports'],
       skills: [
         'TypeScript',
@@ -101,7 +101,7 @@ const data: SiteData = {
       id: 'frontend',
       label: 'Frontend',
       pitch:
-        'React and TypeScript interfaces that hold up on a phone with a bad connection: installable apps, live dashboards, and a WebGL game with no image or model files.',
+        "React and TypeScript apps that work well on phones, including ones that keep working offline, plus a 3D browser game with no image or model files.",
       featured: ['revvault', 'claude-remote', 'tally', 'retro-zombie-arena'],
       skills: [
         'TypeScript',
@@ -121,7 +121,7 @@ const data: SiteData = {
       id: 'ai',
       label: 'AI tooling',
       pitch:
-        'Claude where a task needs judgement, plain code where it has to be exact: reading syllabus PDFs, an MCP connector for studying, a fleet of coding agents, and language models written from scratch.',
+        "Projects that use Claude where it actually helps, like reading syllabus PDFs and running coding agents, and a code assistant with language models I wrote myself.",
       featured: ['course-deadline-tracker', 'claude-remote', 'personal-code-assistant'],
       skills: ['TypeScript', 'Python', 'Node.js', 'Claude API', 'Claude Code', 'Model Context Protocol (MCP)'],
     },
@@ -129,7 +129,7 @@ const data: SiteData = {
       id: 'offline',
       label: 'Offline & real-time',
       pitch:
-        "Apps that keep working with no signal and agree with the server once it's back: durable outboxes, retries that can't land twice, per-field merges, and live state over WebSockets.",
+        "Apps that keep working without internet and catch up when it comes back, without losing or doubling anything. Plus a multiplayer game that runs live over WebSockets.",
       featured: ['tally', 'field-reports', 'claude-remote', 'bluffalo'],
       skills: ['TypeScript', 'React', 'PWAs & service workers', 'Node.js', 'FastAPI', 'PostgreSQL', 'SQLite', 'Supabase'],
     },
@@ -137,7 +137,7 @@ const data: SiteData = {
       id: 'games',
       label: 'Games',
       pitch:
-        'Three games built entirely from code: a WebGL shooter whose textures, models and sounds are generated at runtime, a real-time party game, and a Roblox survival game tested without Roblox.',
+        "Three games, all made in code. A 3D zombie shooter in the browser, a party game you play on your phones, and a Roblox survival game.",
       featured: ['retro-zombie-arena', 'bluffalo', 'necrotide'],
       skills: ['TypeScript', 'JavaScript', 'Luau', 'Three.js / WebGL', 'Node.js'],
     },
@@ -165,18 +165,18 @@ const data: SiteData = {
 
   principles: [
     {
-      title: 'Correct when things happen at once',
-      body: "Two people booking the same slot, two phones editing the same expense. I put the rule where timing can't break it: in a database constraint or a sync protocol, with tests that race it.",
+      title: "Get the tricky cases right",
+      body: "Two people booking the same time slot, or two phones editing the same expense. I put rules like that in the database or the sync code, where timing can't break them, and write tests that try to.",
       proof: ['care-track', 'tally'],
     },
     {
-      title: 'Works offline, fails out loud',
-      body: 'Writes are saved on the device first and sent when they can be, retries never land twice, and a source that breaks says so instead of going quiet.',
+      title: "Keep working offline",
+      body: "If there's no signal, the app should save your work and send it later, and never send it twice. If something breaks, it should tell you instead of going quiet.",
       proof: ['field-reports', 'daily-digest-bot'],
     },
     {
-      title: 'Shipped, not just started',
-      body: 'Real deployments with sign-in, payments, scheduled jobs and monitoring, rebuilt and redeployed by CI on every push.',
+      title: "Put it online",
+      body: "Most of my projects are deployed with real sign-in, payments or scheduled jobs. RevVault runs its tests on every push and only deploys if they pass.",
       proof: ['revvault', 'course-deadline-tracker'],
     },
   ],
@@ -186,13 +186,13 @@ const data: SiteData = {
       period: '2025 – 2026',
       title: 'Computer Engineering',
       org: 'Toronto Metropolitan University',
-      summary: 'One year, with the credits transferred to Lakehead: circuits, calculus, waves and fields.',
+      summary: 'One year. My credits transferred to Lakehead.',
     },
     {
       period: '2022 – now',
       title: 'Line cook',
       org: 'five Barrie-area kitchens',
-      summary: 'Fine dining to high-volume service, working to spec under time pressure, alongside school.',
+      summary: 'From fine dining to high-volume service, alongside school.',
     },
   ],
 
@@ -201,12 +201,11 @@ const data: SiteData = {
     {
       slug: 'revvault',
       title: 'RevVault',
-      blurb:
-        'Searches Kijiji, AutoTrader and eBay for a used car at once, then finds parts for it across a dozen retailers. Live at revvault.ca.',
+      blurb: "Search Kijiji, AutoTrader and eBay for a used car in one go, then find parts for it from a dozen stores. Live at revvault.ca.",
       description: [
-        'Shopping for a project car means running the same search on several sites and seeing the same car three times. RevVault searches Kijiji, AutoTrader and eBay at once, shows each car once even when it is listed on more than one site, and compares every price with similar cars for sale nearby. Listings that mention a salvage title, accident history or unusual mileage are flagged.',
-        'It keeps going after you buy: a garage and build log for the cars you own, parts search for your exact vehicle across retailers like RockAuto, Amazon, Canadian Tire and eBay, and a wishlist that is re-checked on a schedule so a price drop turns into an email and an in-app alert.',
-        "It's an ASP.NET Core 8 API serving a React 19 single-page app, built into a Docker image and deployed to Google Cloud Run by GitHub Actions on every push to main. I migrated it there from Fly.io; it now scales to zero when idle and runs inside Cloud Run's free tier. Most sources are scraped or read through public JSON endpoints, so each one is built to fail quietly: a site that's down returns nothing for that search instead of breaking the page, and an hourly health check emails me when a source stops returning results.",
+        "Shopping for a project car means running the same search on three sites and seeing the same car three times. RevVault searches Kijiji, AutoTrader and eBay together, shows each car once, and compares every price with similar cars for sale nearby. It also flags listings that mention a salvage title, an accident or odd mileage.",
+        "It's still useful after you buy. You can keep a garage and build log for your cars, search for parts that fit your exact vehicle at stores like RockAuto, Amazon, Canadian Tire and eBay, and save parts to a wishlist. The wishlist gets re-checked on a schedule, so a price drop turns into an email.",
+        "It's an ASP.NET Core 8 API with a React 19 frontend, packaged in Docker and deployed to Google Cloud Run by GitHub Actions on every push. I moved it there from Fly.io, and now it scales to zero when nobody's using it and fits in the free tier. Most sources are scraped or read from public JSON endpoints, so I built each one to fail quietly. If a site is down, that search just skips it, and an hourly health check emails me when a source stops returning results.",
       ],
       period: 'Jan – Nov 2026',
       role: 'Solo: design, frontend, backend, deployment',
@@ -248,12 +247,11 @@ const data: SiteData = {
     {
       slug: 'course-deadline-tracker',
       title: 'Course Deadline Tracker',
-      blurb:
-        'Every deadline and grade for a term in one place, merged from Brightspace and read out of syllabus PDFs with Claude.',
+      blurb: "Every deadline and grade for my term in one place, pulled from Brightspace and from my syllabus PDFs with Claude.",
       description: [
-        "Brightspace only knows the deadlines an instructor typed into it, which usually means the dropboxes and quizzes but not the lab dates, in-class tests, or what any of it is worth. The rest is in the syllabus PDF. This app subscribes to my Brightspace calendar feed, reads each syllabus with Claude (or an offline parser when there's no API key), and merges the two, so I see the deadlines Brightspace missed instead of a second copy of the ones it had.",
-        'It works out what each item is (course code, type of work and grade weight) and reads the grading scheme, so each course page shows my marks so far, what is missing, and my weighted grade. Reminders go out a week, three days, a day and three hours before graded work, by phone notification, Discord or email, and everything exports back out as a calendar feed for Google, Apple or Outlook.',
-        'It doubles as a study tool: lecture slides saved from D2L are available to Claude through an MCP connector, so Claude can see when each test is, read the slides it covers, and quiz me on them. The calendar parser and the Web Push encryption are written by hand rather than pulled in as dependencies. It installs to a phone’s home screen and runs on Fly.io.',
+        "Brightspace only shows the deadlines an instructor typed into it. That usually means dropboxes and quizzes, but not lab dates, in-class tests or how much anything is worth. The rest is in the syllabus PDF. So this app subscribes to my Brightspace calendar, reads each syllabus with Claude (or a simpler parser when there's no API key), and merges the two. That way I see what Brightspace missed instead of a second copy of what it already had.",
+        "It also reads each course's grading scheme, so every course page shows my marks so far, what's missing and my weighted grade. Reminders go out a week, three days, a day and three hours before anything graded, by phone notification, Discord or email. Everything can be exported as a calendar for Google, Apple or Outlook.",
+        "I use it to study, too. Lecture slides I save from D2L are available to Claude through an MCP connector, so Claude can see when a test is, read the slides it covers and quiz me on them. I wrote the calendar parser and the Web Push encryption myself instead of pulling in libraries. It installs on a phone's home screen and runs on Fly.io.",
       ],
       period: 'Sep – Oct 2026',
       role: 'Solo',
@@ -293,13 +291,12 @@ const data: SiteData = {
     {
       slug: 'claude-remote',
       title: 'Claude Remote',
-      blurb:
-        'A phone dashboard for running several Claude Code agents at once, on my desktop or in cloud sandboxes, and watching them work live.',
+      blurb: "A phone app for running several Claude Code agents at once, on my desktop or in the cloud, and watching them work live.",
       description: [
-        'Claude Remote is the control panel for the AI coding agents I run. I type what to build, choose how much effort it should spend and whether the result is a private repo, a public one or local only, and an agent creates the repository, writes the code and pushes it, streaming its log back to my phone as it goes.',
-        "Jobs go into Supabase and are claimed by a runner on my desktop. When the desktop is off, a Vercel Function starts a Vercel Sandbox for the project instead, so a job queued from the bus still starts in seconds. I set a ceiling of one to six agents running at once, each project gets at most one, and every waiting job says exactly what it's waiting for: a free slot, its own project, or a desktop that isn't there.",
-        'The same relay carries other traffic without opening a single port: questions to my own coding assistant on the desktop, and taps on lights and the thermostat to the smart home hub on my Raspberry Pi. The app is plain JavaScript with no build step, and row-level security scopes every row to its owner, which is what makes it safe for the page to ship with a public Supabase key.',
-        "It also works with no signal. A job, a message or a field report is saved on the phone the moment it's sent and goes out when the connection comes back; ids made on the phone mean a retry can't land twice, and the app opens on what it last read and says how old that is. That machinery came from Field Reports, which now lives inside Claude Remote on the same sign-in and row-level security.",
+        "Claude Remote is how I run AI coding agents from my phone. I type what I want built, pick how much effort it should use and whether the repo should be private, public or local, and an agent creates the repository, writes the code and pushes it. Its log streams back to my phone while it works.",
+        "Jobs go into Supabase, and a runner on my desktop picks them up. If my desktop is off, a Vercel Function starts a cloud sandbox instead, so a job I queue from the bus still starts in seconds. I can run one to six agents at once, only one per project, and every waiting job says what it's waiting for.",
+        "The same connection carries other things too, without opening any ports at home: questions to my own coding assistant on the desktop, and the lights and thermostat through my Raspberry Pi hub. The app is plain JavaScript with no build step, and row-level security in the database keeps each user's data separate. That's what makes it safe to ship a public Supabase key in the page.",
+        "It also works with no signal. Jobs and messages are saved on the phone right away and sent when the connection comes back, and they can't be sent twice. That part came from Field Reports, which now lives inside Claude Remote.",
       ],
       period: 'Sep – Nov 2026',
       role: 'Solo',
@@ -345,19 +342,18 @@ const data: SiteData = {
         id: 'agent-queue',
         title: 'Queue more agents than there are slots',
         teaser:
-          'Set the ceiling, put the desktop to sleep and queue a rush of jobs. Every job that has to wait says exactly what it is waiting for.',
+          "Set a limit, turn the desktop off, and queue a bunch of jobs. Each one that has to wait tells you why.",
       },
     },
     {
       slug: 'care-track',
       title: 'Care Track',
-      blurb:
-        'A clinic-booking app built by a team of three students: practitioners publish open times and patients book them. I built much of the backend and its security pass.',
+      blurb: "A clinic-booking app I'm building with two other students. Practitioners post open times and patients book them. I built a lot of the backend and its security testing.",
       description: [
-        "Waits for scans and specialist appointments can stretch for months, partly because booking still runs on outdated software. Care Track lets practitioners publish their open availability and patients find a slot and book it, with a dashboard on each side for upcoming appointments. We're building it as a team of three students to practise working on a shared codebase, loosely modelled on parts of healthcare platforms like PointClickCare.",
-        'My part is mostly the backend. I wrote the Drizzle schema and first migration, the booking flow with instant and approval-required modes, and a PostgreSQL exclusion constraint that makes double-booking impossible at the database level rather than relying on checks in application code. I also added an append-only audit log that records reads and writes of patient data and every role change.',
-        'I also built availability editing (weekly hours, exceptions, slot length) and the email layer: Mailpit locally, Resend in production, and status emails when an appointment is requested, confirmed, declined, cancelled or rescheduled. With a teammate I also wrote the daily reminder job, a secret-protected cron route that sends each reminder exactly once.',
-        "Before launch I built the admin side, then tried to break the app. Admins can change roles, disable accounts, verify practitioners (an unverified one never appears in search) and search the audit log by who did what and when. For the break-it pass I wrote a test for every server action that signs in as the wrong patient, practitioner, staff member or admin and calls it with someone else's ids; each test passes only if the database is exactly as it was before. It found two gaps, edits that weren't being audited and account endpoints that allowed password guessing outside the login rate limit, and both are fixed.",
+        "Waits for scans and specialist appointments can take months, partly because booking still runs on old software. Care Track lets practitioners post their open times and lets patients find a slot and book it, with a dashboard on each side. Three of us are building it to get practice working on a shared codebase, loosely based on parts of healthcare platforms like PointClickCare.",
+        "I worked mostly on the backend. I wrote the Drizzle schema, the first migration and the booking flow, which handles instant bookings and ones that need approval. I used a PostgreSQL exclusion constraint so double-booking is impossible at the database level, instead of relying on checks in the app code. I also added an append-only audit log that records every read and write of patient data and every role change.",
+        "I built availability editing too (weekly hours, exceptions and slot length) and the emails: Mailpit locally, Resend in production, and an email whenever an appointment is requested, confirmed, declined, cancelled or rescheduled. A teammate and I wrote the daily reminder job together, and it sends each reminder exactly once.",
+        "Before launch I built the admin side and then tried to break the app. Admins can change roles, disable accounts, verify practitioners and search the audit log. For the security pass I wrote a test for every server action that signs in as the wrong user and goes after someone else's data, and it only passes if the database is unchanged afterwards. It found two real gaps: some edits weren't being logged, and some account endpoints allowed password guessing outside the login rate limit. Both are fixed.",
       ],
       period: 'Sep – Nov 2026',
       role: 'Backend developer, team of three',
@@ -382,7 +378,7 @@ const data: SiteData = {
         id: 'double-booking',
         title: 'Try to double-book a clinic',
         teaser:
-          'Two patients press Book at the same moment. Compare checking first, a unique index, and the exclusion constraint Care Track uses.',
+          "Two patients hit Book at the same moment. See what happens with a simple check, a unique index, and the constraint Care Track actually uses.",
       },
     },
 
@@ -390,12 +386,11 @@ const data: SiteData = {
     {
       slug: 'retro-zombie-arena',
       title: 'Retro Zombie Arena',
-      blurb:
-        'A late-90s-style zombie shooter that runs in the browser, with every texture, model and sound generated in code.',
+      blurb: "A 90s-style zombie shooter that runs in the browser. Every texture, model and sound is made in code.",
       description: [
-        'A wave-survival first-person shooter in the spirit of Call of Duty: Zombies, with the pace of Doom and the look of a late-90s PC game: a low-resolution framebuffer scaled up to the window, bloom, dithering, scanlines, chunky textures, and low-poly monsters with glowing eyes. You earn points for hits and kills, buy your way through doors, roll the mystery box for a random gun, buy perks, and upgrade your weapons.',
-        'There is a story too. Four chapters on four maps (an asylum, a town, an ironworks and an underground lab) each have their own objective, a boss, and a way out. Every map is regenerated from a new seed each time you play, and nothing on the HUD tells you where to go.',
-        "There are no image, model or font files in the repository. Textures are painted onto canvases at load, the guns are modelled in code from the dimensions of real firearms, lighting is baked into vertex colours, and every sound effect and the soundtrack are synthesised with the Web Audio API. The only recorded audio is the announcer's voice lines, generated offline with an open-source text-to-speech model.",
+        "It's a wave-survival shooter inspired by Call of Duty: Zombies, with the speed of Doom and the look of an old PC game. It renders at a low resolution and scales up, with bloom, dithering and scanlines on top. You earn points for kills, buy your way through doors, roll the mystery box for a random gun, and buy perks and weapon upgrades.",
+        "There's a story too. Four chapters on four maps (an asylum, a town, an ironworks and an underground lab) each have their own objective, boss and way out. Every map is regenerated from a new seed each time you play, and nothing on screen tells you where to go.",
+        "The repo has no image, model or font files at all. Textures are painted onto canvases when the game loads, the guns are modelled in code from the measurements of real firearms, lighting is baked into vertex colours, and every sound effect and the music are made with the Web Audio API. The only recorded audio is the announcer, generated offline with an open-source text-to-speech model.",
       ],
       period: 'Sep – Oct 2026',
       role: 'Solo',
@@ -456,12 +451,11 @@ const data: SiteData = {
     {
       slug: 'tally',
       title: 'Tally',
-      blurb:
-        'An offline-first expense tracker that queues changes on the phone, syncs them later, and asks before overwriting anything.',
+      blurb: "An expense tracker that works offline. Changes wait on your phone, sync later, and it asks before overwriting anything.",
       description: [
-        'Tally is an installable expense tracker that keeps working with no connection. Every tap is written to an outbox on the device first, so an entry appears instantly and survives the app being closed while offline; syncing is a separate step that happens whenever the network comes back.',
-        'The interesting part is the sync protocol. Every change carries the last revision the device had seen, and the server keeps a per-field change log, so it can tell a stale edit to a different field (merged automatically, both edits kept) from a stale edit to the same field (a conflict). Conflicts appear as a card with both values side by side, so nothing is silently overwritten, and retries are idempotent, so a push whose response was lost never applies twice.',
-        'On top of that sit bank imports through Plaid (matched against entries typed in by hand), subscription detection, monthly budgets and Web Push reminders. It runs on Vercel, with FastAPI as a serverless function and Supabase Postgres behind it.',
+        "Tally is an expense tracker you can install on your phone, and it keeps working with no connection. Every change is saved on the device first, so it shows up right away and survives the app closing. Syncing happens separately, whenever the network comes back.",
+        "The sync is the interesting part. Each change remembers the last version the device saw, and the server keeps a log of changes for every field. That lets it tell two kinds of conflict apart. If two devices edited different fields of an expense, both changes are kept. If they edited the same field, the app shows both values and asks which one to keep. Retries are safe too, so a sync whose response got lost never gets applied twice.",
+        "On top of that there are bank imports through Plaid (matched against expenses you typed in yourself), subscription detection, monthly budgets and push reminders. It runs on Vercel, with FastAPI as a serverless function and Supabase Postgres behind it.",
       ],
       period: 'Oct – Nov 2026',
       role: 'Solo',
@@ -485,19 +479,18 @@ const data: SiteData = {
         id: 'sync-merge',
         title: 'Edit the same expense on two devices',
         teaser:
-          'Go offline, change a field, and change one on the other device too. Different fields merge on their own; the same field asks you which to keep.',
+          "Go offline, change a field, then change one on the other device. Different fields merge by themselves, and the same field asks you which to keep.",
       },
     },
     {
       slug: 'personal-code-assistant',
       title: 'Personal Code Assistant',
-      blurb:
-        "A coding assistant I'm training on my own code, using machine-learning models written from scratch, with Claude for the hard questions.",
+      blurb: "A coding assistant I'm training on my own code, with machine-learning models I wrote from scratch and Claude for the hard questions.",
       description: [
-        'A coding assistant that learns from my own repositories. The machine-learning models (a tokenizer, an n-gram language model with Kneser-Ney smoothing, a small transformer, and code embeddings) are implemented from scratch and run locally at interactive speed, with no network and no API cost.',
-        'One chat sits over both halves. A router decides each turn: the local models answer what they can, Claude answers the rest, and every answer Claude gives is folded into the local models on the next training run, so the local side covers more ground every week.',
-        'Every change to completion is measured on files the models never trained on. On its own repository the n-gram predicts the next token correctly 52% of the time (77% within its top five), and fixes found by that evaluation took fully correct suggestions from 6.4% to 37%: ranking candidates by summed rather than mean log-probability, matching whole identifiers instead of sub-words, and keeping a locality bonus alive through the beam search. The same evaluation shows the transformer still losing to the n-gram after five minutes of training (29% against 52%), so it stays off by default until it earns its place.',
-        "It runs in the terminal, in the browser, or on my phone over home Wi-Fi by scanning a QR code, and the conversation lives on my machine so I can pick it up on any of them. It's still in progress.",
+        "A coding assistant that learns from my own repositories. I wrote the machine-learning models myself (a tokenizer, an n-gram language model with Kneser-Ney smoothing, a small transformer and code embeddings), and they run locally and fast, with no internet and no API costs.",
+        "There's one chat for both halves. For each message, a router decides who answers: the local models take what they can and Claude takes the rest. Every answer Claude gives is then folded into the local models on the next training run, so the local side can handle more over time.",
+        "I measure every change on files the models never trained on. On its own repo, the n-gram model guesses the next token right 52% of the time, and 77% of the time within its top five guesses. Fixing what those tests turned up took fully correct suggestions from 6.4% to 37%. They also show the transformer still losing to the n-gram after five minutes of training (29% against 52%), so it stays off by default for now.",
+        "It runs in the terminal, in the browser, or on my phone over home Wi-Fi by scanning a QR code, and the conversation stays on my machine. It's still a work in progress.",
       ],
       period: 'Sep – Oct 2026',
       role: 'Solo',
@@ -522,12 +515,11 @@ const data: SiteData = {
     {
       slug: 'bluffalo',
       title: 'Bluffalo',
-      blurb:
-        'A real-time multiplayer bluffing game: write a convincing fake answer, then spot the real one. 2–10 players, each on their own device.',
+      blurb: "A multiplayer bluffing game. Write a fake answer that sounds real, then try to spot the real one. 2 to 10 players, each on their own phone.",
       description: [
-        "Everyone gets the same statement with a word missing. You invent a lie that sounds like the truth, then try to pick the real answer out of everyone else's lies. Players join from their own phones with a four-letter room code: no install and no accounts.",
-        "The server is the only source of truth. Clients send intents and get back a redacted view of the game: during the lie phase neither the answer nor anyone else's lie is in the payload, and answer ids are assigned after shuffling, so reading the WebSocket frames in devtools doesn't give the truth away. The rules engine is pure logic with an injected clock, so every timed rule is tested instantly.",
-        'The client is plain ES modules with no build step and one runtime dependency. Reloading the page resumes the same seat, and the host role moves to another player if the host leaves.',
+        "Everyone gets the same fact with a word missing. You make up an answer that sounds true, then try to pick the real one out of everyone else's fakes. Players join from their own phones with a four-letter room code, and there's no app or account to set up.",
+        "The server is the only one that knows the answer. Players send their moves and get back only what they're allowed to see, so even reading the WebSocket messages in devtools won't give the answer away. The game rules are plain logic with a fake clock, so I can test every timer instantly.",
+        "The frontend is plain JavaScript with no build step. If you reload the page you get your seat back, and if the host leaves, someone else becomes host.",
       ],
       period: 'Oct 2026',
       role: 'Solo',
@@ -557,12 +549,11 @@ const data: SiteData = {
     {
       slug: 'pi-smart-home-hub',
       title: 'Pi Smart Home Hub',
-      blurb:
-        'A self-hosted hub on a Raspberry Pi that controls Nanoleaf panels, a TV, an Xbox, a PC, an Ecobee and a Ring doorbell from one dashboard.',
+      blurb: "A hub on a Raspberry Pi that controls Nanoleaf panels, a TV, an Xbox, a PC, an Ecobee and a Ring doorbell from one dashboard.",
       description: [
-        "One touch-friendly dashboard for every device in the house, with no vendor apps and no cloud relay for anything that can be controlled locally. It runs on a Raspberry Pi 4 as a systemd service and speaks each device's own protocol: Nanoleaf's local HTTP API, Roku ECP and ADB for the TV, SmartGlass to wake the Xbox, Wake-on-LAN for the PC, and the official APIs for Ecobee and Ring.",
-        'Adapters declare capabilities (power, brightness, colour, thermostat, camera) rather than device types, and the dashboard builds its controls from that metadata, so a new adapter gets a working panel for free. Scenes chain commands across devices with delays, automations fire on events, schedules or thresholds, and state is pushed over a WebSocket so every screen stays in sync.',
-        'Adapters never touch the network directly; everything goes through an injected transport. In demo mode that transport is a set of in-process device simulators running the exact same adapter code, so the whole hub works with no hardware, and the tests check the exact bytes each adapter sends.',
+        "One dashboard for every device in the house, without the vendor apps, and without the cloud for anything that can be controlled locally. It runs on a Raspberry Pi 4 and talks to each device in its own language: Nanoleaf's local API, Roku and ADB for the TV, SmartGlass to wake the Xbox, Wake-on-LAN for the PC, and the official APIs for Ecobee and Ring.",
+        "Each device adapter lists what it can do (power, brightness, colour, thermostat, camera), and the dashboard builds its controls from that, so a new device gets a working panel for free. Scenes run commands across devices with delays, automations trigger on events, schedules or thresholds, and every screen stays in sync over a WebSocket.",
+        "Adapters never talk to the network directly. Everything goes through a transport layer, and in demo mode that layer is a set of fake devices running in the same process. So the whole hub works with no hardware, and the tests check the exact bytes each adapter sends.",
       ],
       period: 'Oct 2026',
       role: 'Solo',
@@ -597,13 +588,12 @@ const data: SiteData = {
     {
       slug: 'field-reports',
       title: 'Field Reports',
-      blurb:
-        "An offline-first phone app for field inspections: read sites and file reports with no signal, and it syncs itself once you're back in range.",
+      blurb: "An offline-first phone app for field inspections. You can look up sites and file reports with no signal, and it syncs once you're back in range.",
       description: [
-        'A phone front end for a field-service API: a list of sites, a detail screen for each, and one write action, filing a report. Reading and writing both work with no signal, and the status strip always says which is happening; "synced 2 min ago" only appears when a live read actually succeeded.',
-        "Reports are written to a durable IndexedDB outbox before anything is sent, then delivered whenever possible: immediately, on reconnect, when the app returns to the foreground, on a retry timer, and through Background Sync. The client generates each report's id and the server treats it as an idempotency key, so retries can't create duplicates, and a report written at 9:00 but synced at 17:00 keeps its original time, so it can't overwrite newer state.",
-        'Failures are handled by kind: a 4xx is parked as rejected, a 5xx backs off exponentially with jitter, and a dead network pauses the queue instead of burning through it. Every primary control sits in the bottom third of the screen for one-handed use.',
-        "It has since moved into Claude Remote as one of its screens, with sites and reports in Supabase under row-level security, and its outbox now carries Claude Remote's jobs and messages too.",
+        "A phone app for a field-service API: a list of sites, a page for each one, and one thing you can do, which is file a report. Looking things up and filing both work with no signal, and a status bar always tells you which mode you're in. It only says \"synced 2 min ago\" if it really did sync then.",
+        "Reports are saved to an outbox on the phone before anything is sent, then sent whenever possible: right away, when the connection comes back, when you reopen the app, on a retry timer, and through Background Sync. The phone creates each report's id and the server uses it to ignore repeats, so retries can't make duplicates. A report written at 9:00 but synced at 17:00 keeps its 9:00 time, so it can't overwrite anything newer.",
+        "Different failures get handled differently. A 4xx error is set aside as rejected, a 5xx waits a bit longer before each retry, and when the network is down the queue pauses instead of burning through its retries. The main buttons are all in the bottom third of the screen so you can use it one-handed.",
+        "It's since moved into Claude Remote as one of its screens, with its data in Supabase, and its outbox now sends Claude Remote's jobs and messages too.",
       ],
       period: 'Nov 2026',
       role: 'Solo',
@@ -638,18 +628,17 @@ const data: SiteData = {
         id: 'outbox',
         title: 'File a report with no signal',
         teaser:
-          'Cut the signal, break the server, lose a response. Reports wait, back off and retry, and none of them arrives twice.',
+          "Turn off the signal, break the server, or lose a response. Reports wait and retry, and none of them shows up twice.",
       },
     },
     {
       slug: 'daily-digest-bot',
       title: 'Daily Digest Bot',
-      blurb:
-        'Collects RSS feeds, APIs and scraped pages, removes duplicates, and posts one digest a day. Built so a broken source is never silent.',
+      blurb: "Collects RSS feeds, APIs and web pages, skips duplicates, and posts one digest a day. If a source breaks, it tells you.",
       description: [
-        'A bot that gathers items from the sources you configure (RSS feeds, JSON APIs and pages it scrapes), deduplicates them against everything it has already sent, and posts one digest a day to a chat channel. Everything it knows lives in one SQLite file.',
-        'The design goal was that it can’t fail quietly. A source that errors is listed in a "Collection problems" section of the digest itself; a scraped page whose selector matches nothing is an error, not an empty result; a failed delivery returns its items to the queue and pings a separate alert channel; and a health check exits non-zero when no digest has gone out for too long, so an uptime monitor turns silence into an alert.',
-        'A read-only React dashboard shows the hours since the last digest, per-source health and reliability, every digest exactly as it was posted, and the log.',
+        "A bot that collects from the sources you set up (RSS feeds, JSON APIs and pages it scrapes), skips anything it has already sent, and posts one digest a day to a chat channel. Everything it knows is in one SQLite file.",
+        "My main goal was that it should never fail quietly. A source that breaks shows up in a \"Collection problems\" section of the digest. A scraped page that matches nothing counts as an error, not an empty result. A failed send puts its items back in the queue and pings a separate alert channel. And a health check fails when no digest has gone out for too long, so a monitoring tool can alert on it.",
+        "There's also a read-only React dashboard that shows how long it's been since the last digest, how reliable each source is, every digest as it was posted, and the log.",
       ],
       period: 'Oct 2026',
       role: 'Solo',
@@ -670,7 +659,7 @@ const data: SiteData = {
         },
       ],
       highlights: [
-        '188 tests with HTTP mocked: timeouts, DNS failures, revoked webhooks, redesigned pages',
+        '248 tests with HTTP mocked: timeouts, DNS failures, revoked webhooks, redesigned pages',
         'Failed deliveries return their items to the queue, so nothing is lost',
         'A distinct exit code per failure, so cron and uptime monitors can tell them apart',
         'A one-command demo runs the whole lifecycle against a real local HTTP server',
@@ -679,12 +668,11 @@ const data: SiteData = {
     {
       slug: 'github-project-index',
       title: 'GitHub Project Index',
-      blurb:
-        "A page listing every repository on a GitHub account, rebuilt from the GitHub API every Monday so it can't go stale.",
+      blurb: "A page that lists every repo on a GitHub account. It rebuilds itself from the GitHub API every Monday, so it never goes out of date.",
       description: [
-        'One page that lists every project on a GitHub account: name, a one-line description, language, last push, and a live link where there is one. The data is read from the GitHub API at build time, and a GitHub Actions workflow rebuilds and redeploys the page every week.',
-        "Most repositories have no description, so a standard-library Python script falls back to the first real paragraph of the README, skipping titles, badges and code. Live links come from the repository's homepage field or its GitHub Pages URL, and each one gets an HTTP check, so a dead link is dropped rather than published.",
-        'Nothing is fetched in the browser: the data is inlined into the bundle, so there is no rate limit, no token on the client and no loading spinner. The page has search, language filters and a language-share bar whose legend doubles as the filter, with colours from a colourblind-checked palette.',
+        "One page listing every project on a GitHub account, with its description, language, last update and a live link if it has one. The data comes from the GitHub API when the page is built, and a GitHub Actions workflow rebuilds and redeploys it every week.",
+        "A lot of repos have no description, so a Python script falls back to the first real paragraph of the README, skipping titles, badges and code. Live links come from each repo's homepage or GitHub Pages URL, and every one gets checked first, so a dead link is dropped instead of published.",
+        "Nothing loads in the browser. The data is built into the page, so there's no rate limit, no token and no loading spinner. You can search, filter by language, or click the language bar to filter, and its colours are checked to work for colourblind people.",
       ],
       period: 'Oct 2026',
       role: 'Solo',
@@ -719,12 +707,11 @@ const data: SiteData = {
     {
       slug: 'necrotide',
       title: 'Necrotide: Last Stand',
-      blurb:
-        'A round-based zombie survival shooter for Roblox: 20 waves, 4 bosses and 12 upgradable weapons, tested headlessly without Roblox.',
+      blurb: "A zombie survival game for Roblox with 20 waves, 4 bosses and 12 upgradable weapons, tested without opening Roblox.",
       description: [
-        'Hold the Ashvault against escalating waves of the undead: buy guns off the walls, gamble at the Fate Crate for a random weapon, forge upgrades, drink permanent buffs, nail the barricades back up and revive downed teammates. A boss arrives every five waves, ending with a three-phase final boss on wave 20, after which the game goes endless.',
-        'Everything is original: the names, the lore, the balance numbers, and the map geometry, which is generated from code. There are no external asset IDs.',
-        'Roblox can’t be scripted from CI, so the game verifies itself three ways: every file is parsed offline, a checker walks the built place file and resolves cross-module references, and a stub of the Roblox API runs the real game modules in a Lua VM, building the map, buying and forging a gun, downing and reviving a player, and phasing a boss.',
+        "You hold the Ashvault against waves of zombies. Buy guns off the walls, try your luck at the Fate Crate for a random weapon, upgrade your guns, buy permanent buffs, rebuild barricades and revive teammates. A boss shows up every five waves, ending with a three-phase final boss on wave 20, and after that it goes endless.",
+        "Everything is original, including the names, the story, the balance numbers and the map, which is generated from code. It doesn't use any outside assets.",
+        "You can't run Roblox in CI, so the game checks itself three ways. Every file is parsed offline, a checker goes through the built place file and makes sure every reference between modules resolves, and a fake version of the Roblox API runs the real game code in a Lua VM. That last test builds the map, buys and upgrades a gun, downs and revives a player, and takes a boss through its phases.",
       ],
       period: 'Sep 2026',
       role: 'Solo',
@@ -745,13 +732,12 @@ const data: SiteData = {
     {
       slug: 'portfolio',
       title: 'This portfolio',
-      blurb:
-        "The site you're on: a hand-written WebGL hero that reacts to the cursor, a hiring lens that retailors the page for a role, and working models of four projects' hardest problems.",
+      blurb: "The site you're on. It has a WebGL background I wrote by hand that reacts to your cursor, a hiring filter that rearranges the page for a role, and small working demos of four projects.",
       description: [
-        "The look is called Signal. The hero is a fragment shader I wrote in raw WebGL2: topographic contour lines that drift and bend around the pointer like a lens, drawn in the theme's own colours, paused off screen and turned down on slow machines. Selected work pins a screen on the right that wipes in each project's screenshots as you scroll past it.",
-        'Underneath, it is a React and TypeScript site where one file, src/data/site.ts, holds every word, project and screenshot, so adding a project never means touching a component. It builds to static files and is deployed to GitHub Pages by GitHub Actions on every push, after lint, the tests and a smoke test of the built output.',
-        "Most of it is about the person reading it. Picking a role under “Hiring for” swaps in the projects that matter for that job and highlights the matching skills, and the choice lives in the URL, so a tailored view is a link I can send. Four projects carry a small working model of the problem they solve, built from that project's own rules and tested against them. ⌘K finds projects by the technology they use, and the All work page lists everything with a filter for each kind.",
-        "The numbers in the hero are counted from the content rather than typed in, so they can't drift out of date, and the tests check that every image exists, every link is well-formed, and no project page shows the same screenshot twice.",
+        "The background on the home page is a shader I wrote in raw WebGL2. It draws contour lines that drift and bend around your cursor, uses the theme's colours, pauses when you scroll away, and turns itself down on slower computers. In Selected work, a screen on the right shows each project's screenshots as you scroll past it.",
+        "Under the hood it's React and TypeScript, and every word, project and screenshot lives in one file, src/data/site.ts, so adding a project never means touching a component. It builds to static files, and GitHub Actions deploys it to GitHub Pages on every push once the linter, the tests and a check of the built site pass.",
+        "I built a few things with recruiters in mind. Picking a role under \"Hiring for\" brings the most relevant projects to the top and highlights the matching skills, and the choice is saved in the link, so I can send someone a version of the page for their role. Four projects have a small working demo built from that project's real rules. ⌘K searches projects by the tech they use, and the All work page lists everything with filters.",
+        "The numbers at the top are counted from the content instead of typed in, so they can't go out of date, and the tests check that every image exists, every link is valid and no project page repeats a screenshot.",
       ],
       period: 'Oct – Nov 2026',
       role: 'Solo',
@@ -762,7 +748,7 @@ const data: SiteData = {
       links: { demo: 'https://adenyadegar.github.io/', repo: GH + 'adenyadegar.github.io' },
       cover: {
         src: 'images/portfolio-home.jpg',
-        alt: 'The home page of this portfolio: the name over a field of ember contour lines that bend around the cursor',
+        alt: 'The home page of this portfolio: the name over a field of blue contour lines that bend around the cursor',
       },
       gallery: [
         {

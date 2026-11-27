@@ -20,10 +20,10 @@ export function HandsOn({ query = '' }: { query?: string }) {
         <SectionHeading
           id="try"
           index="02"
-          eyebrow="Hands-on"
-          meta={`${withDemos.length} test benches`}
-          title="Don’t take my word for it. *Try to break it.*"
-          description={`${count} of these projects hinge on one hard problem. Each write-up has a small working model of it, built from the real project's rules, that you can try to break right in the page.`}
+          eyebrow="Try it"
+          meta={`${withDemos.length} demos`}
+          title="Play with a few of them *yourself*"
+          description={`${count} of my projects come down to one tricky problem each. Their pages have a small working version of that problem you can play with right in the browser.`}
         />
         <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {withDemos.map((project, index) => {
@@ -36,7 +36,7 @@ export function HandsOn({ query = '' }: { query?: string }) {
                   className="brackets group flex h-full flex-col border border-border bg-surface p-6 transition duration-300 hover:-translate-y-1 hover:border-accent/60"
                 >
                   <span className="flex items-center justify-between">
-                    <span className="label text-fg-subtle">Bench {String(index + 1).padStart(2, '0')}</span>
+                    <span className="label text-fg-subtle">Demo {String(index + 1).padStart(2, '0')}</span>
                     <Icon className="size-5 text-accent transition-transform duration-300 group-hover:scale-110" aria-hidden />
                   </span>
                   <span className="display mt-8 text-xl leading-tight">{demo.title}</span>
@@ -44,7 +44,7 @@ export function HandsOn({ query = '' }: { query?: string }) {
                   <span className="label mt-6 flex items-center justify-between border-t border-border pt-4 text-fg-subtle">
                     <span>{project.title}</span>
                     <span className="flex items-center gap-1 text-fg-muted transition-colors group-hover:text-accent">
-                      Run it
+                      Try it
                       <ArrowRight className="size-3.5 transition-transform group-hover:translate-x-0.5" aria-hidden />
                     </span>
                   </span>
